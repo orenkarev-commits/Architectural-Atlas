@@ -20,6 +20,18 @@ export const mapStyle = [
   { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 ];
 
+// Dark variant: same idea (warm cast, no POI/transit), on charcoal.
+export const mapStyleDark = [
+  { elementType: 'geometry', stylers: [{ color: '#211B18' }] },
+  { elementType: 'labels.text.fill', stylers: [{ color: '#B0A196' }] },
+  { elementType: 'labels.text.stroke', stylers: [{ color: '#191412' }] },
+  { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#3A302A' }] },
+  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#14181C' }] },
+  { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+  { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+  { featureType: 'road', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+];
+
 // react-native-maps equivalent of the web prototype's
 // `disableDefaultUI: true, gestureHandling: 'greedy'`.
 export const mapUiProps = {

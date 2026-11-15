@@ -53,7 +53,7 @@ export function ArchitectRow({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     borderRadius: radii.lg,
     padding: spacing.lg,
     flexDirection: 'row',

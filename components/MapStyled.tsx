@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import MapView, { MapViewProps, PROVIDER_GOOGLE } from 'react-native-maps';
-import { mapStyle, mapUiProps } from '../lib/mapStyle';
-import { colors } from '../theme/tokens';
+import { mapStyle, mapStyleDark, mapUiProps } from '../lib/mapStyle';
+import { colors, isDark, scheme } from '../theme/tokens';
 
 /**
  * Shared map wrapper — every map instance in the app uses the same warm
@@ -15,7 +15,8 @@ export const MapStyled = forwardRef<MapView, MapViewProps>(function MapStyled(
     <MapView
       ref={ref}
       provider={PROVIDER_GOOGLE}
-      customMapStyle={mapStyle}
+      customMapStyle={isDark ? mapStyleDark : mapStyle}
+      userInterfaceStyle={scheme}
       {...mapUiProps}
       style={[{ backgroundColor: colors.mapTile }, style]}
       {...rest}

@@ -149,7 +149,7 @@ function formatKm(km: number): string {
   return `${km.toFixed(1)} km`;
 }
 
-const INK = 'rgba(43,40,38,';
+const INK = colors.dialInk;
 
 const styles = StyleSheet.create({
   wrap: { alignItems: 'center', gap: 10 },
@@ -157,14 +157,14 @@ const styles = StyleSheet.create({
     width: DIAL,
     height: DIAL,
     borderRadius: R,
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
   },
   faceWash: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#FBF8F4',
+    backgroundColor: colors.dial,
   },
   ring: {
     ...StyleSheet.absoluteFillObject,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     width: HUB,
     height: HUB,
     borderRadius: HUB / 2,
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: INK + '0.3)',
     alignItems: 'center',

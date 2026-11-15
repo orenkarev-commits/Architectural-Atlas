@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atlas Data Views</title>
+<link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8E6E1;--sheet:#fff;--ink:#2E2620;--muted:#6B5E55;--hair:#E8E2DA;--surf:#F7F3EE;--terra:#C2531F;
+ --s1:#C2531F;--s2:#2C5F4E;--s3:#B8862B;--s4:#6E4A7E;--s5:#3E6E9E;--s6:#5A5048}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141110;--sheet:#211B18;--ink:#F4ECE4;--muted:#A8998E;--hair:#3E3530;--surf:#2C2521;--terra:#E0703C;
+ --s1:#E0703C;--s2:#5FB394;--s3:#E0B252;--s4:#B48CC6;--s5:#7FB2E0;--s6:#B7AA9E}}
+:root[data-theme=dark]{--bg:#141110;--sheet:#211B18;--ink:#F4ECE4;--muted:#A8998E;--hair:#3E3530;--surf:#2C2521;--terra:#E0703C;
+ --s1:#E0703C;--s2:#5FB394;--s3:#E0B252;--s4:#B48CC6;--s5:#7FB2E0;--s6:#B7AA9E}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Comfortaa,system-ui,sans-serif;padding:24px 16px 48px}
+header{max-width:1700px;margin:0 auto 20px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+h1{font-family:'Madimi One';font-weight:400;font-size:26px;margin:0}
+header p{margin:4px 0 0;color:var(--muted);font-size:13px;max-width:60ch}
+.grid{display:flex;flex-wrap:wrap;gap:28px;justify-content:center}
+.phone{background:#0e0e10;border-radius:46px;padding:10px;width:max-content}
+.screen{width:min(375px,calc(100vw - 52px));height:760px;border-radius:36px;overflow:hidden auto;background:var(--sheet);padding:56px 18px 24px;scrollbar-width:none}
+.k{font-family:'Madimi One';font-size:22px;margin:0}
+.d{font-size:12px;color:var(--muted);margin:4px 0 12px;line-height:1.45}
+.why{font-size:11px;color:var(--muted);border-top:1px solid var(--hair);padding-top:10px;margin-top:12px;line-height:1.5}
+.why b{color:var(--ink);font-weight:600}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{fill:var(--muted);font-family:Comfortaa;font-size:10px}
+.axis line,.axis path{stroke:var(--hair)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:11px;color:var(--muted);margin:8px 0}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--sheet);font-size:12px;padding:6px 9px;border-radius:8px;opacity:0;transition:opacity 120ms ease-out;max-width:220px;z-index:9}
+.dot{cursor:pointer;transition:r 160ms cubic-bezier(.23,1,.32,1)}
+.ctrl{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted)}
+.ctrl input{flex:1;accent-color:var(--terra)}
+.ctrl b{font-family:'Madimi One';font-weight:400;font-size:18px;color:var(--ink);min-width:44px;font-variant-numeric:tabular-nums}
+button{font:inherit;font-size:12px;border:1px solid var(--hair);background:var(--surf);color:var(--ink);border-radius:10px;padding:6px 10px;cursor:pointer}
+button:active{transform:scale(.97)}
+.seg{display:flex;gap:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Atlas Data Views · d3</h1>
+  <p>Nine ways d3 could add to the Tel Aviv Atlas, drawn from the app's real data: <span id="n"></span> buildings in <code>data/buildings.ts</code>. Tap any dot to open that building in the running app.</p></div>
+  <div class="seg"><button data-t="light">light</button><button data-t="dark">dark</button></div>
+</header>
+<div class="grid">
+  <div class="phone"><div class="screen">
+    <h2 class="k">Style emergence</h2>
+    <p class="d">Every building on one time axis, coloured by style. Filled dots are firm dates; hollow rings are approximate (“Early 1920s”, “c. 1932”).</p>
+    <div class="legend" id="lg1"></div>
+    <svg id="v1"></svg>
+    <p class="why"><b>Improves:</b> the drag-only StyleTimeline. You see the Eclectic → International Style hand-over around 1930 at a glance, and the hollow rings show which dates still need archive work.</p>
+  </div></div>
+
+  <div class="phone"><div class="screen">
+    <h2 class="k">Architects' careers</h2>
+    <p class="d">One row per architect, a dot per building, a line from first to last. Sorted by when each architect first appears.</p>
+    <svg id="v2"></svg>
+    <p class="why"><b>Improves:</b> the architects index. It shows who overlapped with whom (Berlin and Magidovitch, say) and where each career turned from Eclectic to Modern. The rows link straight to the bio pages.</p>
+  </div></div>
+
+  <div class="phone"><div class="screen">
+    <h2 class="k">The city grows</h2>
+    <p class="d">Buildings placed by their geocoded coordinates. Drag the year, or press play, to watch the city fill in.</p>
+    <div class="ctrl"><button id="play">▶ Play</button><input type="range" id="yr" min="1880" max="1960" step="1" value="1960"><b id="yrv">1960</b></div>
+    <svg id="v3"></svg>
+    <p class="why"><b>Improves:</b> the map screen. A time filter turns the map from a static list of pins into the story of how the secular city grew outward from Jaffa and Neve Tzedek.</p>
+  </div></div>
+
+  <div class="phone"><div class="screen">
+    <h2 class="k">Research gaps</h2>
+    <p class="d">How many buildings have a named architect and a firm year — the two headline facts — and which ones are still open.</p>
+    <svg id="v4"></svg>
+    <div id="gapList" style="font-size:12px;margin-top:10px"></div>
+    <p class="why"><b>Improves:</b> your own research loop. It's the “architect + exact year” priority as a live checklist, and each open item is one tap from its building page.</p>
+  </div></div>
+
+  <div class="phone"><div class="screen">
+    <h2 class="k">Building waves</h2>
+    <p class="d">How many buildings in the atlas were built in each 5-year span, stacked by style. Firm and approximate dates both count, placed by their first year.</p>
+    <svg id="v5"></svg>
+    <p class="why"><b>Improves:</b> the Style pages. Each one could open with its own wave, showing when the style peaked and how it overlapped with the others.</p>
+  </div></div>
+
+  <div class="phone"><div class="screen">
+    <h2 class="k">Who built what style</h2>
+    <p class="d">Architects (rows) against styles (columns). The darker the cell, the more buildings. Tap a cell to list them.</p>
+    <svg id="v6"></svg>
+    <div id="v6list" style="font-size:12px;margin-top:8px"></div>
+    <p class="why"><b>Improves:</b> the architect bio pages. It answers whether someone switched styles or stayed in one lane, from the atlas's own entries.</p>
+  </div></div>
+
+  <div class="phone"><div class="screen">
+    <h2 class="k">Style → architect → building</h2>
+    <p class="d">A treemap: each block is one building, grouped by architect inside its style. Tap to open the building.</p>
+    <svg id="v7"></svg>
+    <p class="why"><b>Improves:</b> the Atlas index. A single screen shows the whole collection's shape, including how much of it is Berlin and Eclectic.</p>
+  </div></div>
+
+  <div class="phone"><div class="screen">
+    <h2 class="k">Distance from Jaffa</h2>
+    <p class="d">Each building's distance from the Jaffa Clock Tower against its year, with a trend line.</p>
+    <svg id="v8"></svg>
+    <p class="why"><b>Improves:</b> the secular-city story. It tests in numbers whether the city grew northward away from Jaffa, and the outliers (buildings far off the line) are worth a story card.</p>
+  </div></div>
+
+  <div class="phone"><div class="screen">
+    <h2 class="k">Decade by decade</h2>
+    <p class="d">The same map split into small panels, one per decade. Dots from earlier decades stay grey for context.</p>
+    <svg id="v9"></svg>
+    <p class="why"><b>Improves:</b> walking tours. Each panel is one era's walk, a ready-made route for “Tel Aviv in the 1930s”.</p>
+  </div></div>
+</div>
+<div class="tip" id="tip"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const APP='http://localhost:8081';
+const tip=d3.select('#tip');
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const STYLES=['Ottoman Era','Eclectic','Art Deco','International Style','Early Modernism','Early Brutalist'];
+const SVAR={'Ottoman Era':'--s6','Eclectic':'--s1','Art Deco':'--s3','International Style':'--s2','Early Modernism':'--s5','Early Brutalist':'--s4'};
+const col=s=>css(SVAR[s]||'--s6');
+const unattributed=a=>/^(unknown|unattributed|unverified)/i.test(a);
+const open=d=>window.open(`${APP}/building/${d.id}`,'_blank','noopener');
+function showTip(e,html){tip.html(html).style('opacity',1).style('left',Math.min(e.clientX+12,innerWidth-230)+'px').style('top',(e.clientY+12)+'px')}
+const hideTip=()=>tip.style('opacity',0);
+const label=d=>`<b>${d.name}</b><br>${d.architect}<br>${d.year||'Undated'} · ${d.style}`;
+const W=339;
+
+let DATA=[];
+function legend(){d3.select('#lg1').html(STYLES.filter(s=>DATA.some(d=>d.style===s)).map(s=>`<span><i style="background:${col(s)}"></i>${s}</span>`).join(''))}
+
+function v1(){
+  const data=DATA.filter(d=>d.y), H=300, m={t:10,r:8,b:24,l:8};
+  const x=d3.scaleLinear().domain([1875,1960]).range([m.l,W-m.r]);
+  const svg=d3.select('#v1').attr('viewBox',`0 0 ${W} ${H}`); svg.selectAll('*').remove();
+  svg.append('g').attr('class','axis').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('d')).tickSizeOuter(0));
+  [[1909,'1909 founding'],[1931,'1931']].forEach(([yv,t],i)=>{svg.append('line').attr('x1',x(yv)).attr('x2',x(yv)).attr('y1',m.t).attr('y2',H-m.b).attr('stroke',css('--hair')).attr('stroke-dasharray','3 3');
+    svg.append('text').attr('x',x(yv)+4).attr('y',m.t+10+i*12).text(t)});
+  const nodes=data.map(d=>({d,year:d.y,x:x(d.y),y:(H-m.b)/2}));
+  const sim=d3.forceSimulation(nodes).force('x',d3.forceX(n=>x(n.year)).strength(1)).force('y',d3.forceY((H-m.b)/2+6).strength(.05)).force('c',d3.forceCollide(6.2)).stop();
+  for(let i=0;i<240;i++)sim.tick();
+  svg.append('g').selectAll('circle').data(nodes).join('circle').attr('class','dot')
+    .attr('cx',n=>n.x).attr('cy',n=>Math.max(m.t+30,Math.min(H-m.b-7,n.y)))
+    .attr('fill',n=>n.d.firm?col(n.d.style):css('--sheet')).attr('stroke',n=>col(n.d.style)).attr('stroke-width',1.6).attr('r',0)
+    .on('mousemove',(e,n)=>showTip(e,label(n.d)+(n.d.firm?'':'<br><i>approximate date</i>'))).on('mouseleave',hideTip).on('click',(e,n)=>open(n.d))
+    .transition().duration(reduce?0:500).delay((n,i)=>reduce?0:i*6).ease(d3.easeCubicOut).attr('r',5);
+};
+
+function v2(){
+  const named=DATA.filter(d=>d.y&&!unattributed(d.architect));
+  const groups=d3.groups(named,d=>d.architect).map(([a,bs])=>({a,bs,min:d3.min(bs,b=>b.y),max:d3.max(bs,b=>b.y)})).sort((p,q)=>p.min-q.min||q.bs.length-p.bs.length);
+  const row=22,m={t:6,r:8,b:24,l:112},H=m.t+groups.length*row+m.b;
+  const x=d3.scaleLinear().domain([1905,1960]).range([m.l,W-m.r]);
+  const svg=d3.select('#v2').attr('viewBox',`0 0 ${W} ${H}`);svg.selectAll('*').remove();
+  svg.append('g').attr('class','axis').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('d')).tickSizeOuter(0));
+  const g=svg.append('g').selectAll('g').data(groups).join('g').attr('transform',(d,i)=>`translate(0,${m.t+i*row+row/2})`);
+  g.append('text').attr('x',m.l-8).attr('dy','.35em').attr('text-anchor','end').style('cursor','pointer').style('fill',css('--ink'))
+    .text(d=>d.a.length>18?d.a.slice(0,17)+'…':d.a).on('click',(e,d)=>window.open(`${APP}/architects/${encodeURIComponent(d.a)}`,'_blank','noopener'));
+  g.append('line').attr('x1',d=>x(d.min)).attr('x2',d=>x(d.min)).attr('stroke',css('--hair')).attr('stroke-width',3).attr('stroke-linecap','round')
+    .transition().duration(reduce?0:600).ease(d3.easeCubicOut).attr('x2',d=>x(d.max));
+  g.selectAll('circle').data(d=>d.bs).join('circle').attr('class','dot').attr('cx',b=>x(b.y)).attr('r',4.2)
+    .attr('fill',b=>b.firm?col(b.style):css('--sheet')).attr('stroke',b=>col(b.style)).attr('stroke-width',1.5)
+    .on('mousemove',(e,b)=>showTip(e,label(b))).on('mouseleave',hideTip).on('click',(e,b)=>open(b));
+}
+
+let proj,v3dots;
+function v3(){
+  const H=420,svg=d3.select('#v3').attr('viewBox',`0 0 ${W} ${H}`);svg.selectAll('*').remove();
+  const pts={type:'FeatureCollection',features:DATA.map(d=>({type:'Feature',geometry:{type:'Point',coordinates:[d.lng,d.lat]}}))};
+  proj=d3.geoMercator().fitExtent([[16,16],[W-16,H-16]],pts);
+  svg.append('rect').attr('width',W).attr('height',H).attr('rx',16).attr('fill',css('--surf'));
+  // sea edge hint: buildings' westmost longitude band
+  const west=d3.min(DATA,d=>d.lng);
+  svg.append('text').attr('x',10).attr('y',H-10).text('← Mediterranean');
+  v3dots=svg.append('g').selectAll('circle').data(DATA.filter(d=>d.y).sort((a,b)=>a.y-b.y)).join('circle').attr('class','dot')
+    .attr('cx',d=>proj([d.lng,d.lat])[0]).attr('cy',d=>proj([d.lng,d.lat])[1]).attr('r',5)
+    .attr('fill',d=>d.firm?col(d.style):css('--sheet')).attr('stroke',d=>col(d.style)).attr('stroke-width',1.6)
+    .on('mousemove',(e,d)=>showTip(e,label(d))).on('mouseleave',hideTip).on('click',(e,d)=>open(d));
+  setYear(+d3.select('#yr').property('value'),true);
+}
+function setYear(y,instant){
+  d3.select('#yrv').text(y);
+  v3dots.transition().duration(instant||reduce?0:220).ease(d3.easeCubicOut).attr('r',d=>d.y<=y?5:0).attr('opacity',d=>d.y<=y?1:0);
+}
+d3.select('#yr').on('input',e=>setYear(+e.target.value));
+let timer=null;
+d3.select('#play').on('click',function(){
+  if(timer){timer.stop();timer=null;this.textContent='▶ Play';return}
+  this.textContent='❚❚ Pause';let y=1880;const btn=this;
+  timer=d3.interval(()=>{y+=1;d3.select('#yr').property('value',y);setYear(y);if(y>=1960){timer.stop();timer=null;btn.textContent='▶ Play'}},reduce?1:90);
+});
+
+function v4(){
+  const a=d=>!unattributed(d.architect), f=d=>d.firm;
+  const cats=[
+    {k:'Architect named + firm year',n:DATA.filter(d=>a(d)&&f(d)).length,c:css('--s2')},
+    {k:'Architect named, year approximate',n:DATA.filter(d=>a(d)&&!f(d)).length,c:css('--s3')},
+    {k:'Architect open, year firm',n:DATA.filter(d=>!a(d)&&f(d)).length,c:css('--s1')},
+    {k:'Both still open',n:DATA.filter(d=>!a(d)&&!f(d)).length,c:css('--s4')},
+  ];
+  const H=150,svg=d3.select('#v4').attr('viewBox',`0 0 ${W} ${H}`);svg.selectAll('*').remove();
+  const x=d3.scaleLinear().domain([0,DATA.length]).range([0,W]);let acc=0;
+  cats.forEach(c=>{c.x0=acc;acc+=c.n});
+  svg.selectAll('rect').data(cats).join('rect').attr('y',0).attr('height',28).attr('rx',4).attr('fill',d=>d.c)
+    .attr('x',d=>x(d.x0)).attr('width',0).transition().duration(reduce?0:700).ease(d3.easeCubicOut).attr('width',d=>Math.max(0,x(d.n)-2));
+  svg.selectAll('g.l').data(cats).join('g').attr('class','l').attr('transform',(d,i)=>`translate(0,${46+i*24})`).each(function(d){
+    const g=d3.select(this);g.append('rect').attr('width',10).attr('height',10).attr('rx',2).attr('fill',d.c);
+    g.append('text').attr('x',16).attr('y',9).style('font-size','11px').text(d.k);
+    g.append('text').attr('x',W).attr('y',9).attr('text-anchor','end').style('fill',css('--ink')).style('font-size','12px').text(`${d.n}`)});
+  const open_=DATA.filter(d=>!a(d)||!f(d)).sort((p,q)=>(a(p)+f(p))-(a(q)+f(q)));
+  d3.select('#gapList').html('<div style="color:var(--muted);margin-bottom:6px">Open items, worst first</div>'+open_.map(d=>
+    `<a href="${APP}/building/${d.id}" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--hair);color:var(--ink);text-decoration:none"><span>${d.name}</span><span style="color:var(--muted);white-space:nowrap">${a(d)?'':'architect'}${!a(d)&&!f(d)?' · ':''}${f(d)?'':'year'}</span></a>`).join(''));
+}
+
+
+function v5(){
+  const data=DATA.filter(d=>d.y), bin=5, m={t:10,r:8,b:24,l:24}, H=240;
+  const bins=d3.range(1875,1960,bin), st=STYLES.filter(s=>data.some(d=>d.style===s));
+  const rows=bins.map(b=>{const o={b};st.forEach(s=>o[s]=data.filter(d=>d.style===s&&d.y>=b&&d.y<b+bin).length);return o});
+  const series=d3.stack().keys(st)(rows);
+  const x=d3.scaleLinear().domain([1875,1960]).range([m.l,W-m.r]);
+  const y=d3.scaleLinear().domain([0,d3.max(series.at(-1),d=>d[1])]).nice().range([H-m.b,m.t]);
+  const svg=d3.select('#v5').attr('viewBox',`0 0 ${W} ${H}`);svg.selectAll('*').remove();
+  svg.append('g').attr('class','axis').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('d')).tickSizeOuter(0));
+  svg.append('g').attr('class','axis').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSizeOuter(0));
+  const area=d3.area().curve(d3.curveMonotoneX).x(d=>x(d.data.b+bin/2)).y0(d=>y(d[0])).y1(d=>y(d[1]));
+  svg.append('g').selectAll('path').data(series).join('path').attr('fill',d=>col(d.key)).attr('opacity',.9).attr('d',area)
+    .on('mousemove',(e,d)=>showTip(e,`<b>${d.key}</b><br>${d3.sum(d,v=>v[1]-v[0])} buildings`)).on('mouseleave',hideTip);
+}
+
+function v6(){
+  const named=DATA.filter(d=>!unattributed(d.architect));
+  const archs=d3.groups(named,d=>d.architect).sort((a,b)=>b[1].length-a[1].length).slice(0,12).map(d=>d[0]);
+  const st=STYLES.filter(s=>named.some(d=>d.style===s));
+  const m={t:64,r:4,b:4,l:112},cw=(W-m.l-m.r)/st.length,ch=20,H=m.t+archs.length*ch+m.b;
+  const max=d3.max(archs,a=>d3.max(st,s=>named.filter(d=>d.architect===a&&d.style===s).length));
+  const svg=d3.select('#v6').attr('viewBox',`0 0 ${W} ${H}`);svg.selectAll('*').remove();
+  st.forEach((s,j)=>svg.append('text').attr('transform',`translate(${m.l+j*cw+cw/2},${m.t-6}) rotate(-45)`).text(s.replace('International Style','International')));
+  archs.forEach((a,i)=>{
+    svg.append('text').attr('x',m.l-8).attr('y',m.t+i*ch+ch/2).attr('dy','.35em').attr('text-anchor','end').style('fill',css('--ink')).text(a.length>18?a.slice(0,17)+'…':a);
+    st.forEach((s,j)=>{const bs=named.filter(d=>d.architect===a&&d.style===s);
+      svg.append('rect').attr('x',m.l+j*cw+1).attr('y',m.t+i*ch+1).attr('width',cw-2).attr('height',ch-2).attr('rx',3)
+        .attr('fill',bs.length?col(s):css('--surf')).attr('opacity',bs.length?.25+.75*bs.length/max:1).style('cursor',bs.length?'pointer':'default')
+        .on('mousemove',e=>bs.length&&showTip(e,`<b>${a}</b> · ${s}<br>${bs.length} building${bs.length>1?'s':''}`)).on('mouseleave',hideTip)
+        .on('click',()=>bs.length&&d3.select('#v6list').html(`<div style="color:var(--muted);margin-bottom:4px">${a} · ${s}</div>`+bs.map(b=>`<a href="${APP}/building/${b.id}" target="_blank" rel="noopener" style="display:block;padding:6px 0;border-top:1px solid var(--hair);color:var(--ink);text-decoration:none">${b.name} <span style="color:var(--muted)">${b.year||''}</span></a>`).join('')));
+      if(bs.length)svg.append('text').attr('x',m.l+j*cw+cw/2).attr('y',m.t+i*ch+ch/2).attr('dy','.35em').attr('text-anchor','middle').style('fill',css('--sheet')).style('pointer-events','none').text(bs.length);
+    });
+  });
+}
+
+function v7(){
+  const H=420;
+  const root=d3.hierarchy({children:d3.groups(DATA,d=>d.style,d=>d.architect).map(([s,as])=>({name:s,children:as.map(([a,bs])=>({name:a,children:bs.map(b=>({name:b.name,b,value:1}))}))}))}).sum(d=>d.value||0).sort((a,b)=>b.value-a.value);
+  d3.treemap().size([W,H]).paddingInner(1.5).paddingOuter(2).paddingTop(d=>d.depth===1?16:d.depth===2?0:0).round(true)(root);
+  const svg=d3.select('#v7').attr('viewBox',`0 0 ${W} ${H}`);svg.selectAll('*').remove();
+  svg.selectAll('text.s').data(root.children).join('text').attr('class','s').attr('x',d=>d.x0+4).attr('y',d=>d.y0+11).style('fill',css('--ink')).text(d=>(d.x1-d.x0)>60?`${d.data.name} · ${d.value}`:'');
+  svg.selectAll('rect').data(root.leaves()).join('rect').attr('class','dot').attr('x',d=>d.x0).attr('y',d=>d.y0).attr('width',d=>d.x1-d.x0).attr('height',d=>d.y1-d.y0).attr('rx',2)
+    .attr('fill',d=>col(d.data.b.style)).attr('opacity',d=>unattributed(d.data.b.architect)?.35:.85)
+    .on('mousemove',(e,d)=>showTip(e,label(d.data.b))).on('mouseleave',hideTip).on('click',(e,d)=>open(d.data.b));
+}
+
+function v8(){
+  const JAFFA=[34.7564,32.0549]; // Jaffa Clock Tower
+  const data=DATA.filter(d=>d.y).map(d=>({...d,km:d3.geoDistance(JAFFA,[d.lng,d.lat])*6371}));
+  const m={t:10,r:10,b:30,l:30},H=300;
+  const x=d3.scaleLinear().domain([1875,1960]).range([m.l,W-m.r]);
+  const y=d3.scaleLinear().domain([0,d3.max(data,d=>d.km)]).nice().range([H-m.b,m.t]);
+  const svg=d3.select('#v8').attr('viewBox',`0 0 ${W} ${H}`);svg.selectAll('*').remove();
+  svg.append('g').attr('class','axis').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('d')).tickSizeOuter(0));
+  svg.append('g').attr('class','axis').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSizeOuter(0));
+  svg.append('text').attr('x',m.l+4).attr('y',m.t+4).text('km from Jaffa');
+  const mx=d3.mean(data,d=>d.y),my=d3.mean(data,d=>d.km),k=d3.sum(data,d=>(d.y-mx)*(d.km-my))/d3.sum(data,d=>(d.y-mx)**2);
+  svg.append('line').attr('x1',x(1880)).attr('x2',x(1955)).attr('y1',y(my+k*(1880-mx))).attr('y2',y(my+k*(1955-mx))).attr('stroke',css('--muted')).attr('stroke-dasharray','4 3');
+  svg.append('g').selectAll('circle').data(data).join('circle').attr('class','dot').attr('cx',d=>x(d.y)).attr('cy',d=>y(d.km)).attr('r',4.5)
+    .attr('fill',d=>d.firm?col(d.style):css('--sheet')).attr('stroke',d=>col(d.style)).attr('stroke-width',1.5)
+    .on('mousemove',(e,d)=>showTip(e,label(d)+`<br>${d.km.toFixed(1)} km from Jaffa`)).on('mouseleave',hideTip).on('click',(e,d)=>open(d));
+  svg.append('text').attr('x',W-m.r).attr('y',H-m.b-6).attr('text-anchor','end').text(`trend: ${(k*10).toFixed(2)} km per decade`);
+}
+
+function v9(){
+  const decades=[1880,1910,1920,1930,1940,1950], cols=2, pw=(W-8)/cols, ph=150, H=Math.ceil(decades.length/cols)*(ph+8);
+  const svg=d3.select('#v9').attr('viewBox',`0 0 ${W} ${H}`);svg.selectAll('*').remove();
+  const data=DATA.filter(d=>d.y);
+  const pts={type:'FeatureCollection',features:data.map(d=>({type:'Feature',geometry:{type:'Point',coordinates:[d.lng,d.lat]}}))};
+  decades.forEach((dc,i)=>{
+    const end=i===0?1910:dc+10, start=i===0?1800:dc;
+    const g=svg.append('g').attr('transform',`translate(${(i%cols)*(pw+8)},${Math.floor(i/cols)*(ph+8)})`);
+    const p=d3.geoMercator().fitExtent([[8,22],[pw-8,ph-8]],pts);
+    g.append('rect').attr('width',pw).attr('height',ph).attr('rx',12).attr('fill',css('--surf'));
+    const here=data.filter(d=>d.y>=start&&d.y<end);
+    g.append('text').attr('x',10).attr('y',16).style('fill',css('--ink')).text(`${i===0?'Before 1910':dc+'s'} · ${here.length}`);
+    g.selectAll('circle.old').data(data.filter(d=>d.y<start)).join('circle').attr('cx',d=>p([d.lng,d.lat])[0]).attr('cy',d=>p([d.lng,d.lat])[1]).attr('r',2.2).attr('fill',css('--hair'));
+    g.selectAll('circle.new').data(here).join('circle').attr('class','dot').attr('cx',d=>p([d.lng,d.lat])[0]).attr('cy',d=>p([d.lng,d.lat])[1]).attr('r',3.6)
+      .attr('fill',d=>col(d.style)).on('mousemove',(e,d)=>showTip(e,label(d))).on('mouseleave',hideTip).on('click',(e,d)=>open(d));
+  });
+}
+
+function drawAll(){legend();v1();v2();v3();v4();v5();v6();v7();v8();v9()}
+d3.selectAll('[data-t]').on('click',function(){document.documentElement.dataset.theme=this.dataset.t;drawAll()});
+d3.json('atlas-data.json').then(d=>{DATA=d;d3.select('#n').text(d.length);drawAll()});
+</script>
+</body>
+</html>

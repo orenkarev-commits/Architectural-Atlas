@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Marker } from 'react-native-maps';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { MapStyled } from '../../components/MapStyled';
 import { BackButton } from '../../components/BackButton';
-import { Badge } from '../../components/Badge';
-import { SectionLabel } from '../../components/SectionLabel';
+import { CollapsibleSection } from '../../components/CollapsibleSection';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { buildings } from '../../data/buildings';
 import { architects } from '../../data/architects';
+import { stories } from '../../data/stories';
 import { plansForBuilding, type Plan } from '../../data/plans';
 import { PlanViewer } from '../../components/PlanViewer';
+import { BuildingWaves, WhoBuiltWhatStyle } from '../../components/AtlasCharts';
+import { toBullets } from '../../lib/bullets';
+import { parseYear } from '../../lib/year';
+import { portraitFor } from '../../data/portraits';
 import { toLatLng, toRegion } from '../../lib/coords';
 import { colors, radii, spacing } from '../../theme/tokens';
 import { editorial, ui } from '../../theme/typography';
 
 const MAP_HEIGHT = 300;
 const SHEET_OVERLAP = 28;
+const HERO_HEIGHT = 250;
+const BAR_SPACE = 90;
 
 const PLAN_KIND_LABEL: Record<string, string> = {
   plan: 'Floor plan',
@@ -26,13 +33,31 @@ const PLAN_KIND_LABEL: Record<string, string> = {
   site: 'Survey sheet',
 };
 
+function Bullets({ text }: { text: string }) {
+  const items = toBullets(text);
+  return (
+    <View style={styles.bullets}>
+      {items.map((it, i) => (
+        <View key={i} style={styles.bulletRow}>
+          <Text style={styles.bulletDot}>•</Text>
+          <Text style={styles.bulletText}>{it}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
 export default function BuildingDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const building = buildings.find((b) => String(b.id) === id);
   const architect = building ? architects.find((a) => a.name === building.architect) : undefined;
   const plans = building ? plansForBuilding(building.id) : [];
+  const story = building ? stories.find((s) => s.buildingId === building.id) : undefined;
   const [activePlan, setActivePlan] = useState<Plan | null>(null);
   const [photoBig, setPhotoBig] = useState(false);
+  const [slide, setSlide] = useState(0);
+  const { width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
 
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(14);
@@ -49,6 +74,29 @@ export default function BuildingDetail() {
 
   if (!building) return null;
 
+  const builtYear = parseYear(building.year);
+  // Only state an age when the year itself is a firm date (e.g. 1932, 1922–27), never for 'Early 1920s' / 'c. 1932'.
+  const firmYear = typeof building.year === 'number' || /^\d{4}/.test(String(building.year));
+  const age = builtYear && firmYear ? new Date().getFullYear() - builtYear : null;
+  const unattributed = /^(unverified|unknown|unattributed)/i.test(building.architect);
+  const portrait = portraitFor(building.architect);
+  const initials =
+    building.architect
+      .split(/\s+/)
+      .filter((w) => /^[A-Z]/.test(w))
+      .map((w) => w[0])
+      .slice(0, 2)
+      .join('') || '?';
+  const avatarLabel = unattributed ? '?' : initials;
+  const openMap = () => router.push({ pathname: '/map', params: { focus: String(building.id) } });
+  const openAtlas = (style?: string) =>
+    router.push(style ? { pathname: '/atlas', params: { style } } : '/atlas');
+  const slides: { key: string; src: any; onPress: () => void }[] = [
+    { key: 'photo', src: building.image, onPress: () => setPhotoBig(true) },
+    ...plans.map((plan, i) => ({ key: `plan-${i}`, src: plan.src, onPress: () => setActivePlan(plan) })),
+  ];
+  const pressed = ({ pressed: p }: { pressed: boolean }) => (p ? styles.pressed : null);
+
   return (
     <View style={styles.container}>
       <MapStyled
@@ -61,69 +109,107 @@ export default function BuildingDetail() {
       </MapStyled>
       <BackButton />
 
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <Animated.View style={[styles.sheet, sheetStyle]}>
-          <View style={styles.grabber} />
+          {/* Listing layout: swipeable hero (photo, then archive sheets) */}
+          <View style={[styles.hero, { width }]}>
+            <ScrollView
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={32}
+              onScroll={(e) => setSlide(Math.round(e.nativeEvent.contentOffset.x / width))}
+            >
+              {slides.map((sl) => (
+                <Pressable key={sl.key} onPress={sl.onPress} accessibilityRole="imagebutton">
+                  <Image
+                    source={sl.src}
+                    style={{ width, height: HERO_HEIGHT }}
+                    resizeMode={sl.key === 'photo' ? 'cover' : 'contain'}
+                  />
+                </Pressable>
+              ))}
+            </ScrollView>
+            {slides.length > 1 ? (
+              <>
+                <View style={styles.dots} pointerEvents="none">
+                  {slides.map((sl, i) => (
+                    <View key={sl.key} style={[styles.dot, i === slide && styles.dotOn]} />
+                  ))}
+                </View>
+                <View style={styles.count} pointerEvents="none">
+                  <Text style={styles.countText}>{`${slide + 1} / ${slides.length}`}</Text>
+                </View>
+              </>
+            ) : null}
+          </View>
 
-          <View style={styles.headerRow}>
-            <Pressable onPress={() => setPhotoBig(true)}>
-              <Image source={building.image} style={styles.photo} />
+          <View style={styles.titleBlock}>
+            <Text style={styles.name}>{building.name}</Text>
+            <Pressable onPress={openMap} hitSlop={6} style={pressed}>
+              <Text style={styles.address}>{building.address}</Text>
             </Pressable>
-            <View style={styles.headerText}>
-              <Text style={styles.name}>{building.name}</Text>
-              <Pressable
-                onPress={() =>
-                  router.push({ pathname: '/map', params: { focus: String(building.id) } })
-                }
-                hitSlop={6}
-              >
-                <Text style={styles.address}>{building.address}</Text>
+            {building.styleNote ? <Text style={styles.note}>{building.styleNote}</Text> : null}
+          </View>
+
+          <View style={styles.facts}>
+            <Pressable style={(st) => [styles.fact, pressed(st)]} onPress={() => openAtlas()}>
+              <Text style={styles.factValue}>{String(building.year)}</Text>
+              <Text style={styles.factLabel}>built</Text>
+            </Pressable>
+            <Pressable
+              style={(st) => [styles.fact, styles.factDivider, pressed(st)]}
+              onPress={() => openAtlas(building.style)}
+            >
+              <Text style={styles.factValue}>{building.style}</Text>
+              <Text style={styles.factLabel}>style</Text>
+            </Pressable>
+            {age ? (
+              <Pressable style={(st) => [styles.fact, styles.factDivider, pressed(st)]} onPress={() => openAtlas()}>
+                <Text style={styles.factValue}>{age}</Text>
+                <Text style={styles.factLabel}>years</Text>
               </Pressable>
-              <View style={styles.badgeRow}>
-                <Badge
-                  label={building.style}
-                  variant="style"
-                  onPress={() =>
-                    router.push({ pathname: '/atlas', params: { style: building.style } })
-                  }
-                />
-                <Badge label={String(building.year)} variant="year" />
-                {building.styleNote ? <Badge label={building.styleNote} variant="note" /> : null}
-              </View>
-            </View>
+            ) : null}
           </View>
 
-          <Pressable
-            style={styles.architectButton}
-            disabled={!architect}
-            onPress={() => {
-              if (architect) {
-                router.push({ pathname: '/architects/[name]', params: { name: architect.name } });
-              }
-            }}
-          >
-            <Text style={styles.architectLabel}>Architect</Text>
-            <Text style={styles.architectName}>{building.architect}</Text>
-          </Pressable>
-
-          <View style={styles.section}>
-            <SectionLabel>Why it matters</SectionLabel>
-            <Text style={styles.prose}>{building.innovation}</Text>
+          <View>
+            <Text style={styles.sectionHeading}>Architect</Text>
+            <Pressable
+              style={(st) => [styles.architectRow, pressed(st)]}
+              disabled={!architect}
+              onPress={() => {
+                if (architect) {
+                  router.push({ pathname: '/architects/[name]', params: { name: architect.name } });
+                }
+              }}
+            >
+              {portrait ? (
+                <Image source={portrait} style={styles.avatar} />
+              ) : (
+                <View style={[styles.avatar, styles.avatarEmpty]}>
+                  <Text style={styles.avatarText}>{avatarLabel}</Text>
+                </View>
+              )}
+              <Text style={styles.architectName}>{building.architect}</Text>
+              {architect ? <Text style={styles.chevron}>›</Text> : null}
+            </Pressable>
           </View>
 
-          {building.materials ? (
-            <View style={styles.section}>
-              <SectionLabel>Materials & construction</SectionLabel>
-              <Text style={styles.prose}>{building.materials}</Text>
-            </View>
+          {/* Each section is a collapsible terracotta-strip bubble.
+              Order: the Story leads, then Why it Matters, Life, Materials, Archive. */}
+          {story ? (
+            <CollapsibleSection title="The Story" defaultOpen>
+              <Text style={styles.storyTitle}>{story.title}</Text>
+              <Text style={styles.storyText}>{story.reveal}</Text>
+            </CollapsibleSection>
           ) : null}
 
+          <CollapsibleSection title="Why it Matters" defaultOpen={!story}>
+            <Bullets text={building.whyItMatters} />
+          </CollapsibleSection>
+
           {building.timeline && building.timeline.length > 0 ? (
-            <View style={styles.section}>
-              <SectionLabel>Life of the building</SectionLabel>
+            <CollapsibleSection title="Life of the Building">
               <View style={styles.timeline}>
                 {building.timeline.map((t, i) => (
                   <View key={i} style={styles.timelineRow}>
@@ -132,12 +218,25 @@ export default function BuildingDetail() {
                   </View>
                 ))}
               </View>
-            </View>
+            </CollapsibleSection>
           ) : null}
 
-          {plans.length > 0 && (
-            <View style={styles.section}>
-              <SectionLabel>From the archive</SectionLabel>
+          {building.materials ? (
+            <CollapsibleSection title="Materials & Construction">
+              <Bullets text={building.materials} />
+            </CollapsibleSection>
+          ) : null}
+
+          <CollapsibleSection title="Building Waves">
+            <BuildingWaves highlightId={building.id} />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Who Built What Style">
+            <WhoBuiltWhatStyle highlightId={building.id} />
+          </CollapsibleSection>
+
+          {plans.length > 0 ? (
+            <CollapsibleSection title="From the Archive">
               {plans.map((plan, i) => (
                 <View key={i} style={styles.planBlock}>
                   <Pressable onPress={() => setActivePlan(plan)}>
@@ -153,17 +252,21 @@ export default function BuildingDetail() {
                   <Text style={styles.planCaption}>{plan.caption}</Text>
                 </View>
               ))}
-            </View>
-          )}
-
-          <View style={styles.threadBlock}>
-            <SectionLabel>Research thread</SectionLabel>
-            <Text style={styles.threadText}>{building.thread}</Text>
-          </View>
+            </CollapsibleSection>
+          ) : null}
 
           <PrimaryButton label="Open in Field research" onPress={() => router.push('/field')} />
         </Animated.View>
       </ScrollView>
+
+      <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, spacing.lg) }]}>
+        <Pressable onPress={openMap} style={(st) => [styles.barAddress, pressed(st)]}>
+          <Text style={styles.barAddressText} numberOfLines={1}>{building.address}</Text>
+        </Pressable>
+        <Pressable onPress={openMap} style={(st) => [styles.barButton, pressed(st)]}>
+          <Text style={styles.barButtonText}>Walk there</Text>
+        </Pressable>
+      </View>
 
       <PlanViewer
         visible={activePlan !== null}
@@ -202,14 +305,63 @@ const styles = StyleSheet.create({
     paddingTop: MAP_HEIGHT - SHEET_OVERLAP,
   },
   sheet: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     borderTopLeftRadius: radii.sheet,
     borderTopRightRadius: radii.sheet,
     paddingHorizontal: spacing.xxl,
-    paddingTop: spacing.xxl,
-    paddingBottom: spacing.huge,
-    gap: spacing.xxl,
+    paddingTop: 0,
+    paddingBottom: spacing.huge + BAR_SPACE,
+    overflow: 'hidden',
+    gap: spacing.lg,
   },
+  pressed: { transform: [{ scale: 0.97 }], opacity: 0.85 },
+  hero: {
+    marginHorizontal: -spacing.xxl,
+    height: HERO_HEIGHT,
+    backgroundColor: colors.surfaceTint,
+  },
+  dots: {
+    position: 'absolute', bottom: 10, left: 0, right: 0,
+    flexDirection: 'row', justifyContent: 'center', gap: 5,
+  },
+  dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: 'rgba(255,255,255,0.6)' },
+  dotOn: { backgroundColor: colors.surface },
+  count: {
+    position: 'absolute', right: 12, bottom: 8,
+    backgroundColor: 'rgba(20,17,15,0.55)', borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3,
+  },
+  countText: { ...ui.metadataSmall, color: colors.white },
+  titleBlock: { gap: spacing.xs, marginTop: spacing.sm },
+  note: { ...ui.metadata, color: colors.muted },
+  facts: {
+    flexDirection: 'row',
+    borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.hairline,
+    paddingVertical: spacing.lg,
+  },
+  fact: { flex: 1, alignItems: 'center', paddingHorizontal: spacing.sm, minWidth: 0 },
+  factDivider: { borderLeftWidth: 1, borderLeftColor: colors.hairline },
+  factValue: { ...editorial.cardTitle, color: colors.ink, textAlign: 'center' },
+  factLabel: { ...ui.metadata, color: colors.muted, marginTop: 2 },
+  sectionHeading: { ...editorial.cardTitleLg, color: colors.ink, marginBottom: spacing.base },
+  architectRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
+  avatar: { width: 44, height: 44, borderRadius: 22, flexShrink: 0 },
+  avatarEmpty: { backgroundColor: colors.terracottaTint, alignItems: 'center', justifyContent: 'center' },
+  avatarText: { ...editorial.cardTitle, color: colors.terracottaTextOnTint },
+  chevron: { ...ui.body, fontSize: 22, color: colors.muted },
+  bar: {
+    position: 'absolute', left: 0, right: 0, bottom: 0,
+    flexDirection: 'row', alignItems: 'center', gap: spacing.lg,
+    paddingHorizontal: spacing.xxl, paddingTop: spacing.lg,
+    backgroundColor: colors.surface,
+    borderTopWidth: 1, borderTopColor: colors.hairline,
+  },
+  barAddress: { flex: 1, minWidth: 0 },
+  barAddressText: { ...ui.metadata, color: colors.muted },
+  barButton: {
+    backgroundColor: colors.terracotta, borderRadius: radii.md,
+    paddingHorizontal: spacing.xl, paddingVertical: spacing.base,
+  },
+  barButtonText: { ...ui.body, color: colors.white },
   grabber: {
     width: 38,
     height: 4,
@@ -217,19 +369,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.hairline,
     alignSelf: 'center',
     marginBottom: spacing.base,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    gap: spacing.lg,
-  },
-  photo: {
-    width: 92,
-    height: 116,
-    borderRadius: radii.md,
-  },
-  headerText: {
-    flex: 1,
-    gap: spacing.xs,
   },
   name: {
     ...editorial.buildingName,
@@ -239,37 +378,31 @@ const styles = StyleSheet.create({
     ...ui.metadata,
     color: colors.terracottaTextOnTint,
   },
-  badgeRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
-    marginTop: spacing.xs,
-  },
-  architectButton: {
-    backgroundColor: colors.surfaceTint,
-    borderRadius: radii.lg,
-    padding: spacing.lg,
-  },
-  architectLabel: {
-    ...ui.label,
-    color: colors.label,
-  },
   architectName: {
-    ...editorial.cardTitleLg,
-    fontSize: 17,
+    ...ui.body,
+    fontSize: 16,
+    flex: 1,
     color: colors.ink,
-    marginTop: spacing.xs,
   },
-  section: {
+  bullets: {
     gap: spacing.sm,
   },
-  prose: {
+  bulletRow: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+  },
+  bulletDot: {
     ...ui.body,
+    color: colors.terracotta,
+    lineHeight: 22,
+  },
+  bulletText: {
+    ...ui.body,
+    flex: 1,
     color: colors.body,
   },
   timeline: {
     gap: spacing.md,
-    marginTop: spacing.xs,
   },
   timelineRow: {
     flexDirection: 'row',
@@ -278,7 +411,7 @@ const styles = StyleSheet.create({
   timelineYear: {
     ...ui.label,
     color: colors.terracotta,
-    width: 68,
+    width: 76,
     paddingTop: 1,
   },
   timelineNote: {
@@ -286,9 +419,17 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.body,
   },
+  storyTitle: {
+    ...editorial.cardTitle,
+    fontSize: 15,
+    color: colors.ink,
+  },
+  storyText: {
+    ...ui.body,
+    color: colors.body,
+  },
   planBlock: {
     gap: spacing.xs,
-    marginTop: spacing.xs,
   },
   planImage: {
     width: '100%',
@@ -319,18 +460,5 @@ const styles = StyleSheet.create({
     ...ui.body,
     fontSize: 13,
     color: colors.muted,
-  },
-  threadBlock: {
-    backgroundColor: '#F5EFE7',
-    borderLeftWidth: 3,
-    borderLeftColor: colors.terracotta,
-    borderRadius: radii.lg,
-    padding: spacing.xl,
-    gap: spacing.xs,
-  },
-  threadText: {
-    ...editorial.cardTitle,
-    fontSize: 15,
-    color: colors.inkSoft,
   },
 });

@@ -36,7 +36,7 @@ export function BuildingRow({
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.hairline,
     borderRadius: radii.lg,

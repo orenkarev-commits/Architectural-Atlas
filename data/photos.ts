@@ -38,8 +38,9 @@ const photos: Partial<Record<number, ImageSourcePropType>> = {
   2: require('../assets/images/buildings/2-engel-house.jpg'),
   3: require('../assets/images/buildings/3-pagoda-house.jpg'),
   4: require('../assets/images/buildings/4-beit-bialik.jpg'),
+  21: require('../assets/images/buildings/21-beit-hakadim.jpg'),
   // The "בית ברלין-פסובסקי" article image depicts Beit HaTe'omim (user-confirmed),
-  // not Berlin House — Berlin House still needs a correct photo.
+  // not Berlin House — Berlin House now has its own photo (id 10, above).
   11: require('../assets/images/buildings/11-beit-hateomim.jpg'),
   17: require('../assets/images/buildings/17-great-synagogue.jpg'),
   18: require('../assets/images/buildings/18-dizengoff-square.jpg'),
@@ -48,11 +49,10 @@ const photos: Partial<Record<number, ImageSourcePropType>> = {
   12: require('../assets/images/buildings/12-power-station.jpg'),
   13: require('../assets/images/buildings/13-ohel-moed.jpg'),
   22: require('../assets/images/buildings/22-lodzia-house.jpg'),
-  24: require('../assets/images/buildings/24-beit-hasofer.jpg'),
   26: require('../assets/images/buildings/26-levin-house.jpg'),
   27: require('../assets/images/buildings/27-ben-gurion-house.jpg'),
   29: require('../assets/images/buildings/29-independence-hall.jpg'),
-  30: require('../assets/images/buildings/30-haganah-museum.jpg'),
+  30: require('../assets/images/buildings/30-haganah-museum.jpeg'),
   32: require('../assets/images/buildings/32-beit-hair.jpg'),
   // Real field photograph supplied in the Balfour 57 intake (embedded data URI).
   49: require('../assets/images/buildings/49-balfour-57.jpeg'),
@@ -66,6 +66,32 @@ const photos: Partial<Record<number, ImageSourcePropType>> = {
   50: require('../assets/images/buildings/50-beit-klein.jpeg'),
   51: require('../assets/images/buildings/51-beit-yerdani.jpeg'),
   52: require('../assets/images/buildings/52-balfour-42.jpeg'),
+  // Newly wired building photographs.
+  7: require('../assets/images/buildings/7-Moshe-Greidinger-House.jpeg'),
+  25: require('../assets/images/buildings/25-Beit-Mangel.jpg'),
+  10: require('../assets/images/buildings/10-Berlin-House.jpg'),
+  14: require('../assets/images/buildings/14-Beit-Awad.jpeg'),
+  // id 15 renamed Beit Romanov -> Beit Shafran (naming correction, 2026-08-29).
+  // Image shows the Norman Hotel entrance — the merged Shafran + Romanov compound;
+  // a dedicated shot of the King Albert Square / Melchett elevation is still wanted.
+  15: require('../assets/images/buildings/15-Beit-Shafran.jpg'),
+  20: require('../assets/images/buildings/20-Cinema-Esther.jpg'),
+  31: require('../assets/images/buildings/31-Rubin-Museum.jpeg'),
+  35: require('../assets/images/buildings/35-Guter-House.jpeg'),
+  // New building photographs (batch 53–58), wired 2026-08-29 — filename id matches project id.
+  53: require('../assets/images/buildings/53-Beit-Balder.jpeg'),
+  54: require('../assets/images/buildings/54-Beit-Peltzman.jpeg'),
+  55: require('../assets/images/buildings/55-Beit-Hava-Shapira.jpeg'),
+  56: require('../assets/images/buildings/56-Beit-Zlocisti.jpeg'),
+  57: require('../assets/images/buildings/57-Beit-Gross.jpeg'),
+  58: require('../assets/images/buildings/58-Beit-Hazin.jpg'),
+  63: require('../assets/images/buildings/63-Beit-Shmuel-David.jpg'),
+  67: require('../assets/images/buildings/67-Beit Victor Nagi.jpeg'),
+  68: require('../assets/images/buildings/68-Ahad Haam School.jpeg'),
+  // Historic 1922 photograph of the finished building, from Alexander Levy's estate
+  // papers (Zionist Archive), annotated in his hand in German — via the municipal
+  // conservation documentation file (Shifman/RixArc, 2021).
+  70: require('../assets/images/buildings/70-beit-alfes.jpg'),
 };
 
 /** Real photograph for this building if one exists, otherwise the placeholder. */

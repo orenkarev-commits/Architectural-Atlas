@@ -8,10 +8,17 @@ const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY ?? '';
 const config: ExpoConfig = {
   name: 'Architectural Atlas',
   slug: 'architectural-atlas',
+  owner: 'oren2026',
   scheme: 'architectural-atlas',
   version: '1.0.0',
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
+  updates: {
+    url: 'https://u.expo.dev/2639e838-5a8d-469e-b637-cfadd17a8225',
+  },
   orientation: 'portrait',
-  userInterfaceStyle: 'light',
+  userInterfaceStyle: 'automatic',
   newArchEnabled: true,
   icon: './assets/images/icon.png',
   ios: {
@@ -19,6 +26,7 @@ const config: ExpoConfig = {
     bundleIdentifier: 'com.architecturalatlas.app',
     config: {
       googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+      usesNonExemptEncryption: false,
     },
   },
   android: {
@@ -54,26 +62,19 @@ const config: ExpoConfig = {
     [
       'expo-splash-screen',
       {
-        // Native pre-splash: the Nolli plan on the warm ground, so the JS
-        // splash (which adds the title + drift) takes over with no flash.
+        // Solid warm ground natively — no image — so there's no small, unscaled
+        // map before the app. The JS SplashOverlay draws the full Nolli drift +
+        // title on top, bridging cleanly from this warm screen.
         backgroundColor: '#FBF4EA',
-        image: './assets/images/nolli-tel-aviv.jpg',
-        resizeMode: 'cover',
       },
     ],
   ],
-  updates: {
-    url: 'https://u.expo.dev/33a0e3e5-2070-42a2-9c11-631389b45365',
-  },
-  runtimeVersion: {
-    policy: 'appVersion',
-  },
   extra: {
     router: {
       origin: false,
     },
     eas: {
-      projectId: '33a0e3e5-2070-42a2-9c11-631389b45365',
+      projectId: '2639e838-5a8d-469e-b637-cfadd17a8225',
     },
   },
 };

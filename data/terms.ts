@@ -159,7 +159,7 @@ export const terms: Term[] = [
     term: 'International Style',
     category: 'style',
     definition:
-      'The stripped modernism of flat roofs, ribbon windows and rendered concrete that Bauhaus-trained émigrés adapted to the Mediterranean — the White City’s language.',
+      'Le Corbusier’s principles remade for the Mediterranean sun, strongly shaped by Bauhaus-trained émigrés — flat roofs, strip windows and rendered concrete, with pilotis for the sea breeze, smaller deep-set windows, deep balconies and brise-soleil for shade. The White City’s language.',
     seenAt: ['Engel House', 'Liebling House', 'Dizengoff Square'],
   },
   {

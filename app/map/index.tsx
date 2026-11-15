@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import {
   LayoutChangeEvent,
   PanResponder,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import MapView, { Marker, Polyline } from 'react-native-maps';
+import * as Location from 'expo-location';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -21,7 +22,7 @@ import { MapStyled } from '../../components/MapStyled';
 import { BackButton } from '../../components/BackButton';
 import { buildings } from '../../data/buildings';
 import { timelineStyles, styleByName } from '../../data/styles';
-import { tourCategories, allTours, type MapTour } from '../../data/mapTours';
+import { tourCategories, allTours, cafeStops, type MapTour } from '../../data/mapTours';
 import { parseYear } from '../../lib/year';
 import { toLatLng, toRegion } from '../../lib/coords';
 import { colors, radii, spacing } from '../../theme/tokens';
@@ -61,6 +62,31 @@ function FlashingArrow({ deg }: { deg: number }) {
   );
 }
 
+/**
+ * The user's live "you are here" marker — a solid terracotta dot with a pulsing ring,
+ * and (when a compass heading is available) a rotating arrow showing which way the phone points.
+ */
+function UserDot({ heading }: { heading: number | null }) {
+  const scale = useSharedValue(1);
+  const opacity = useSharedValue(0.5);
+  useEffect(() => {
+    scale.value = withRepeat(withTiming(2.6, { duration: 1800, easing: Easing.out(Easing.ease) }), -1, false);
+    opacity.value = withRepeat(withTiming(0, { duration: 1800, easing: Easing.out(Easing.ease) }), -1, false);
+  }, [scale, opacity]);
+  const ring = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }], opacity: opacity.value }));
+  return (
+    <View style={styles.userWrap} pointerEvents="none">
+      <Animated.View style={[styles.userRing, ring]} />
+      {heading != null && (
+        <View style={[styles.headingRotor, { transform: [{ rotate: `${heading}deg` }] }]}>
+          <View style={styles.headingArrow} />
+        </View>
+      )}
+      <View style={styles.userDot} />
+    </View>
+  );
+}
+
 /** A soft pulsing ring marking the stop you're currently on. */
 function CurrentRing() {
   const s = useSharedValue(1);
@@ -75,6 +101,30 @@ export default function FullScreenMap() {
   const { focus, tour: tourParam } = useLocalSearchParams<{ focus?: string; tour?: string }>();
   const focusBuilding = focus ? buildings.find((b) => String(b.id) === focus) : undefined;
   const mapRef = useRef<MapView>(null);
+
+  // Live "you are here" dot — watched position, drawn as a pulsing terracotta marker.
+  const [userCoord, setUserCoord] = useState<{ lat: number; lng: number } | null>(null);
+  // Live compass heading (degrees clockwise from north) for the direction arrow.
+  const [heading, setHeading] = useState<number | null>(null);
+  useEffect(() => {
+    let posSub: Location.LocationSubscription | undefined;
+    let headSub: Location.LocationSubscription | undefined;
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') return;
+      posSub = await Location.watchPositionAsync(
+        { accuracy: Location.Accuracy.Balanced, distanceInterval: 5 },
+        (p) => setUserCoord({ lat: p.coords.latitude, lng: p.coords.longitude })
+      );
+      headSub = await Location.watchHeadingAsync((h) =>
+        setHeading(h.trueHeading >= 0 ? h.trueHeading : h.magHeading)
+      );
+    })();
+    return () => {
+      posSub?.remove();
+      headSub?.remove();
+    };
+  }, []);
 
   const [year, setYear] = useState(MAX_YEAR);
   const [mode, setMode] = useState<'timeline' | 'category'>('timeline');
@@ -101,6 +151,9 @@ export default function FullScreenMap() {
 
   const activePeriod = periodName ? styleByName(periodName) : undefined;
 
+  // The slider (thumb + year label) tracks the finger immediately; the heavier
+  // marker recompute follows a deferred value so dragging stays smooth.
+  const deferredYear = useDeferredValue(year);
   const activeIds = useMemo(() => {
     const set = new Set<number>();
     for (const b of buildings) {
@@ -109,11 +162,11 @@ export default function FullScreenMap() {
         if (!activePeriod || match.includes(b.style)) set.add(b.id);
       } else {
         const y = parseYear(b.year);
-        if (y === 0 || y <= year) set.add(b.id);
+        if (y === 0 || y <= deferredYear) set.add(b.id);
       }
     }
     return set;
-  }, [mode, activePeriod, year]);
+  }, [mode, activePeriod, deferredYear]);
 
   const frac = MAX_YEAR > MIN_YEAR ? clamp((year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR), 0, 1) : 1;
 
@@ -130,6 +183,29 @@ export default function FullScreenMap() {
   };
   const exitTour = () => setTourKey(null);
 
+  // "What's nearby?" — centre on the user (fetching a fix if we don't have one yet)
+  // and reveal every building so the pins around them show.
+  const showNearby = async () => {
+    let coord = userCoord;
+    if (!coord) {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status === 'granted') {
+          const p = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
+          coord = { lat: p.coords.latitude, lng: p.coords.longitude };
+          setUserCoord(coord);
+        }
+      } catch {
+        // location unavailable — fall through and at least reveal all buildings
+      }
+    }
+    setMode('timeline');
+    setYear(MAX_YEAR);
+    if (coord && mapRef.current) {
+      mapRef.current.animateToRegion(toRegion(coord, 16), 650);
+    }
+  };
+
   // Vertical track: top = latest, bottom = earliest.
   const yearFromY = (y: number) => {
     const h = heightRef.current || 1;
@@ -139,7 +215,10 @@ export default function FullScreenMap() {
   const responder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponderCapture: () => true,
       onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
+      onPanResponderTerminationRequest: () => false,
       onPanResponderGrant: (e) => setYear(yearFromY(e.nativeEvent.locationY)),
       onPanResponderMove: (e) => setYear(yearFromY(e.nativeEvent.locationY)),
     })
@@ -241,6 +320,13 @@ export default function FullScreenMap() {
             <CurrentRing />
           </Marker>
         )}
+
+        {/* The user's live location */}
+        {userCoord && (
+          <Marker coordinate={toLatLng(userCoord)} anchor={{ x: 0.5, y: 0.5 }} zIndex={999}>
+            <UserDot heading={heading} />
+          </Marker>
+        )}
       </MapStyled>
 
       <BackButton onPress={() => (tour ? exitTour() : router.back())} />
@@ -274,9 +360,12 @@ export default function FullScreenMap() {
             <View style={styles.sliderCol}>
               <Text style={styles.yearNow}>{year}</Text>
               <View style={styles.track} onLayout={onTrackLayout} {...responder.panHandlers}>
-                <View style={styles.trackLine} />
-                <View style={[styles.trackFill, { height: trackH * frac }]} />
-                <View style={[styles.thumb, { top: clamp(trackH * (1 - frac) - 11, -2, trackH - 20) }]} />
+                <View style={styles.trackLine} pointerEvents="none" />
+                <View style={[styles.trackFill, { height: trackH * frac }]} pointerEvents="none" />
+                <View
+                  style={[styles.thumb, { top: clamp(trackH * (1 - frac) - 11, -2, trackH - 20) }]}
+                  pointerEvents="none"
+                />
               </View>
               <Text style={styles.yearEnd}>{MIN_YEAR}</Text>
             </View>
@@ -301,6 +390,14 @@ export default function FullScreenMap() {
       {/* Bottom: tour launcher (free-browse) or the stop-to-stop stepper (in a tour) */}
       {!tour ? (
         <View style={styles.tourBar} pointerEvents="box-none">
+          {/* "What's nearby?" — centre on the user and reveal the pins around them */}
+          <Pressable
+            style={({ pressed }) => [styles.nearbyBtn, pressed && styles.pressedScale]}
+            onPress={showNearby}
+          >
+            <View style={styles.nearbyPin} />
+            <Text style={styles.nearbyText}>{"What's nearby?"}</Text>
+          </Pressable>
           <Text style={styles.tourBarLabel}>Guided tours</Text>
           {openCategory && (
             <ScrollView
@@ -349,6 +446,14 @@ export default function FullScreenMap() {
             <Text style={styles.stopMeta}>
               {current.year} · {current.style} · {current.architect}
             </Text>
+            {tour.key === 'theme-cafe-culture' && cafeStops[current.id] ? (
+              <View style={styles.stopCafe}>
+                <Text style={styles.stopCafeName}>
+                  ☕ {cafeStops[current.id].cafe} · {cafeStops[current.id].years}
+                </Text>
+                <Text style={styles.stopCafeNote}>{cafeStops[current.id].note}</Text>
+              </View>
+            ) : null}
             <View style={styles.stepRow}>
               <Pressable
                 onPress={() => setStopIndex((i) => Math.max(0, i - 1))}
@@ -386,7 +491,49 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     backgroundColor: colors.terracotta,
     borderWidth: 2,
-    borderColor: colors.white,
+    borderColor: colors.surface,
+  },
+  // Live user-location dot (enlarged) + heading arrow
+  userWrap: { width: 80, height: 80, alignItems: 'center', justifyContent: 'center' },
+  userRing: {
+    position: 'absolute',
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: colors.terracotta,
+  },
+  userDot: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: colors.terracotta,
+    borderWidth: 4,
+    borderColor: colors.surface,
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 4,
+  },
+  // Rotor spans the wrap so the arrow orbits the dot centre; heading rotates the rotor.
+  headingRotor: {
+    position: 'absolute',
+    width: 80,
+    height: 80,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 4,
+  },
+  // Upward-pointing triangle (CSS-border trick), terracotta with a white edge for contrast.
+  headingArrow: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
+    borderBottomWidth: 14,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: colors.terracotta,
   },
 
   // Tour map graphics
@@ -397,7 +544,7 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     backgroundColor: colors.terracotta,
     borderWidth: 2,
-    borderColor: colors.white,
+    borderColor: colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -423,7 +570,7 @@ const styles = StyleSheet.create({
   },
   modeSwitch: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(255,255,255,0.94)',
+    backgroundColor: colors.chrome,
     borderRadius: radii.circle,
     padding: 3,
     shadowColor: '#000',
@@ -441,7 +588,7 @@ const styles = StyleSheet.create({
   yearNow: {
     ...ui.buttonLabel,
     color: colors.ink,
-    backgroundColor: 'rgba(255,255,255,0.94)',
+    backgroundColor: colors.chrome,
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: radii.sm,
@@ -455,7 +602,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: 4,
     borderRadius: 2,
-    backgroundColor: 'rgba(255,255,255,0.85)',
+    backgroundColor: colors.chrome,
   },
   trackFill: {
     position: 'absolute',
@@ -469,7 +616,7 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     borderRadius: 11,
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     borderWidth: 3,
     borderColor: colors.terracotta,
   },
@@ -478,7 +625,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 7,
     borderRadius: radii.sm,
-    backgroundColor: 'rgba(255,255,255,0.94)',
+    backgroundColor: colors.chrome,
     alignItems: 'center',
   },
   chipOn: { backgroundColor: colors.terracotta },
@@ -489,13 +636,14 @@ const styles = StyleSheet.create({
   cameraBtn: {
     position: 'absolute',
     top: 52,
-    right: 12,
+    left: '50%',
+    marginLeft: -24,
     width: 48,
     height: 48,
     borderRadius: 24,
     backgroundColor: colors.terracotta,
     borderWidth: 2,
-    borderColor: colors.white,
+    borderColor: colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
@@ -505,9 +653,38 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   pressedScale: { transform: [{ scale: 1.06 }] },
-  camBump: { width: 9, height: 4, borderTopLeftRadius: 2, borderTopRightRadius: 2, backgroundColor: colors.white, marginBottom: -1 },
-  camBody: { width: 26, height: 17, borderRadius: 4, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center' },
+  camBump: { width: 9, height: 4, borderTopLeftRadius: 2, borderTopRightRadius: 2, backgroundColor: colors.surface, marginBottom: -1 },
+  camBody: { width: 26, height: 17, borderRadius: 4, backgroundColor: colors.surface, alignItems: 'center', justifyContent: 'center' },
   camLens: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.terracotta },
+
+  // "What's nearby?" pill — terracotta fill, white text — centred above the tours bar
+  nearbyBtn: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    alignItems: 'center',
+    gap: 7,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: radii.circle,
+    backgroundColor: colors.terracotta,
+    borderWidth: 2,
+    borderColor: colors.surface,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.22,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 6,
+  },
+  nearbyPin: {
+    width: 11,
+    height: 11,
+    borderRadius: 6,
+    backgroundColor: colors.surface,
+    borderWidth: 2,
+    borderColor: colors.terracotta,
+  },
+  nearbyText: { ...ui.buttonLabel, color: colors.white, fontWeight: '800', fontSize: 13 },
 
   // Bottom tour launcher
   tourBar: {
@@ -525,7 +702,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1.4,
     textAlign: 'center',
     marginBottom: 8,
-    backgroundColor: 'rgba(251,244,234,0.94)',
+    backgroundColor: colors.warmScrim,
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: radii.circle,
@@ -536,7 +713,7 @@ const styles = StyleSheet.create({
   catRow: { flexDirection: 'row', gap: spacing.sm },
   catBtn: {
     flex: 1,
-    backgroundColor: 'rgba(255,255,255,0.96)',
+    backgroundColor: colors.chrome,
     borderRadius: radii.lg,
     paddingHorizontal: 10,
     paddingVertical: 10,
@@ -554,7 +731,7 @@ const styles = StyleSheet.create({
   catBlurbOn: { color: 'rgba(255,255,255,0.9)' },
   tourBtn: {
     width: 172,
-    backgroundColor: 'rgba(255,255,255,0.97)',
+    backgroundColor: colors.chrome,
     borderRadius: radii.lg,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -574,7 +751,7 @@ const styles = StyleSheet.create({
     left: 12,
     right: 12,
     bottom: 24,
-    backgroundColor: 'rgba(255,255,255,0.98)',
+    backgroundColor: colors.chrome,
     borderRadius: radii.lg,
     padding: spacing.lg,
     shadowColor: '#000',
@@ -588,6 +765,9 @@ const styles = StyleSheet.create({
   exitX: { ...ui.buttonLabel, color: colors.muted, fontSize: 15 },
   stopTitle: { ...editorial.cardTitleLg, color: colors.ink, marginTop: 4 },
   stopMeta: { ...ui.metadata, color: colors.muted, marginTop: 2 },
+  stopCafe: { marginTop: spacing.sm, paddingTop: spacing.sm, borderTopWidth: 1, borderTopColor: colors.hairline },
+  stopCafeName: { ...ui.body, fontWeight: '700', color: colors.terracotta },
+  stopCafeNote: { ...ui.metadata, color: colors.body, marginTop: 2 },
   stepRow: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.md },
   stepBtn: {
     flex: 1,

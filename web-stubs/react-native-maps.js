@@ -9,7 +9,8 @@ const { View, Text } = require('react-native');
 
 const LEAFLET_JS = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
 const LEAFLET_CSS = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-const TILES = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+const DARK = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+const TILES = `https://{s}.basemaps.cartocdn.com/${DARK ? 'dark_all' : 'light_all'}/{z}/{x}/{y}{r}.png`;
 
 let leafletPromise = null;
 function loadLeaflet() {

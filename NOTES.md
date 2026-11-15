@@ -23,6 +23,12 @@ npx expo start
 - The Google Maps API key lives in `.env` (gitignored) as `GOOGLE_MAPS_API_KEY`. It's already
   populated for this build — rotate it if it leaks, since it's baked into any binary you ship.
 
+## Photo Studio (back of house)
+
+Desktop-only tool, not part of the app: prompt-based photo clean-up at http://localhost:8787 that
+reads from and writes back to `assets/images/buildings` and updates `data/photos.ts`.
+See `studio/README.md`.
+
 ## Development build (EAS) — for real Google Maps
 
 Expo Go on iOS cannot load the Google Maps SDK, so `PROVIDER_GOOGLE` falls back to Apple Maps and

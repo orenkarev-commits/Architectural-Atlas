@@ -38,6 +38,8 @@ function bearing(a: Coord, b: Coord) {
 }
 /** Signed smallest angle target−ref, in [-180, 180]. */
 const angDiff = (target: number, ref: number) => ((target - ref + 540) % 360) - 180;
+/** Distance for the viewfinder label — metres up close, one-decimal km further out. */
+const fmtDist = (m: number) => (m < 950 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`);
 
 export default function ARViewfinder() {
   const { width } = useWindowDimensions();
@@ -98,7 +100,7 @@ export default function ARViewfinder() {
         <View style={[StyleSheet.absoluteFill, styles.fallback]} />
       )}
 
-      {labels.map(({ b, off }, i) => {
+      {labels.map(({ b, off, d }, i) => {
         const x = width / 2 + (off / HALF_FOV) * (width / 2 - 80);
         return (
           <Pressable
@@ -108,6 +110,7 @@ export default function ARViewfinder() {
           >
             <View style={styles.namePill}>
               <Text style={styles.labelName} numberOfLines={1}>{b.name}</Text>
+              <Text style={styles.labelDist}>{fmtDist(d)}</Text>
             </View>
             <View style={styles.arrowHead} />
           </Pressable>
@@ -139,6 +142,13 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   labelName: { ...editorial.cardTitle, fontSize: 14, color: colors.white, textAlign: 'center' },
+  labelDist: {
+    ...ui.metadataSmall,
+    color: '#F0B89E',
+    textAlign: 'center',
+    marginTop: 1,
+    fontWeight: '700',
+  },
   // An open (outline) arrowhead pointing down at the building.
   arrowHead: {
     width: 13,

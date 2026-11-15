@@ -65,7 +65,7 @@ export function suggest(
       score(b.styleNote ?? '', q)
     );
     const keyword =
-      direct === 0 && normalize(`${b.innovation} ${b.materials} ${b.thread}`).includes(q) ? 1 : 0;
+      direct === 0 && normalize(`${b.whyItMatters} ${b.materials} ${b.thread}`).includes(q) ? 1 : 0;
     const r = Math.max(direct, keyword);
     if (r > 0) {
       scored.push({

@@ -1,0 +1,14 @@
+# Mirrors .gitignore (so node_modules / .env / native dirs stay out of the build)…
+node_modules/
+.expo/
+dist/
+web-build/
+ios/
+android/
+*.log
+.env
+.DS_Store
+
+# …plus large archival folders the app binary does not need
+assets/PLAN SOURCES/
+assets/MODIFIED IMAGES/

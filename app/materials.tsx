@@ -44,7 +44,7 @@ export default function Materials() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.white },
+  container: { flex: 1, backgroundColor: colors.surface },
   content: {
     paddingHorizontal: spacing.xxl,
     paddingTop: 104,

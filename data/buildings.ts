@@ -20,10 +20,16 @@ const entries: Building[] = [
     geo: '82 Rothschild Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.065777, lng: 34.777493 },
     image: IMG,
-    innovation:
-      "The stairwell glazing turns circulation into the façade's main event — the plan is legible from the street without a single curved corner.",
+    whyItMatters:
+      "It matters for what its corner stairwell window does: it opens the building's private vertical circulation — the stair climbing the corner — to the public life of Rothschild and Mazeh below, so the routes inside and the streets outside read as one intertwined system. The city's density shown continuing upward as much as outward, in the crossing of lives and routines.",
     materials:
-      'Reinforced concrete frame, rendered masonry infill, steel windows, cantilevered concrete balconies.',
+      'Reinforced-concrete frame with rendered masonry infill; steel-framed windows; reinforced-concrete balconies cantilevered clear of the wall.',
+    timeline: [
+      { year: '1932', note: 'Built for the developers Pinhas Brown and Yosef Rubinsky — a corner apartment house where the glazed stairwell becomes the front, the apartment plan legible from the street.' },
+      { year: 'late 1930s', note: 'The Krasik family moves in. Rabbi Eliezer Krasik — appointed rabbi of Tel Aviv\u2019s Chabad community in 1936 — runs much of the movement\u2019s life from his flat, which becomes a Chabad centre for nearly seventy years; he also operated a parcel-shipping service to Poland and Russia, advertised through 1946.' },
+      { year: '1960', note: 'Rabbi Krasik dies of a heart attack at home in April; his funeral leaves from the Rothschild address.' },
+      { year: '2002–06', note: 'Conservation photographs and completion paperwork as the building is restored.' },
+    ],
     thread: 'How a façade can reveal the apartment plan behind it.',
   },
   {
@@ -36,9 +42,16 @@ const entries: Building[] = [
     geo: '84 Rothschild Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066125, lng: 34.777667 },
     image: IMG,
-    innovation:
-      'One of the first residential buildings in Tel Aviv raised on pilotis, giving the ground back to the city as shaded public space.',
-    materials: 'Reinforced concrete frame, plaster render, ribbon windows, pilotis.',
+    whyItMatters:
+      "It matters because the pilotis are an argument, not an import: Rechter takes Le Corbusier's device and justifies it on local, climatic and civic grounds. The instinct Liebling House would later push from the column into the wall — modernism reasoned for Tel Aviv rather than copied.",
+    materials:
+      'Reinforced-concrete frame carried on pilotis, freeing the ground plane; plaster render over the frame; horizontal ribbon windows.',
+    timeline: [
+      { year: '1933', note: 'Built for Sarah and Abraham Engel — Abraham a Łódź-born Revisionist and associate of Jabotinsky; Rechter liked it so well he bought a flat here for his own family.' },
+      { year: '1930s–40s', note: 'Its central flats draw a remarkable cast — the Shamir brothers, who designed the State of Israel emblem, worked on the first floor; later residents include the future US ambassador Shmuel Dinitz and the Israeli Opera founder Anis de-Philippe.' },
+      { year: 'WWII', note: 'British forces wall the pilotis behind a concrete blast barrier.' },
+      { year: '2019', note: "A comprehensive restoration uncovers Rechter's original pilotis and lines." },
+    ],
     thread: "Pilotis and Le Corbusier's influence on Tel Aviv.",
   },
   {
@@ -51,10 +64,17 @@ const entries: Building[] = [
     geo: 'Pagoda House, King Albert Square, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.065983, lng: 34.774364 },
     image: IMG,
-    innovation:
-      "A Japanese-inspired pagoda roof over an orientalism-inspired eclectic envelope with arched openings and façade details, plus one of the city's earliest passenger elevators.",
+    whyItMatters:
+      "It matters as an experiment in what the young city could imagine itself to be — American patronage, European-trained design and imagined 'Oriental' motifs reaching for identity rather than economy, an eclecticism made to be looked at.",
     materials:
-      'Reinforced concrete with richly ornamented plaster, decorative ironwork, timber roof structure.',
+      "Reinforced-concrete structure faced in richly modelled ornamental plaster — twenty-one arches, Doric columns and folded Islamic, Greek and Far-Eastern motifs under the pagoda roof; decorative wrought ironwork; timber roof framing. A passenger lift — among the city's earliest — served the private house.",
+    timeline: [
+      { year: '1925', note: 'Built for Maurice Bloch, a widower newly arrived from the United States; named for its pagoda roof.' },
+      { year: '1930s', note: 'The Polish consulate occupies the third floor.' },
+      { year: '1935', note: "Pinhas Giesontheit installs what's described as Tel Aviv's first elevator in a private home — children queue for a ride." },
+      { year: '1997', note: 'Bought for $5.2 million by the Swedish businessman Robert Weil, who sets out to make it his home.' },
+      { year: '2000', note: 'Conservation works begin — the eclectic house restored to last, in Weil’s words, five hundred years.' },
+    ],
     thread: 'Early elevator technology; Orientalism in Tel Aviv architecture.',
   },
   {
@@ -67,15 +87,23 @@ const entries: Building[] = [
     geo: 'Beit Bialik, 22 Bialik Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.072858, lng: 34.771146 },
     image: IMG,
-    innovation:
-      'Built for the national poet, it fuses Oriental motifs with Arts & Crafts craft — a house asked to carry an identity.',
-    materials: 'Reinforced concrete, decorative plaster, ceramic tile roof, timber detailing.',
+    whyItMatters:
+      "It matters as an experiment in inventing a national architecture: the commission itself is the idea — a house asked to give a new Hebrew city an identity, 'a new architecture for an old people.' Minor, a student of Alexander Baerwald, carries his teacher's comprehensive 'modern-oriental' approach into a private home.",
+    materials:
+      "Reinforced-concrete structure under decorative plaster and a ceramic-tiled roof, with timber detailing and an enclosed timber balcony; an oriental dome-topped tower for the poet's solitude — modeled on Alexander Baerwald's Hebrew Reali School in Haifa (1913) — and a twin-pointed-arch entrance carried on a slender column. Bezalel-school tiles run inside and out: Ze'ev Raban's designs at the entrance archway, and within, palm trees, the Israelite Spies, the twelve tribes and ancient Hebraic coins, with the living-room fireplace faced in Bezalel tiles.",
+    timeline: [
+      { year: '1924–25', note: "Built for the national poet Chaim Nachman Bialik — who chose Minor personally and took an active hand in the design — on a plot he financed from a special edition of his writings; the architect Shmuel Barkai supervised construction." },
+      { year: '1925–34', note: "For its first decade the poet's home and, in effect, the cultural centre of the young city." },
+      { year: '1934', note: "After Bialik's death the house passes to the Hebrew Writers' Association, the Hebrew Language Committee and the Bialik House society, later becoming a library and research centre." },
+      { year: '2009', note: 'Reopens as a museum after a full municipal restoration to its original state.' },
+      { year: '2023', note: 'Renovated again for the building’s centenary — one of the five culture houses of the renewed Bialik Square.' },
+    ],
     thread: 'National identity expressed through architecture.',
   },
   {
     id: 5,
     name: 'Haganah Water Tower',
-    architect: 'Arpad Gut (engineer)',
+    architect: 'Arpad Gut',
     year: 1924,
     style: 'Eclectic',
     styleNote: 'Water tower — the Haganah’s signal mast',
@@ -83,26 +111,16 @@ const entries: Building[] = [
     geo: '36 Mazeh Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066181, lng: 34.775913 },
     image: IMG,
-    innovation:
-      'Infrastructure with a second life: the tower was used to flash Morse code to immigration ships during the British Mandate.',
-    materials: 'Reinforced concrete tower with steel tank and a menorah at the summit.',
+    whyItMatters:
+      "It matters as infrastructure turned covert network — and as the one Atlas entry credited to an engineer, not an architect. Pure utility, put to hidden military use while the city passed beneath it unaware.",
+    materials:
+      'A reinforced-concrete tower carrying a steel water tank, crowned by a menorah — the tallest structure in 1920s Tel Aviv.',
+    timeline: [
+      { year: '1924', note: "Built to the engineer Arpad Guth's design as the city water tower — about 16 m, the tallest structure in 1920s Tel Aviv, crowned by a menorah." },
+      { year: 'Pre-State', note: "Doubles as the Haganah's Signal Station No. 1 — flashing Morse to immigration ships and outlying settlements, and semaphore flags to nearer ones." },
+      { year: '2013', note: 'Declared a heritage site and restored.' },
+    ],
     thread: 'Architecture as infrastructure; hidden military history.',
-  },
-  {
-    id: 6,
-    name: '48 Montefiore Street',
-    architect: 'Dov Karmi',
-    year: 1941,
-    style: 'International Style',
-    styleNote: 'Beit Shamshi — reworked by Ram Karmi',
-    address: '48 Montefiore Street / 2 Bezalel Yaffe',
-    geo: '48 Montefiore Street, Tel Aviv-Yafo, Israel',
-    resolved: { lat: 32.065774, lng: 34.774733 },
-    image: IMG,
-    innovation:
-      "Dov Karmi drew it in 1941; his son Ram Karmi later reworked it so thoroughly that Project TLV now catalogues the building under Ram's name, as Beit Shamshi, on the Montefiore–Bezalel Yaffe corner in Lev Ha'ir. A rare chance to read two generations of one family's architecture in the same walls — the father's local International Style and the son's uncompromising later hand — Ram went on to design the Supreme Court of Israel. The entrance carries artwork by the painter Uri Lifshitz.",
-    materials: 'Reinforced concrete, plaster render, steel-framed windows.',
-    thread: 'Conservation versus reinterpretation.',
   },
   {
     id: 7,
@@ -110,15 +128,27 @@ const entries: Building[] = [
     architect: 'Unverified — municipal sign names none',
     year: 'Early 1920s',
     style: 'Eclectic',
+    styleNote: 'The Greidinger villa, then Pittman School',
     address: '38 Balfour Street',
     geo: '38 Balfour Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066657, lng: 34.776479 },
     image: IMG,
-    innovation:
-      'A private residence that became the Pittman shorthand school — later a model conservation project by Amnon Bar Or.',
+    whyItMatters:
+      "It matters for a spatial idea, proposed rather than proven: 38 Balfour may be among the first Tel Aviv houses composed with a formal French garden as part of the design — and among the last to keep it. The corner reads street → garden → curved stair → villa → balcony rather than street → façade: a set-back relationship to the junction found almost nowhere else in the city.",
     materials:
-      'Masonry with concrete elements, decorative plaster, mosaic-clad columns, raised entrance stair.',
-    thread: 'Adaptive reuse and conservation methodology.',
+      'An Eclectic two-storey villa (architect unknown, c. early 1920s). An elevated balcony rides on six mosaic-clad concrete columns; stylized concrete balusters and a curved concrete entrance stair front a symmetrical French garden. A domestic structure later adapted to institutional use; the original drawings are lost, so the 1941 alteration plans are the best surviving evidence.',
+    timeline: [
+      { year: 'c. 1920s', note: 'Two-storey Eclectic villa built — architect and exact date unknown.' },
+      { year: '1925–28', note: 'Owned by Nahum Winerski, a butcher; his family documented living here in 1928.' },
+      { year: '1929', note: 'Winerski sells to Moshe Greidinger, newly arrived from London.' },
+      { year: '1939', note: 'The Greidingers hold a silver-wedding celebration in the house.' },
+      { year: '1937 / 1941', note: 'The Pittman School — founded by the Shapira family in 1937 — relocates and expands into 38 Balfour by 1941, filing the alteration plans that survive.' },
+      { year: '1946', note: 'Moshe Greidinger dies; the family had moved to Haifa, where they built the cinema empire behind Yes Planet and Rav-Hen.' },
+      { year: '1948', note: 'Reportedly used for wartime training — typing and communications (oral history).' },
+      { year: '2003', note: 'Pittman closes after ~six decades; students absorbed by Ankori.' },
+      { year: '2014–15', note: 'Conserved (Amnon Bar Or; Bar Orian) and kept as a villa within a new residential development.' },
+    ],
+    thread: 'The set-back garden villa that seeded a cinema empire and taught the city to type.',
   },
   {
     id: 8,
@@ -131,10 +161,13 @@ const entries: Building[] = [
     geo: '16 Mazeh Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066958, lng: 34.773338 },
     image: IMG,
-    innovation:
-      "Tobia drew it for himself — house below the practice, practice above the house — two years after drawing the private residence of David Ben-Gurion, Israel's first prime minister. Permit 1261, issued 14 July 1933, names him designer, owner and occupant all at once. It sits at the intersection of modernist principle and stylistic detailing: the lines accentuated through horizontal datums and sweeping curved balconies, held just short of decoration — ornament is a hard habit to break.",
+    whyItMatters:
+      "It matters as a transitional experiment, drawn at the seam between Art Deco detailing and modernist principle and held just short of ornament — a working architect breaking a habit on his own drawing board. (The vault keeps, but flags, an early 'climate-responsive' reading of its balconies.)",
     materials:
-      "Reinforced concrete frame under rendered plaster, balconies cantilevered clear of the wall in a sweeping curve, windows originally steel-framed. The concrete is confirmed by test certificates filed with the Association of Engineers and Architects — the engineering records still carry the hand of Solel Boneh's first chief engineer. Façade finish and fenestration await a site survey.",
+      "Reinforced-concrete frame under rendered plaster; balconies cantilevered clear of the wall in a continuous curve; windows originally steel-framed. The concrete is verified by test certificates filed with the Association of Engineers and Architects — records still bearing the hand of Solel Boneh's first chief engineer. Façade finish and fenestration await a site survey.",
+    timeline: [
+      { year: '1933', note: "Built as David Tobia's own house-and-office — permit 1261 names him designer, owner and occupant." },
+    ],
     thread: 'What an architect builds for himself.',
   },
   {
@@ -148,10 +181,16 @@ const entries: Building[] = [
     geo: '46 Allenby Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.071703, lng: 34.76924 },
     image: IMG,
-    innovation:
-      'Berlin refused to render it. The buff silicate brick is left bare and made to do the decorating itself — courses stepped forward and back until the wall reads as a zipper running the height of the building, catching shadow where a plastered façade would have gone quiet. Triangular balconies push out over Allenby; shops below, apartments above.',
+    whyItMatters:
+      "It matters as the public statement of a Tel Aviv idea — ornament out of bare construction, not applied to it. The argument Berlin first tried on his own house, now made in the open on Allenby.",
     materials:
-      'Exposed buff silicate brick, laid in projecting courses, from the great Tel Aviv brick works that once stood on the Beit Klal site. Ornament here is masonry craft rather than applied plaster.',
+      'Load-bearing buff silicate brick, laid in projecting and recessed courses and left unrendered, so the masonry itself carries the ornament — brick from the great Tel Aviv works that once stood on the Beit Klal site, not applied plaster.',
+    timeline: [
+      { year: '1930', note: "Built — Berlin's exposed silicate-brick ‘Zipper House’; locals called it ‘Beit HaRichartz’, the zipper, for the chain-laid brick." },
+      { year: '1930s–40s', note: "Mann's own dairy fills the ground floor — cut prices, home delivery, milk from the Har-Tov settlement; beside it the Warsaw émigré Baruch Fenigstein's café, later a beer cellar of roast goose and sausage that the family kept running into the 1970s." },
+      { year: '1931', note: "The dairy owner defends his milk's kosher standing in the newspapers." },
+      { year: 'Since', note: 'The shopfront turns over endlessly — beer cellar, currency exchange, hat salon, lingerie shop, wig centre, ice-cream parlour — while the brick above never moves.' },
+    ],
     thread: 'When ornament comes out of the construction, not onto it.',
   },
   {
@@ -165,10 +204,15 @@ const entries: Building[] = [
     geo: '83 Rothschild Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066836, lng: 34.777374 },
     image: IMG,
-    innovation:
-      "Berlin built this one for himself, and used his own walls to make the argument he had been making on other people's — that silicate brick left bare could do the decorating. The 1929 drawing does not name him at all: it is titled the house of Mrs. M. Berlin, his wife. A third floor arrived in 1935, drawn by his son Ze'ev, who then joined the practice as its second name.",
+    whyItMatters:
+      "It matters as the private test run behind a public idiom: before pressing bare silicate brick on any client, Berlin proved it on his own walls — the experiment that becomes a Tel Aviv idiom a year later at Beit Mann.",
     materials:
-      'Exposed silicate brick, laid so the courses themselves carry the ornament rather than any applied plaster. The permit was approved in February 1929 and the building signed off in June 1930.',
+      'Exposed silicate brick, coursed so the masonry carries the ornament in place of applied plaster. Permit approved February 1929; building signed off June 1930; a third floor added 1935.',
+    timeline: [
+      { year: '1929', note: 'Permit approved — titled only for his wife, Mrs. M. Berlin.' },
+      { year: '1930', note: 'The house is signed off, bare silicate brick left to carry the ornament.' },
+      { year: '1935', note: "A third floor added, drawn by his son Ze'ev — who gave the practice its second name." },
+    ],
     thread: 'What an architect proves on his own house first.',
   },
   {
@@ -182,10 +226,14 @@ const entries: Building[] = [
     geo: '9 Mazeh Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.067303, lng: 34.77236 },
     image: IMG,
-    innovation:
-      "Two brothers, both doctors, each wanted the same house — so Berlin drew it once and built it twice, joined down the middle. It reads from the street as one symmetrical villa and lives as two identical wings folded along the party wall. Restored in 1999, it reopened as the city's first municipal youth house.",
+    whyItMatters:
+      "It matters as the origin of Berlin's brick idiom — the first outing of the bare silicate brick he would later leave fully exposed, here still wearing classical clothes. The experiment before Beit Mann.",
     materials:
-      "Exposed silicate brick — the same material Berlin would leave bare on Beit Mann eight years on, here dressed instead as a Greek temple: an arched colonnade with carved capitals, running across two symmetrical wings. Designed with the engineer Richard Pasovsky, his partner until 1929.",
+      "Exposed silicate brick — the material Berlin would later leave bare at Beit Mann — here dressed as a Greek temple: an arched colonnade with carved capitals running across two mirrored wings. Engineered with Richard Pasovsky, his partner until 1929.",
+    timeline: [
+      { year: '1922–27', note: "Berlin and the engineer Richard Pasovsky build the first twin house in the city — two identical neo-classical wings, registered to Berlin's relative Moshe Saltzovsky; Berlin himself, his sculptor wife Miriam and their three children live at Mazeh 7, the Saltzovskys at Mazeh 9." },
+      { year: '1999', note: "Restored (Amnon Bar-Or) and the twins separated — Mazeh 7 becomes an art gallery, Mazeh 9 the city's youth house (Mazeh 9)." },
+    ],
     thread: 'The same brick as Beit Mann, eight years earlier — wearing classical clothes.',
   },
   {
@@ -199,10 +247,12 @@ const entries: Building[] = [
     geo: '16 HaHashmal Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.062469, lng: 34.777435 },
     image: IMG,
-    innovation:
-      'The building the street is named after. Pinhas Rutenberg put Tel Aviv’s first diesel generators here in 1923, and Berlin wrapped the machinery in Art Deco — infrastructure dressed to be looked at. It ran until 1957; HaHashmal Street, "Electricity Street", still carries its name.',
+    whyItMatters:
+      "It matters as a civic first: Tel Aviv's first power station, where Rutenberg's diesel generators lit the young city from 1923 — and Berlin dressed the machinery in Art Deco, infrastructure made to be looked at. The street it named, HaHashmal ('Electricity'), still carries the fact.",
+    materials:
+      "Reinforced concrete given an Art Deco face — stepped massing and geometric relief over a hall built for diesel generators, counted in Joseph Berlin's hands among the first works of modern architecture in the country. Today the Israel Electric Corporation's own directorate, and a conserved heritage site.",
     timeline: [
-      { year: '1923', note: "Rutenberg's first diesel generators begin supplying Tel Aviv's electricity." },
+      { year: '10 June 1923', note: "Pinhas Rutenberg's Jaffa Electric Company inaugurates the first power station in Eretz Israel here, before Rutenberg and the townsfolk — its diesel generators the young city's first electricity." },
       { year: '1957', note: 'The generators fall silent after thirty-four years.' },
       { year: 'Today', note: "The Israel Electric Corporation's directorate — a conserved landmark where the company born from these machines still keeps its seat." },
     ],
@@ -218,10 +268,17 @@ const entries: Building[] = [
     geo: '5 Shadal Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.063238, lng: 34.774869 },
     image: IMG,
-    innovation:
-      'Berlin built the liturgy into the plan: four quarters of seven arches, for the seven branches of the menorah, and at the centre a dome raised in fifteen steps — the fifteen steps of the Temple on which the Levites sang the Songs of Ascent. The central synagogue of the city’s Sephardi community, six years in the building.',
+    whyItMatters:
+      "It matters as one of the Atlas's purest cases of architecture-as-liturgy — a synagogue whose meaning is not decoration on the building but the building's own geometry, every proportion made to carry a religious count.",
     materials:
-      'Documented for its symbolic geometry rather than its fabric — the seven-arch quarters and the fifteen-step dome — while the wall and roof materials go unrecorded. The number-symbolism is the point: the arches and steps are the building, not decoration on it.',
+      'Load-bearing masonry and concrete, the roof carrying a stepped central dome; the number-symbolism is structural, not applied — four quarters of seven arches for the menorah’s branches, the dome raised in fifteen steps. The arches and the steps are the building, not decoration on it.',
+    timeline: [
+      { year: 'Early 1900s', note: 'The land is bought by Cohen and Levy, Yemenite immigrants.' },
+      { year: '1923', note: 'Cornerstone laid; the building rises slowly over six years.' },
+      { year: '1931', note: 'Inaugurated as the central Sephardi synagogue — one of the first in the city.' },
+      { year: '1968–75', note: 'Rabbi Ovadia Yosef prays here as chief rabbi of Tel Aviv-Jaffa, and into his first years as Chief Rabbi of Israel.' },
+      { year: 'Today', note: 'Weddings, bar mitzvahs and daily prayer; tourist visits and military-chaplaincy study.' },
+    ],
     thread: 'When the count of the arches is the meaning.',
   },
   {
@@ -235,25 +292,43 @@ const entries: Building[] = [
     geo: '64 Rothschild Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.064571, lng: 34.776283 },
     image: IMG,
-    innovation:
-      "Berlin's eclectic Art Deco at full strength: sharp prism pilasters standing at the corners, flat pediments over the openings, and the axis of symmetry pointed up by the arch that became his signature. Listed for strict preservation, inside the White City's UNESCO buffer zone.",
+    whyItMatters:
+      "It matters as social history built in plaster: a boulevard status-villa for an affluent Adenite Jewish family — immigrants from Aden, in Yemen — raised on what was then Tel Aviv's grandest address. And it matters as an architectural hinge, one of the clearest surviving cases of Berlin's symmetrical Eclecticism abstracting its ornament into sharp geometry — the bridge between the city's 1920s historicism and the modernism that followed.",
     materials:
-      "Read from the conservation sign: prism pilasters at the corners, flat pediments over the openings, the symmetry axis pointed up by Berlin's signature arch.",
-    thread: 'The corner sharpened to a prism.',
+      "A plastered masonry villa. From the conservation record: prism pilasters at the corners, flat pediments over the openings, and the arch on the central axis that became Berlin's signature. In the 2015–19 restoration the house was kept as a whole three-dimensional building — not a retained façade — its entrance gateway, windows and railings restored, and painted decoration uncovered in the stairwell conserved in place. Original wall, floor and roof structure remain undocumented.",
+    timeline: [
+      { year: '1926', note: "Joseph Berlin builds the villa for the Awad family — an affluent Jewish family from Aden — as a statement of their standing on Rothschild Boulevard." },
+      { year: 'Mid–late 20th c.', note: 'The family villa passes into commercial use and slides into disrepair.' },
+      { year: '1980s–2006', note: "Home of Yin Yang, chef Yisrael Aharoni and partner Moudi Ben-Shach's Cantonese-and-Sichuan restaurant — one of Israel's first serious Chinese kitchens and a Tel Aviv landmark; through these years the family of Rabbi Lopovitz, of the Bucharest Hasidic community, is reported to have lived on in the same building." },
+      { year: '2007–08', note: 'The Italian restaurant Fabiana takes the premises.' },
+      { year: '2008', note: "Sold for about USD 4.8m by the Erlich and Peter families, who had inherited it, to a development group (Brack Capital with Dan and Ronit Lehat); the rear housed a kindergarten and cultural centre." },
+      { year: '2008–09', note: 'Runs as "The House on Rothschild" — a neighbourhood cultural centre with classes, music and social and artistic events.' },
+      { year: '2015–19', note: 'Bar Orian Architects carry out a strict restoration; to sink three levels of parking (~13 m deep) the historic house is temporarily borne on piles while two new residential buildings rise on either side as "Villa Rothschild".' },
+      { year: '2022', note: 'A diplomatic lease — a reported Gulf-state representation — is negotiated but not concluded.' },
+      { year: '2023', note: 'The restored villa sells for NIS 77.2 million to a private couple and returns to use as a private home — an immigrant family villa, having been restaurant, cultural venue and endangered landmark, becomes a residence again.' },
+    ],
+    thread: 'The whole life of a boulevard house — immigrant family villa, Chinese restaurant, cultural centre, then a NIS 77-million home again.',
   },
   {
     id: 15,
-    name: 'Beit Romanov',
+    name: 'Beit Shafran',
     architect: 'Moshe Cherner',
     year: 1925,
     style: 'Eclectic',
-    styleNote: 'Now the Norman Hotel',
-    address: '23 Nachmani / 2 Melchett',
-    geo: '23 Nachmani Street, Tel Aviv-Yafo, Israel',
+    styleNote: 'Now part of the Norman Hotel',
+    address: '2 Melchett / King Albert Square',
+    geo: '2 Melchett Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066008, lng: 34.775003 },
     image: IMG,
-    innovation:
-      'Cherner drew this eclectic house in 1925 with the architect Leo Adler. Nearly a century on it is the heart of the Norman — the luxury hotel folded into a preserved compound of Nachmani Street houses, one of the city’s most visible arguments that conservation and hospitality can be the same walls.',
+    whyItMatters:
+      "It matters as conservation done at the scale of a city block — a whole preserved compound, not a single rescued façade, absorbed intact into a working luxury hotel. The Atlas's largest case of a historic ensemble kept alive by being put back to use.",
+    timeline: [
+      { year: '1925', note: 'Cherner builds the Italian-Renaissance house for Chava Friedman, beside the Pagoda House on King Albert Square.' },
+      { year: '1930s', note: "The Shafran family acquires it, giving the building its lasting name; its flats fill with doctors, a French tutor, an agronomist, and Maxim Geniger — founder of the city's first cosmetics factory, 'Thea.'" },
+      { year: '1945', note: "Rabbi Moshe Avigdor Amiel, Tel Aviv's Chief Rabbi, dies in his apartment here." },
+      { year: '1960s', note: 'The building turns to offices.' },
+      { year: '2005', note: 'Sold and joined with the neighbouring Beit Romanov (by Leo Adler); together, after eight years of work, they become the Norman Hotel.' },
+    ],
     thread: 'When the conservation project and the luxury hotel are the same building.',
   },
   {
@@ -267,10 +342,16 @@ const entries: Building[] = [
     geo: '38 Mazeh Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066121, lng: 34.776225 },
     image: IMG,
-    innovation:
-      'Chelouche turned the corner with cylinders — two curved volumes with balconies fanning out from them, joined to two stepped rectangular blocks. The move earned the building its name, the Fan House, and it turns the Mazeh–Ahad Ha’am corner in the shadow of the water tower.',
+    whyItMatters:
+      "It matters as an experiment in turning a corner without a right angle — the curve tested as a way to hold a junction, the device that gave the building its name, the Fan House.",
     materials:
-      'The curved corner is the whole argument — two cylindrical volumes, their balconies fanning open, set against two stepped rectangular blocks.',
+      'Two cylindrical volumes, their balconies fanning open, set against two stepped rectangular blocks — the curved corner carrying the composition. Structural fabric not separately documented.',
+    timeline: [
+      { year: '1933', note: 'Built for the engineer Eliyahu Brown — who ran a petrol station and citrus groves, his wife Batya a pianist; construction spilled onto the Water Tower plot, dogging him with lawsuits for years.' },
+      { year: '1934', note: 'Leon Roccanati — soon the founder of Discount Bank — arrives from Salonica and takes rooms here; the Rabinowitzes buy in by the mid-1940s.' },
+      { year: 'The children', note: "Margalit Brown became a musician, Ami a major art collector and Coca-Cola's Israel maker, Ika a sculptor lost in a car crash at twenty-seven." },
+      { year: 'Late 1980s', note: "A 1989 plan to turn it into offices; the revival of Lev Ha'ir keeps it a home." },
+    ],
     thread: 'The corner turned with a cylinder, not a right angle.',
   },
   {
@@ -284,16 +365,17 @@ const entries: Building[] = [
     geo: '110 Allenby Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.06434, lng: 34.77237 },
     image: IMG,
-    innovation:
-      "Magidovitch drew it in the early 1920s and it rose slowly, helped over the line by a gift from Baron Edmond de Rothschild, opening around 1926 as an eclectic hall under a great dome. The face the street knows now is younger than that: in 1970 the building was wrapped in a ring of tall concrete arches, so the synagogue reads as two buildings at once — a 1920s core inside a modernist colonnade.",
+    whyItMatters:
+      "It matters as a building twice refaced — an argument about conservation itself. For fifty years its significance lay in a collision of eras: a 1920s eclectic hall reread inside a 1970 modernist colonnade. Now that colonnade is being taken down to return the original to view — so the question the building poses, which one are you looking at, is being answered in real time.",
     materials:
-      'The 1970 refacing is a screen of reinforced-concrete arches standing clear of the older hall.',
+      '1920s core: an Eclectic masonry hall under a dome — the dome engineered by Arpad Gut, the shell built by the contractor Shmuel Natan Wilson. 1969–70 refacing (Aryeh Elhanani): a free-standing screen of tall reinforced-concrete arches set clear of the older walls — the screen now being removed in the current conservation.',
     timeline: [
-      { year: 'early 1920s', note: 'Magidovitch draws the synagogue; it rises slowly, helped over the line by a gift from Baron Edmond de Rothschild.' },
-      { year: 'c. 1926', note: 'Opens as an eclectic hall under a great dome.' },
-      { year: '1970', note: 'Wrapped in a ring of tall concrete arches — the synagogue now reads as two buildings, a 1920s core inside a modernist colonnade.' },
+      { year: '1924', note: 'Cornerstone laid to Magidovitch’s design; the work stalls for lack of funds until a gift from Baron Edmond de Rothschild carries it over the line.' },
+      { year: 'c. 1926', note: 'Completed by the contractor Shmuel Natan Wilson, its dome engineered by Arpad Gut; opens as an eclectic hall and a focus of the Yishuv’s national life.' },
+      { year: '1969–70', note: 'Refaced by the architect Aryeh Elhanani in a ring of tall concrete arches — the synagogue now reads as two buildings, a 1920s core inside a modernist colonnade.' },
+      { year: '2020s', note: "Under a major conservation — documentation file by Uri Padan's office, some NIS 107m of work seeded by a NIS 20m gift from Patrick Drahi with the municipality: the stone cleaned, the dome and stained glass restored, the structure strengthened, and the 1969–70 arch-screen removed to return the eclectic hall to view and open a public square on a pedestrianising Allenby." },
     ],
-    thread: 'A building refaced — which one are you looking at?',
+    thread: 'A building refaced, then unfaced — which one are you looking at?',
   },
   {
     id: 18,
@@ -306,10 +388,10 @@ const entries: Building[] = [
     geo: 'Dizengoff Square, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.077994, lng: 34.774349 },
     image: IMG,
-    innovation:
-      "Averbuch won a competition in 1934 for the master plan — not the buildings but the rule they would share: a circular plaza ringed by one repeated International-Style face, three storeys, tied by continuous horizontal bands that run whether or not a balcony sits behind them. Each house on the ring was then finalised by its own architect inside her frame. It is likely the only plaza in the world laid out on Bauhaus principles. Inaugurated in 1938, it later left the ground — raised onto a deck in the 1970s with the traffic sent underneath — and was dropped back to Averbuch's original street level in 2016.",
+    whyItMatters:
+      "It matters at the scale of the city, not the building: Averbuch's 1934 plan gave a whole circular plaza a single shared face, so a ring of houses by different architects would read as one room — likely the only plaza in the world laid out on Bauhaus principles. Raised onto a deck in the 1970s, returned to her street level in 2016.",
     materials:
-      'The ring speaks one language — rendered concrete, flat roofs, and the continuous horizontal parapet bands that carry the eye around the circle. Behind that shared face, each building is its own architect’s.',
+      'One shared envelope language around the ring: rendered concrete, flat roofs, and continuous horizontal parapet bands carrying the eye around the circle. Behind the common face, each building is its own architect’s.',
     timeline: [
       { year: '1934', note: 'Averbuch wins the competition for the master plan — the shared rule, not the buildings.' },
       { year: '1938', note: 'The circular plaza is inaugurated.' },
@@ -329,13 +411,15 @@ const entries: Building[] = [
     geo: '29 Idelson Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.07335, lng: 34.77041 },
     image: IMG,
-    innovation:
-      "Karmi's White City house of 1936, and the first in the country to trade Le Corbusier's ribbon window for a deep recessed balcony — a shaded slot cut back into the wall that answers the Tel Aviv sun where a strip of glass could not. A fishpond at the entrance, a generous stairwell, a pergola on the roof. Since 2019 it has been the White City Center, the archive and workshop for the whole UNESCO quarter: a Bauhaus house now teaching the Bauhaus.",
+    whyItMatters:
+      "It matters because a lineage starts here: Karmi's 1936 house is the first in the country to trade Le Corbusier's ribbon window for a deep recessed balcony — the section reworked to answer the Tel Aviv sun rather than a machine bolted on. Every climate-adapted White City façade that pushes its line inward is downstream of this move.",
     materials:
-      'The reinforced-concrete frame that made the International Style possible, rendered smooth; the documented moves are spatial — the recessed balconies and the roof pergola, imported modernism adapted to the heat. Built with the engineer Zvi Barak.',
+      'Reinforced-concrete frame rendered smooth — the structure that made the International Style possible. The documented moves are spatial: deep recessed balconies cut into the wall and a roof pergola, imported modernism reworked for the heat. Engineered with Zvi Barak.',
     timeline: [
-      { year: '1936', note: "Karmi's White City house completed — the first in the country to trade the ribbon window for a deep recessed balcony." },
-      { year: '2019', note: 'Becomes the White City Center, the archive and workshop for the whole UNESCO quarter.' },
+      { year: '1936', note: "Built for Tony and Max Liebling to Karmi's design (engineer Zvi Barak) — the first house in the country to trade the ribbon window for a deep recessed balcony; an entrance set with a fishpond and a generous stairwell." },
+      { year: '1970s', note: 'Tony Liebling donates the building to the city of Tel Aviv.' },
+      { year: '2014–15', note: 'One of the first ten modernist buildings to win a Getty “Keeping It Modern” grant; the German government then funds its restoration as a conservation museum.' },
+      { year: '2019', note: 'Reopens in September as Liebling Haus — the White City Center, a German–Israeli institution that researches and teaches Bauhaus conservation for the whole UNESCO quarter.' },
     ],
     thread: 'Where the ribbon window became a recessed balcony.',
   },
@@ -350,14 +434,15 @@ const entries: Building[] = [
     geo: '1 Zamenhof Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.078025, lng: 34.77477 },
     image: IMG,
-    innovation:
-      "Magidovitch's picture palace of 1938–39 — drawn with his son, the engineer Rafael Magido, for Esther and Moshe Netanel, immigrants from Aden — and far from obeying the circle, it broke it. Where Genia Averbuch's scheme asked every building on Dizengoff Square to share one clean, curving face, the Magidovitches lifted theirs on pilotis with a concave front and let the balconies grow from a bare trunk at the Zamenhof corner and wrap around to the square, a decorative relief independent of the rooms behind. Inside: a 1,000-seat hall and Israel's first central air-conditioning (Carrier). It opened with 'Snow White,' ran the country's great MGM premieres for fifty years, and in 1998 became the Cinema Hotel — the old projector now a prop in the lobby.",
+    whyItMatters:
+      "It matters because it tested a limit: could one building defy the rule of the square? Alone on Averbuch's ring, this picture palace refused the shared curving face the plan imposed on every other plot — an architectural rule-break matched by a mechanical first inside it.",
     materials:
-      "Rendered concrete on pilotis with a concave street front; balconies wrapping from the Zamenhof corner as applied relief. A 1,000-seat auditorium fitted with the country's first central air-conditioning.",
+      "Rendered concrete raised on pilotis with a concave street front; balconies wrapping from the Zamenhof corner as applied relief. A 1,000-seat auditorium serviced by the country's first central air-conditioning (a Carrier system).",
     timeline: [
-      { year: '1938–39', note: 'Magidovitch and his son build the picture palace for Esther and Moshe Netanel, immigrants from Aden.' },
-      { year: '1939', note: "Opens with 'Snow White' and Israel's first central air-conditioning — a 1,000-seat hall." },
-      { year: '1998', note: 'Becomes the Cinema Hotel; the old projector kept as a prop in the lobby.' },
+      { year: '1938–39', note: "Magidovitch and his son build the picture palace for Moshe and Esther Netanel — Moshe a merchant and leader of the Jewish community of Aden, who named the cinema for the wife he had married against her family's wishes." },
+      { year: '1939', note: "Opens with 'Snow White' and Israel's first central air-conditioning — a 1,000-seat hall that becomes MGM's central house in the country." },
+      { year: '1948–1993', note: "Run for over half a century by the Netanel–Goldschmid family (Tikva Netanel manages it from 1948 to 1987); later leased to Israel Theatres, it closes as a cinema in 1993." },
+      { year: '1998', note: 'Reopens as the Cinema Hotel — a boutique hotel keeping the old projector, seats and posters as its story.' },
     ],
     thread: "The picture palace that refused the square's uniform — and cooled its air first.",
   },
@@ -370,12 +455,18 @@ const entries: Building[] = [
     styleNote: "Rechter's first building",
     address: 'Nachalat Binyamin / Rambam',
     geo: 'Nachalat Binyamin / Rambam, Tel Aviv-Yafo, Israel',
-    resolved: { lat: 32.068293, lng: 34.768631 },
+    resolved: { lat: 32.06781, lng: 34.77002 },
     image: IMG,
-    innovation:
-      "Rechter's very first building, drawn at twenty-five — and nothing like the pilotis he would lift Engel House onto nine years later. In 1924, working in the eclectic manner of the moment, he turned the Nachalat Binyamin / Rambam corner with a pseudo-European apartment house officially named Beit Dov Rosenberg, its popular name earned by the row of large urns ranged along the cornice. The House of Jugs. The same hand, two worlds apart.",
+    whyItMatters:
+      "It matters as an origin point — the earliest work of the architect who would go on to lift Tel Aviv's housing off the ground. Utterly conventional, it measures the distance a major imagination travelled: everything that makes Rechter Rechter is still ahead of it.",
     materials:
-      'Eclectic, and the ornament is literal — the row of oversized urns along the cornice that gives the house its name.',
+      'Eclectic masonry; the ornament literal — a row of oversized urns ranged along the cornice that names the house.',
+    timeline: [
+      { year: '1924', note: "Ze'ev Rechter's first building, at twenty-five, for the Łódź merchant Dov Rosenberg — who asked for 'a bourgeois house in the spirit of the period' and ran it from Poland through an agent; Middle-Eastern ceramic jugs set along the cornice give it its name." },
+      { year: '1925–1980s', note: "The ground floor runs through decades of trade — the 'Kadima' clothing shop, the 'Chorev' bookshop, a neurology clinic, a textile works, boutiques, an evening high school, and Lubliński's famous knife shop." },
+      { year: 'The Shoah', note: 'Dov Rosenberg and most of the family are murdered in the camps; only his son Shmuel survives as heir.' },
+      { year: '1960s', note: 'The Georgian-born textile industrialist Rafael Eluashvili buys the building; his widow and son inherit it.' },
+    ],
     thread: 'Rechter before Rechter — urns on the cornice, years before the pilotis.',
   },
   {
@@ -389,8 +480,16 @@ const entries: Building[] = [
     geo: '43 Nachmani Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.065049, lng: 34.778619 },
     image: IMG,
-    innovation:
-      "Not a house at all but a factory — Berlin and his engineer Richard Pasovsky raised it in 1924 for Akiva Aryeh Weiss, one of Tel Aviv's founders, to spin textiles, and named it Łódź after the Polish mill city. One of the young city's first real industrial buildings. It stood empty for years and was restored in the 2010s; the street still calls it HaBayit Ha'adom, the Red House.",
+    whyItMatters:
+      "It matters as a programmatic first: not a house but one of the young city's first real industrial buildings — proof that Tel Aviv was inventing its working landscape, its factories and its labour, not only its boulevards and villas.",
+    materials:
+      'The 1924 mill is a rare red brick laid as masonry infill within a reinforced-concrete frame; a second building of 1929 repeats the language in the more common white silicate brick within a similar frame.',
+    timeline: [
+      { year: '1924', note: 'Berlin (with Richard Pasovsky) builds the red-brick mill for a consortium of textile founders — Dantziger, Shinferber, Berlinsky, Guter, Brown and Yehuda Moses; the street names it the Red House.' },
+      { year: '1929', note: 'A second building is added in the same idiom, in the more common white silicate brick.' },
+      { year: '1935–1971', note: 'The Lodzia textile works run here — socks, knitwear, silk and baby clothes — proof the young city was building its industry, not only its boulevards.' },
+      { year: '2010s', note: 'Conserved after years standing empty (Amnon Bar Or); the street still knows it only as the Red House.' },
+    ],
     thread: 'A textile mill named for a Polish city, in the heart of Tel Aviv.',
   },
   {
@@ -404,28 +503,16 @@ const entries: Building[] = [
     geo: '30 Balfour Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.067019, lng: 34.77578 },
     image: IMG,
-    innovation:
-      "Cherner's public hall of 1928 — 'Shem's Tent' — raised in the cultural heart of the city beside the circle of the poet Bialik, whose memory it honours. For nearly three decades it was the first home of the Israel Philharmonic, which played here until 1957, before Heichal HaTarbut drew the orchestra north.",
+    whyItMatters:
+      "It matters as a cultural first — architecture built to give the young city's musical life a room of its own: the concert hall as civic institution, in a city that did not yet have a concert hall.",
     timeline: [
-      { year: '1928', note: "Cherner's public hall 'Shem's Tent' opens beside the poet Bialik's square; first home of the Israel Philharmonic." },
+      { year: '1928', note: "Cornerstone laid on a Balfour Street plot given by the philanthropist Shmuel Blum — a culture house honouring the poet Bialik and permanent home for his 'Oneg Shabbat' Saturday gatherings (begun 1926)." },
+      { year: '1929', note: "The 1,000-seat hall opens on 9 May, beside Bialik's square." },
+      { year: 'late 1930s–1957', note: "Home of the Palestine (later Israel) Philharmonic — Rubinstein, Menuhin, Huberman and Heifetz all play here; in April 1948 the orchestra records 'Hatikvah' in the hall." },
       { year: '1957', note: 'The Philharmonic departs north for Heichal HaTarbut, a hall of its own.' },
+      { year: '2010–2021', note: 'Home to the Orna Porat children’s theatre until a court ruling; the hall is now “HaMakom”, a centre for culture and spirit.' },
     ],
     thread: 'Where the Philharmonic played before it had a hall of its own.',
-  },
-  {
-    id: 24,
-    name: 'Beit HaSofer',
-    architect: 'Dov Karmi',
-    year: 1957,
-    style: 'International Style',
-    styleNote: "The Writers' House",
-    address: '6 Kaplan Street',
-    geo: '6 Kaplan Street, Tel Aviv-Yafo, Israel',
-    resolved: { lat: 32.073252, lng: 34.782941 },
-    image: IMG,
-    innovation:
-      "The Writers' House — Karmi built it in 1957, the year he took the first Israel Prize for Architecture, as the home of the Hebrew Writers Association, which still runs the country's literary life from these rooms. A late, quiet work of his local modernism, made for the people who write the city rather than for a view of it.",
-    thread: 'A house built for the people who write the city.',
   },
   {
     id: 25,
@@ -438,8 +525,14 @@ const entries: Building[] = [
     geo: '58 HaCarmel Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.069439, lng: 34.77013 },
     image: IMG,
-    innovation:
-      "One of Levy's earliest Tel Aviv buildings, from 1922 — an eclectic corner house where HaCarmel meets Nachalat Binyamin, at the mouth of what became the Carmel Market. Two years before he crowned the Pagoda House with its tiered roof, he was already learning to turn a corner here.",
+    whyItMatters:
+      "It matters as an early experiment by a hand still learning: one of Levy's first Tel Aviv buildings, the corner-turning idea in rehearsal two years before he would crown the Pagoda House.",
+    timeline: [
+      { year: '1921', note: 'Peyga and Alter-Moshe Mangel arrive from Warsaw and buy the corner plot, pledging to build within two months.' },
+      { year: '1922', note: "Alexander Levy builds a three-storey house — one of his first in the city, at the mouth of the future Carmel Market." },
+      { year: '1925', note: 'Magidovitch doubles it for the family; the café-bakery “Maadonim” opens below and, under Mordechai Izbitski, becomes a known meeting place — by the mid-1930s the poets Bialik and Ravnitzki sit here, drawing the curious and the notable after them.' },
+      { year: 'Since', note: 'A Berlitz school, a travel agency and clothing shops pass through the ground floor — now a burger bar; the building is still held by Reuven Ziv, a grandson of the builders.' },
+    ],
     thread: 'Levy two years before the Pagoda, at the gate of the market.',
   },
   {
@@ -453,10 +546,10 @@ const entries: Building[] = [
     geo: '46 Rothschild Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.063755, lng: 34.774745 },
     image: IMG,
-    innovation:
-      "Magidovitch drew it in 1924 for the wealthy Levin family — one of Rothschild's most flamboyant Eclectic houses, thick with Romantic ornament and crowned, improbably, by a pagoda. That pagoda hides a mechanism: its three parts swing open over the stairwell — to hoist furniture up, or, the Levins being observant, to raise a sukkah. After 1948 it housed the Soviet Union's embassy, until a 1953 bomb by former Lehi men gave Moscow its pretext to sever ties with Israel. Left to decay, it was conserved from 1990 behind the new Alrov Tower — the preserve-for-building-rights trade that reshaped central Tel Aviv — then held Sotheby's Israeli sales, and now a foundation for lone soldiers.",
+    whyItMatters:
+      "It matters for a device hidden in the ornament — a working mechanism disguised as decoration, engineering smuggled into a Romantic silhouette on one of Rothschild's most flamboyant Eclectic houses.",
     materials:
-      "Eclectic in the flamboyant Lev Tel Aviv manner — ornamental plaster and Romantic symbolism under the three-part opening pagoda over the stair. Restored 1991 and tied structurally into the Alrov Tower behind it.",
+      "Eclectic in the flamboyant Lev-Tel-Aviv manner: ornamental plaster and Romantic symbolism beneath a three-part pagoda that opens over the stairwell. Restored 1991 and tied structurally into the Alrov Tower behind it.",
     timeline: [
       { year: '1924', note: 'Magidovitch draws the pagoda-crowned mansion for the wealthy Levin family.' },
       { year: '1948', note: "Becomes the Soviet Union's embassy." },
@@ -477,11 +570,12 @@ const entries: Building[] = [
     geo: '17 Ben-Gurion Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.085321, lng: 34.771662 },
     image: IMG,
-    innovation:
-      "The plainest house in the atlas, and on purpose. David Tobia — an engineer as much as an architect — drew it in 1931 as one more one-family house in the first northern workers' neighbourhood; Paula Ben-Gurion herself submitted the plan (permit 723), and the family paid 350 Palestine pounds, the Mandate's own currency pegged to sterling, for its 134 square metres. The modest ground floor gives no hint of the upper storey's library of some twenty thousand books, where a private telephone ran straight to the Defence Ministry — and where, on the night of 13 May 1948, Ben-Gurion and a few colleagues honed the final text of the Declaration of Independence, before reading it out the next day at Independence Hall. He led a country into being from the smallest house on the street, and left it to the state.",
+    whyItMatters:
+      "It matters as an idea about restraint: the plainest house in the Atlas, on purpose — one more one-family house in the first workers' neighbourhood. Its modesty is the argument; the man who led the country chose to live no differently from those he led.",
     timeline: [
-      { year: '1931', note: 'Tobia draws the one-family house; Paula Ben-Gurion submits the plan (permit 723).' },
-      { year: '13 May 1948', note: 'Ben-Gurion hones the final text of the Declaration of Independence in the upstairs library.' },
+      { year: '1930–31', note: 'Tobia draws the one-family house on Keren Kayemet land in the first workers’ neighbourhood — a single apartment costing 350 Palestine pounds; Paula Ben-Gurion submits the plan (permit 723).' },
+      { year: '1931–1973', note: 'The Ben-Gurion family’s Tel Aviv home for forty-odd years, its upstairs library growing to over 20,000 books in many languages.' },
+      { year: '13 May 1948', note: 'Ben-Gurion hosts members of the People’s Administration in the library to settle the final wording of the Declaration of Independence; the next day the state is declared at Dizengoff House on Rothschild.' },
       { year: 'Today', note: 'Left to the state and kept as his house-museum, the library preserved.' },
     ],
     thread: 'The man who led a country — and drafted its declaration — in the smallest house on the street.',
@@ -497,8 +591,15 @@ const entries: Building[] = [
     geo: '51 Allenby Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.069715, lng: 34.770701 },
     image: IMG,
-    innovation:
-      "Magidovitch drew this one in the mid-1930s with his son Raphael, at the seam where his eclectic decade was giving way to the flat-roofed International Style — a career's turn caught in a single building, a few doors along Allenby from Berlin's brick Beit Mann.",
+    whyItMatters:
+      "It matters because a whole style turns at this corner — the exact moment the eclectic decade gives way to the flat-roofed International Style, a few doors from Berlin's brick Beit Mann.",
+    materials:
+      "Magidovitch's turn to modernism read under Erich Mendelsohn's influence — a concrete roof pergola over stacked curved balconies; the balconies once carried the building's signature decorative lamps set in glass-fronted wooden boxes, a night-lighting scheme long since gone. The corner overlooks Beit Mangel, Beit Gershon Levin and Beit Polishuk.",
+    timeline: [
+      { year: 'Before 1935', note: "A two-storey building on the corner holds Israel Cohen's dairy." },
+      { year: '1935', note: "The Gottgold brothers, Tzvi and Yaakov, replace it with Magidovitch and his son Raphael's block — a concrete roof pergola, curved balconies, terrace lamps." },
+      { year: 'Decades on', note: "Gershon Ben's publishing house, the Meltours travel agency, and the Plotnitsky family's beloved “Pinta” corner — soups and stuffed fish, then the falafel that made its name." },
+    ],
     thread: 'Father and son, and a whole style changing under their pens.',
   },
   {
@@ -512,13 +613,14 @@ const entries: Building[] = [
     geo: '16 Rothschild Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.062784, lng: 34.770925 },
     image: IMG,
-    innovation:
-      "Beit Dizengoff — plot 43 in the seashell lottery that carved Ahuzat Bayit out of the dunes in 1909, built in 1910 as Meir and Zina Dizengoff's home, the year the town named itself Tel Aviv. In 1930, after Zina's death, the widowed first mayor gave the house to the city as its first art museum; it opened in 1932, was extended in 1933 by Dov Hershkovich, and was recast in the International Style by Carl Rubin — who renovated it, not, as long assumed, designed it. Reopened in 1936 as the Tel Aviv Museum of Art, its thick-walled back hall was chosen on 14 May 1948 as the safest room in the city for Ben-Gurion to declare the State of Israel — out of reach of Egyptian bombers. The plainest possible room for the largest possible sentence.",
+    whyItMatters:
+      "It matters as the idea of a public art institution born inside a private house — Dizengoff gave the city his own home, and the first art museum in Tel Aviv opened in it. That the same house then held the Declaration of the State is exactly the double life the Atlas is built to catch.",
     materials:
-      "A layered building, not one design: the 1910 house, a 1920s added floor, Dov Hershkovich's 1933 extension, and Carl Rubin's International-Style refacing. Its drama is one room — the thick-walled, high-windowed back hall, kept as it was on 14 May 1948.",
+      "A layered fabric, not one design: the 1910 house, a 1920s added floor, Dov Hershkovich's 1933 extension, and Carl Rubin's International-Style refacing. Its drama is one room — the thick-walled, high-windowed back hall, kept as on 14 May 1948.",
     timeline: [
       { year: '1909', note: 'Plot 43 drawn in the seashell lottery that carved Ahuzat Bayit out of the dunes.' },
       { year: '1910', note: "Built as Meir and Zina Dizengoff's home, the year the town named itself Tel Aviv." },
+      { year: '1924', note: "Boris Schatz's Bezalel ceramic 'Rothschild Boulevard' street sign is set on the mayor's house — the first of the city's Bezalel street signs." },
       { year: '1930', note: 'The widowed first mayor gives the house to the city as its first art museum.' },
       { year: '1932', note: 'Opens as a museum; extended in 1933 and recast in the International Style by Carl Rubin.' },
       { year: '1936', note: 'Reopens as the Tel Aviv Museum of Art.' },
@@ -537,10 +639,10 @@ const entries: Building[] = [
     geo: '23 Rothschild Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.063418, lng: 34.772058 },
     image: IMG,
-    innovation:
-      "Joseph Berlin's Eclectic house of the early 1920s — painted floor tiles, decorative 'stone-carpet' borders, ornamented walls — built for the Sharett family and, from the late 1920s, home to Eliyahu Golomb, the 'uncrowned commander' of the Haganah. The underground ran itself from here, its leadership meeting late into the night on the front balcony, in the open, on the correct theory that the British would never look for a secret HQ on a veranda facing Rothschild. Decisions taken in this house shaped the Yishuv — Tower and Stockade, illegal immigration, the founding of the Palmach. When a developer moved to demolish it in 1954, Golda Meir led the campaign that made it the Haganah Museum instead, opened in 1961.",
+    whyItMatters:
+      "It matters as operational architecture hidden in the open — a secret command that concealed itself by not hiding at all, on a boulevard in plain sight. A museum since 1961, after Golda Meir's campaign saved it from demolition.",
     materials:
-      "Eclectic and prized for its interiors — painted cement floor tiles, 'stone-carpet' borders and ornamented walls, two rooms kept as period rooms. Berlin's early-1920s drawings aren't digitised; the oldest sheet on file is a 1978 museum-era permit.",
+      "Eclectic, prized for its interiors: painted cement floor tiles, 'stone-carpet' borders and ornamented walls, two rooms kept as period rooms. Berlin's early-1920s drawings are undigitised; the oldest sheet on file is a 1978 museum-era permit.",
     timeline: [
       { year: 'early 1920s', note: "Berlin's Eclectic house built for the Sharett family." },
       { year: 'late 1920s', note: "Home of Eliyahu Golomb, the Haganah's 'uncrowned commander'; the underground runs itself from here." },
@@ -554,21 +656,26 @@ const entries: Building[] = [
     name: 'Rubin Museum',
     architect: 'Pinchas Bijonski',
     year: 1930,
-    style: 'Eclectic',
-    styleNote: "The painter Reuven Rubin's house",
+    style: 'International Style',
+    styleNote: "Beit Reuven — the artist's house and studio",
     address: '14 Bialik Street',
     geo: '14 Bialik Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.072087, lng: 34.770733 },
     image: IMG,
-    innovation:
-      "Built in 1930 by the architect Pinchas Bijonski, and from 1946 the home and studio of the painter Reuven Rubin, who worked on the third floor until his death in 1974. He left the house and its pictures to the city, and it opened as his museum in 1983 — a painter's house kept much as he left it, on the street that gathers the city's eclectic and its Bauhaus into a single block.",
+    whyItMatters:
+      "It matters for a building its owner made diagrammatic — and, potentially, for a first: Rubin stacked the villa public → domestic → creative, the top floor a purpose-built painting studio perhaps among the first in the city. And its life runs artist → diplomat → artist — Rubin was also Israel's first envoy to Romania (1948–50).",
+    materials:
+      "Built 1930–31 by Pinchas Bijonski as a restrained urban-villa modernism — International Style marking Bialik Street's turn from Eclectic to modern. Rubin's 1954 top-floor painting studio is preserved as he left it; a basement workshop opens to a covered rear courtyard.",
     timeline: [
-      { year: '1930', note: 'Built by the architect Pinchas Bijonski as a residence.' },
-      { year: '1946', note: 'Becomes the home and studio of the painter Reuven Rubin.' },
-      { year: '1974', note: 'Rubin works on the third floor until his death, and leaves the house and its pictures to the city.' },
-      { year: '1983', note: 'Opens as the Rubin Museum, the studio kept as he left it.' },
+      { year: '1930–31', note: 'Built by the architect Pinchas Bijonski for the Taplitz family, from Switzerland.' },
+      { year: 'by 1946', note: 'Sold to Shimon Yavetz of New York; the ground floor let to the Jewish Agency.' },
+      { year: '1946', note: 'Reuven and Esther Rubin rent the upper floor, back from the United States after the war.' },
+      { year: '1948–50', note: 'Rubin serves as the first Israeli envoy to Romania.' },
+      { year: '1954', note: 'Rubin buys the whole building and adds the third-floor painting studio.' },
+      { year: '1974', note: 'A month before his death he gives the house and 45 paintings to the city (mayor Shlomo Lahat).' },
+      { year: '1983', note: 'Opens as the Rubin Museum, the studio preserved as he left it.' },
     ],
-    thread: "A painter's house, kept as he left it.",
+    thread: 'Artist → diplomat → artist: the house Rubin painted in, then gave to the city.',
   },
   {
     id: 32,
@@ -581,10 +688,10 @@ const entries: Building[] = [
     geo: '27 Bialik Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.073492, lng: 34.77107 },
     image: IMG,
-    innovation:
-      "Cherner drew it in 1925 as Hotel Skura — the eclectic hotel of Avraham Skura, closing the head of Bialik Square. But the young municipality, which had outgrown the water tower it used for offices, took it as its temporary City Hall, and it stayed the seat of Tel Aviv for decades. Its set-piece is a symmetrical twin staircase climbing both sides of the central hall, a hotel's grand gesture kept through the change. It became the city's Museum of Urban History in 1971 and reopened, restored, as Beit Ha'ir in 2009.",
+    whyItMatters:
+      "It matters as a lesson in adaptive reuse at the scale of an institution — one building that tracked the city's own growth, from private hotel to the seat of its government to the museum of its history.",
     materials:
-      "Eclectic, built to a hotel's standard — the symmetrical twin staircase rising on both sides of the central hall is its keynote. Restored and extended in the conversion to Beit Ha'ir (conservation architects Meira Kovalsky and Zvi Efrat).",
+      "Eclectic, built to a hotel's standard; the keynote is the symmetrical twin staircase rising on both sides of the central hall. Restored and extended in the Beit Ha'ir conversion (conservation architects Meira Kovalsky and Zvi Efrat).",
     timeline: [
       { year: '1925', note: 'Cherner builds it as Hotel Skura, closing the head of Bialik Square.' },
       { year: 'soon after', note: 'The young municipality, outgrowing the water tower it used for offices, takes it as its temporary City Hall — and stays for decades.' },
@@ -604,27 +711,39 @@ const entries: Building[] = [
     geo: '27 Mazeh Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066556, lng: 34.775575 },
     image: IMG,
-    innovation:
-      "Berlin drew it in 1931 with his son Ze'ev, and made the stairwell the front of the building again — a tall glazed slot climbing the centre of the façade, the same move that fronts Brown–Rabinsky, turning the act of climbing into the face the street sees.",
+    whyItMatters:
+      "It matters as another test of the stairwell-as-façade — the same idea Berlin fronts Brown–Rabinsky with, run again here, so a building type accretes across the city instead of appearing once.",
     materials:
-      'The signature is the full-height glazed stairwell running up the middle of the front.',
+      'A full-height glazed stairwell runs up the centre of the front — the vertical circulation turned into the façade. It stands on a kurkar rise near the Mazeh water tower, one of the young city’s high points, which gave the early tenants a sea view. Structural fabric not separately documented.',
+    timeline: [
+      { year: '1931–32', note: "Berlin (with his son Ze'ev) builds it for Frida and Yitzhak Elishiv — clients he knew through his friend, the writer Yehoshua Hana Ravnitzki; completed mid-1932." },
+      { year: '1930s', note: 'Its first tenants are largely middle- and upper-class professionals — several doctors among them. With Mazeh Street still half-empty, they could see the Mediterranean, over a kilometre off, from the second-floor balconies.' },
+      { year: '2000', note: 'Renovated and extended.' },
+    ],
     thread: 'The stairwell made the façade — again.',
   },
   {
     id: 34,
     name: 'Shilman House',
     architect: 'Genia Averbuch',
-    year: 1933,
+    year: '1933–34',
     style: 'International Style',
-    styleNote: 'Averbuch before Dizengoff Square',
+    styleNote: 'Urban villa with a pharmacy — Averbuch before Dizengoff Square',
     address: "57 Ahad Ha'am Street",
     geo: "57 Ahad Ha'am Street, Tel Aviv-Yafo, Israel",
     resolved: { lat: 32.067249, lng: 34.77672 },
     image: IMG,
-    innovation:
-      "An early Averbuch — a year before she won Dizengoff Square — already thinking the modernist way: the apartment plan pushed out onto the street as plain rectangular and cubic volumes, hierarchy carried by mass and proportion rather than the eclectic ornament of the decade she was leaving. One specialist study credits the design to Averbuch with Shlomo Ginzburg (Sha'ag).",
+    whyItMatters:
+      "It matters as an early answer to a question the growing city kept asking — how to house several families without surrendering the individuality of a villa. Its dwellings keep their own expressed volumes instead of dissolving into a uniform block.",
     materials:
-      'A rendered front of simple cubic and rectangular volumes, the outside reading the inside — the façade geometry set by the building’s own subdivision.',
+      'A rendered front of plain cubic and rectangular volumes, the massing set by the building’s own subdivision — the outside reading the inside.',
+    timeline: [
+      { year: '1933–34', note: 'Genia Averbuch — with Shlomo Ginzburg, her husband and partner — builds the house as a hybrid urban villa: several apartments over a street-facing pharmacy, the stepped volumes expressing the flats within.' },
+      { year: '1930s–40s', note: 'Apartments and the pharmacy share one modern block — domestic and commercial life together, the year before Averbuch won Dizengoff Square.' },
+      { year: '1960', note: "A 'Shilman' is still listed at Ahad Ha'am 57 in the city telephone directory; a second-floor balcony is added under permit 465." },
+      { year: '1991', note: 'The building is architecturally documented — a record of its surviving façade and massing.' },
+      { year: '2004', note: 'A conservation-and-renovation permit is filed.' },
+    ],
     thread: 'The plan made visible, in plain volumes.',
   },
   {
@@ -638,12 +757,13 @@ const entries: Building[] = [
     geo: "84 Ahad Ha'am Street, Tel Aviv-Yafo, Israel",
     resolved: { lat: 32.066407, lng: 34.776738 },
     image: IMG,
-    innovation:
-      "Berlin's Eclectic house of 1924 for the Guter family — symmetrical, columned, richly plastered — rose a few hundred metres from the Łodzia textile works the same family had founded. But its real secret is the roof: then the highest point in Tel Aviv, it served as the Haganah's main signal station from 1936 to 1939, flashing lanterns by night and heliograph by day to Jewish settlements across the country. The historic front was kept when new building was added behind it in 2013.",
+    whyItMatters:
+      "It matters as a covert first: a private family villa conscripted, by nothing more than its height, into the underground's communications network — pre-state military infrastructure improvised out of a home.",
     materials:
       'A strongly symmetrical Eclectic front — classical columns and pilasters, cornices, decorative plaster — retained and restored while the 2013 work rose behind it.',
     timeline: [
-      { year: '1924', note: "Berlin's Eclectic house for the Guter family, a few hundred metres from the family's Łodzia textile works." },
+      { year: '1924', note: "Berlin builds the Eclectic house for Sarah and Benjamin Guter and their son Shlomo-Zalman — Polish Zionist leaders and Tel Aviv pioneers who founded the Łodzia textile works a few hundred metres away; construction was managed by Akiva Aryeh Weiss, founder of Ahuzat Bayit." },
+      { year: '1930s', note: "Though the Guters later sold the business, they settled permanently in the house." },
       { year: '1936–1939', note: "Its roof — then the highest point in Tel Aviv — serves as the Haganah's main signal station, lanterns by night and heliograph by day." },
       { year: '2013', note: 'The historic front kept as new building is added behind it.' },
     ],
@@ -660,27 +780,38 @@ const entries: Building[] = [
     geo: "92 Ahad Ha'am Street, Tel Aviv-Yafo, Israel",
     resolved: { lat: 32.067321, lng: 34.777104 },
     image: IMG,
-    innovation:
-      "Cherner built it in the late 1920s for Menachem-Mendel Krol — and the client is the point: Krol and his sons were the decorative painters whose hands lie under the plaster of much of eclectic Tel Aviv, so the house belongs to the very craft economy that produced the city's ornament. Cherner drew it to the same pattern as the Rozenblit house along the street at Ahad Ha'am 32. Two floors were added above the original three in 2010.",
+    whyItMatters:
+      "It matters for what it represents rather than how it looks — the invisible craft economy that made the Eclectic city, the painters and plasterers whose work is everywhere on the boulevards and whose names are almost nowhere. Here that trade is the subject, not the servant.",
     materials:
-      "Eclectic — historicist symmetry and the painted, plastered surface that was the Krol family's own trade; the 2010 upper floors sit visibly above the older base.",
+      "Eclectic: historicist symmetry over the painted, plastered surface that was the Krol family's own trade. Inside, the decorators decorated their own home — every room painted, with a ceiling painting since lifted and preserved by a special removal technique. Two floors added above the original three in 2010 sit visibly on the older base.",
+    timeline: [
+      { year: '1928', note: "Cherner builds it for Menachem-Mendel Krol (1862–1938) and his sons — the decorative painters and plasterers of the Second Aliyah whose hands lie under the plaster of much of Eclectic Tel Aviv; his son Chaim Krol moves in with his wife Bella and their children. Raised over a single-storey 1926 house the family had to abandon in the economic crisis; drawn to the same plan as the Rozenblit house at Ahad Ha'am 32." },
+      { year: 'mid-1930s', note: 'As the Krols move out to the new moshav of Avichayil, ownership passes to Meir Weidenboim — later his son Shlomo, then the Nelson heirs, who hold it into the 1980s.' },
+      { year: '2010', note: 'Two floors added above the original three, sitting visibly on the older base.' },
+    ],
     thread: 'The decorators of the city, in a house of their own.',
   },
   {
     id: 37,
     name: 'Beit Tzemach Shkanovsky',
     architect: 'Eyal Klein',
-    year: 1925,
+    year: 1926,
     style: 'Eclectic',
     styleNote: 'Now the Assemblage hotel',
     address: '48 Allenby Street',
     geo: '48 Allenby Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.071496, lng: 34.769364 },
     image: IMG,
-    innovation:
-      "An Eclectic block of about 1925 — apartments over shops, two symmetrical wings with side kiosks, its plaster carrying pointed-arch windows and circular motifs in a Jaffa-tinged accent. It held the Jewish National Fund's offices in the 1930s and has been the Assemblage boutique hotel since 2020. Its building file holds no permit, so the architect — most likely Eyal Klein, per the municipal catalogue — is recorded but not certain.",
+    whyItMatters:
+      "It matters less for its plaster than for its tenant: for one decade an utterly ordinary block of flats over shops was a working node in the national project of buying the land — the Atlas's clearest case that history hides in its most anonymous buildings. The municipal Eclectic catalogue names its architect as Eyal Klein.",
     materials:
-      'From the municipal Eclectic-detail catalogue: decorative plaster with pointed-arch windows and circular openings in precast concrete framing, timber double-leaf windows, wrought-iron balcony railings — a Jaffa-influenced detail set.',
+      'From the municipal Eclectic-detail catalogue: decorative plaster with a two-leaf timber casement under a tilting upper light, and a circular window set in a patterned concrete surround the catalogue reads as Japanese-influenced — a sign of how freely 1920s Eclecticism borrowed. Wrought-iron balcony railings complete the set.',
+    timeline: [
+      { year: '1926', note: 'Built as an Eclectic block of apartments over shops on Allenby, to the design of Eyal Klein.' },
+      { year: '1930s', note: 'Houses the Tel Aviv offices of Keren Kayemet LeYisrael — the Jewish National Fund.' },
+      { year: 'Later', note: 'Offices, then apartments.' },
+      { year: 'Today', note: 'The Assemblage hotel.' },
+    ],
     thread: 'Apartments over shops, then a hotel — the Allenby building that keeps turning over.',
   },
   {
@@ -694,33 +825,43 @@ const entries: Building[] = [
     geo: '44 Geula Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.071001, lng: 34.769566 },
     image: IMG,
-    innovation:
-      "Levy turned a triangular corner plot into a monument in 1924 — two near-identical fronts meeting at the point, rusticated below and stone-plastered above, hung with heraldic-looking reliefs and pomegranates. Sheya and Sarah Lifshitz had first approached Magidovitch, then gave the commission to Levy: four shops below, apartments above, and a century of cafés, a hair salon and a used-book shop passing through the ground floor.",
+    whyItMatters:
+      "It matters as an experiment in making an irregular corner deliberate — Levy takes a triangular plot and turns the awkward site itself into the whole argument, the point of the wedge made a monument.",
     materials:
-      'Local materials under a European historicist skin — a rusticated ground floor, stone-like plaster above, sculptural reliefs and pomegranate motifs, deep balconies on shaped brackets.',
+      'Local materials under a European historicist skin: a rusticated ground floor, stone-like plaster above, sculptural reliefs and pomegranate motifs, and deep balconies carried on shaped brackets.',
+    timeline: [
+      { year: '1922', note: "Yeshayahu ‘Sha'iya’ Lifshitz, a contractor evicted under Ottoman-era tenant law, wins the city's permission to build." },
+      { year: '1924', note: 'The municipality sells him the triangular plot (£E200); after first engaging Magidovitch, he hires Levy, who turns the awkward corner into a deliberate object.' },
+      { year: 'Decades on', note: "The ground floor runs through Bogard's barbershop (~35 years), a grocery-turned-café, the ‘Naharia’ restaurant and ‘Micro’ electricals; upstairs, Meshania's lending-library bookshop ‘Bibliophile.’" },
+      { year: '1947', note: "The Lifshitzes' daughter Batya inherits the building." },
+    ],
     thread: 'An irregular corner turned into a deliberate object.',
   },
   {
     id: 39,
     name: 'Sheinkin 55',
     architect: 'Unattributed',
-    year: 'c. 1932',
+    year: 1932,
     style: 'International Style',
     styleNote: 'The everyday street, above the shops',
     address: '55 Sheinkin Street',
     geo: '55 Sheinkin Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.06857, lng: 34.776858 },
     image: IMG,
-    innovation:
-      "Not a monument — and that is the point. A plain Sheinkin block whose architecture is all balconies: horizontal slabs stepping in and out above a ground floor that has held a fruit shop since the 1960s, a laundry, a barber, a rotisserie. Its architect is still unrecorded, but its building file — a deep set of signed sheets — opens on a permit-plan of January 1932, which finally dates this once-undated corner to the early 1930s. Exactly the ordinary mixed-use building that gave the street its lived-in grain.",
+    whyItMatters:
+      "It matters precisely because it isn't a monument — the development of the ordinary mixed-use block that gave Sheinkin its lived-in grain, the everyday building doing the real work of making a street feel like a street.",
     materials:
-      'A rendered façade organised almost entirely by its balconies — horizontal slabs and parapets stepping in and out over an altered, much-used commercial ground floor.',
+      'A rendered façade organised almost entirely by its balconies — horizontal slabs and parapets stepping in and out above an altered, much-used commercial ground floor.',
+    timeline: [
+      { year: '1932', note: "Built for M. A. Kahana and his wife Rivka — building permit no. 90 (plan 66), issued 28 January 1932, finally dating this once-undated corner; that December a second permit (no. 134, plan 4104) approves an addition to 'the house of Mrs. Rivka Kahana'." },
+      { year: 'Since the 1960s', note: 'The ground floor holds a fruit shop, alongside — over the years — a laundry, a barber and a rotisserie: the everyday street, above the shops.' },
+    ],
     thread: 'The building that made the street feel lived-in.',
   },
   {
     id: 40,
     name: 'Roland Neef House',
-    architect: 'Hugo Wengel',
+    architect: 'Hugo Wennagel',
     year: '1930s',
     style: 'International Style',
     styleNote: 'Late Sarona → International',
@@ -728,8 +869,14 @@ const entries: Building[] = [
     geo: 'Oswaldo Aranha 14, Sarona, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.0726, lng: 34.78655 },
     image: IMG,
-    innovation:
-      "A Templer colony house that learns the language of the 1930s — modernism arriving in Sarona not as a clean break but as the colony's late transformation. Built for Edith Lippmann and Roland Neef, it sits in the family network that also ties in the neighbouring Steller house; its later turn as the State Attorney's Office is how a colony home became part of a state precinct. The conservation plaque calls it International Style and names Hugo Wengel — both still to be confirmed against the archive.",
+    whyItMatters:
+      "It matters as the International Style reaching a Templer colony — modernism arriving in Sarona not as a clean break but as the colony's own late transformation. Development, not rupture.",
+    timeline: [
+      { year: '1871 on', note: 'Part of Sarona, the German Templer colony founded north of Jaffa in 1871.' },
+      { year: '1930s', note: "Built (Hugo Wennagel) as Sarona's late turn to the International Style." },
+      { year: 'WWII', note: 'The Templers, as enemy nationals, are interned and later deported; the colony empties.' },
+      { year: 'post-1948', note: 'The colony house passes to the Israeli state as part of the government/military “Kirya” precinct, before Sarona’s 2003–2014 restoration into a public quarter.' },
+    ],
     thread: 'When the International Style reached a Templer colony — and a colony house became a state office.',
   },
   {
@@ -743,10 +890,16 @@ const entries: Building[] = [
     geo: 'Oswaldo Aranha 8, Sarona, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.07235, lng: 34.78635 },
     image: IMG,
-    innovation:
-      "Here the argument is the construction: a reinforced-concrete frame lets the balcony and the long horizontal front become the whole architectural statement. A private Templer-family home later absorbed into the Ministry of Defense precinct — Sarona's shift from colony to state infrastructure written into one building, down to a third floor since removed. The plaque names Fritz Steller; German conservation literature points instead to the Wennagel office — a conflict left open on purpose.",
+    whyItMatters:
+      "It matters because here the construction is the architecture — the structural frame, not applied ornament, carries the entire statement. The clearest of the Sarona houses at showing modern structure doing the design work.",
     materials:
-      'Reinforced-concrete frame (per the municipal plaque), carrying a horizontal balconied front; a later third floor has been removed.',
+      'A reinforced-concrete frame (per the municipal plaque) carrying a single long horizontal balconied front; a later third floor has been removed.',
+    timeline: [
+      { year: '1871 on', note: 'Part of the Sarona Templer colony (founded 1871).' },
+      { year: '1930s', note: "Built (Fritz Steller) on a reinforced-concrete frame carrying one long horizontal balconied front." },
+      { year: 'WWII → post-1948', note: 'With the Templers interned and gone, the house becomes a state office in the Kirya precinct.' },
+      { year: '2003–2014', note: 'Restored as part of the Sarona quarter; a later third floor is removed in conservation.' },
+    ],
     thread: 'The concrete frame that turned a colony home into one long horizontal front.',
   },
   {
@@ -760,8 +913,14 @@ const entries: Building[] = [
     geo: 'Oswaldo Aranha 18, Sarona, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.0728, lng: 34.7867 },
     image: IMG,
-    innovation:
-      "The International Style arrives in Sarona at domestic scale — clean massing and balcony logic rather than a civic monument. The house of Eugen Steller and Elli Lippmann sits inside the Lippmann–Neef–Steller family constellation, and the family's 1942 wartime internment makes it a record of displacement as much as of design. Attributed to Fritz Steller; the exact year and structure are still to be drawn from the file.",
+    whyItMatters:
+      "It matters as the International Style at its most domestic in Sarona — not a statement building but a family's own house taking up the new language, the colony's modern turn measured at the scale of a single household.",
+    timeline: [
+      { year: '1871 on', note: 'Part of the Sarona Templer colony (founded 1871), built in the Württemberg tradition the settlers brought from home.' },
+      { year: '1930s', note: "Built (Fritz Steller) at domestic scale as Sarona learns the International Style house by house." },
+      { year: '1942', note: 'The Steller family is interned during the war — the house a record of displacement.' },
+      { year: '2003–2014', note: 'The colony precinct, used for decades as government offices, is restored as the Sarona quarter.' },
+    ],
     thread: "The International Style at house scale — and a family's 1942 displacement.",
   },
   {
@@ -775,16 +934,18 @@ const entries: Building[] = [
     geo: 'HaHashmonaim 85, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.06979, lng: 34.782552 },
     image: IMG,
-    innovation:
-      "A bank for agriculture that put wheat on its façade: the relief makes the institution's rural mission part of the street. Designed by Shulamit and Michael Nadler in the mid-1950s opposite the old wholesale market, it turned agricultural credit into an urban monument — heavier and more materially expressive than White-City modernism, already leaning toward the Brutalist. Long abandonment, a 2012 demolition permit and a preservation campaign made its survival a second chapter (a Lexus showroom opened in the ground floor in 2016).",
+    whyItMatters:
+      "It matters as a hinge in the country's modernism — the moment the light White City gives way to something heavier and more muscular, the architecture of the young state leaning toward the Brutalist.",
     materials:
-      'Wheat-stalk reliefs run as integral iconography across a monumental, materially expressive front — 1950s modernism turning toward the Brutalist.',
+      'A monumental, materially expressive front, heavier and more tectonic than the light White City, with wheat-stalk reliefs run as integral iconography — 1950s modernism turning toward the Brutalist.',
     timeline: [
       { year: '1953–55', note: 'The Nadlers design the bank opposite the old wholesale market, its façade carrying wheat-stalk reliefs.' },
-      { year: '2012', note: 'A demolition permit; a preservation campaign fights to save it.' },
-      { year: '2016', note: 'A Lexus showroom opens in the ground floor.' },
+      { year: '2012', note: 'A demolition permit is issued — but the building is saved; a district-approved plan preserves it with 46 flats built around it.' },
+      { year: '2016', note: 'The Toyota/Lexus importer George Horesh adds two floors and opens a Lexus showroom in the ground floor.' },
+      { year: 'Later', note: 'HQ Architects take the building for a time as their own offices.' },
+      { year: 'Today', note: 'It stands empty and deteriorating — a monumental building left behind as the city grows around it and over it.' },
     ],
-    thread: 'A bank for agriculture that put wheat on its façade.',
+    thread: 'A monumental bank left behind as the city grows around it and over it.',
   },
   {
     id: 44,
@@ -797,10 +958,15 @@ const entries: Building[] = [
     geo: 'Yehuda Halevi 135, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.069715, lng: 34.780928 },
     image: IMG,
-    innovation:
-      "Water storage, not style, is the architecture here. A small survivor of the Templer productive landscape — well, storage and distribution — left standing at a dense central junction, it makes the agricultural system that preceded the city physically legible. No architect or engineer is on record, and the exact date is unknown; its world is late-Ottoman and Templer.",
+    whyItMatters:
+      "It matters as a fossil in the city's fabric — a piece of farm infrastructure left standing where the fields it served did not, so a whole pre-urban agricultural world stays physically legible at one of Tel Aviv's densest modern junctions. No architect or date on record.",
     materials:
-      "A rendered exterior over rough exposed stone at the rear and sides, under red clay roof tiles.",
+      "Rough exposed stone at the rear and sides, rendered on the show faces, under red clay roof tiles — the waterworks of the Templer farming landscape.",
+    timeline: [
+      { year: '1871', note: 'Sarona — the German Templer colony — is founded, importing European farming to late-Ottoman Palestine.' },
+      { year: 'Late 19th c.', note: "The colony's storage reservoir is built as the waterworks of that productive landscape." },
+      { year: 'Today', note: "A surviving fragment left standing where Sarona's fields once reached, at a dense modern junction." },
+    ],
     thread: 'The farm waterworks the city grew up around.',
   },
   {
@@ -814,10 +980,17 @@ const entries: Building[] = [
     geo: 'Yehuda Halevi 97, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.065582, lng: 34.778163 },
     image: IMG,
-    innovation:
-      "Cherner makes the stair — not the apartment — the corner's public face: a triangular shaft rising to a full-height 'thermometer' window that fuses circulation, daylight and street identity into one device. The first building at the Yehuda Halevi–Mazeh junction, it helped urbanise an area still dominated by the Łodzia factory. Abraham-Yehiel and Gitel Hemphel had arrived from Będzin in 1932; the family's Holocaust losses make it an immigrant record as well as a modernist one. Three floors were added over the conserved base in 2019.",
+    whyItMatters:
+      "It matters for a single device pushed to the point of identity — Cherner makes the stair, not the apartment, the building's public face, the way up turned into the whole front on the street.",
     materials:
-      "An original two-storey base with a triangular corner stairwell lit by a full-height 'thermometer' window; three conserved-over floors added in 2019 (six today).",
+      "An original two-storey base with a triangular corner stairwell lit by a full-height 'thermometer' window — circulation, daylight and street identity fused in one shaft; three conserved-over floors added in 2019 (six today).",
+    timeline: [
+      { year: '1932', note: 'Gitel and Abraham-Yehiel HaMafel — a wholesale food merchant newly arrived from Będzin, Poland — buy the plot; they move into the finished house in April 1933.' },
+      { year: '1932–33', note: "Cherner's two-storey block, the first at the Yehuda Halevi–Mazeh junction, its triangular corner stairwell lit by a 'thermometer' window." },
+      { year: '1934 on', note: 'The ground floor runs a storage company, sewing courses, later shops; a flower shop stands in the courtyard for decades, to 2023.' },
+      { year: 'The Shoah', note: "Of the HaMafels' four children only Mordechai reached the country; Dora, Aaron and Sima, with four grandchildren, were murdered in Poland." },
+      { year: '2019', note: 'Three conserved-over floors added (six today), the triangular stairwell kept.' },
+    ],
     thread: "The stairwell made the corner's face — a thermometer window on the junction.",
   },
   {
@@ -831,10 +1004,16 @@ const entries: Building[] = [
     geo: 'Yehuda Halevi 123, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.068601, lng: 34.780214 },
     image: IMG,
-    innovation:
-      "The modernism lives in the care of its thresholds and finishes — even an ornamental fishpond at the entrance was used to make collective housing feel considered rather than generic. Designed by Mordechai Zabrodsky and Yitzhak Blaks (later Bonneh) for Fruma Gourevitz, it kept its residential purpose across decades and is listed under the Lev Ha'ir plan inside the UNESCO White City. A conservation and addition project began in 2018; a field photograph reports damage after the 28 February 2026 strike — pending the actual image and an independent assessment.",
+    whyItMatters:
+      "It matters as proof that the White City's ordinary rental blocks were designed, not merely built — an everyday apartment house held to the standard of a considered work, where most of its kind were run up to a formula.",
     materials:
-      'A four-storey building whose finish palette is part of the design — earlier research records ceramic tiles, zinc gutters, wrought-iron railings and a raised ornamental fishpond at the entrance.',
+      'A four-storey block whose finish palette is part of the design — ceramic tiles, zinc gutters, wrought-iron railings and a raised ornamental fishpond at the entrance (from earlier research).',
+    timeline: [
+      { year: '1935–37', note: 'Built by Zabrodsky and Blaks — about 1,200 sq m of residential block made to read as designed, with varied finishing materials and a care for tenant comfort, down to a fishpond at the door. Named for Fruma Gourevitz (of whom little else is recorded).' },
+      { year: 'Through the decades', note: "It keeps its form and its residential purpose, inside what becomes the UNESCO White City and the Lev Ha'ir preservation plan." },
+      { year: '2018', note: 'Alon Ben-Nun conserves the building and adds about 380 sq m — a floor and a half set back on the roof.' },
+      { year: '28 Feb 2026', note: 'Damaged by an Iranian missile strike on the White City; the historian Ilan Schori calls it the most significant of the two Bauhaus buildings hit.' },
+    ],
     thread: 'Making rental housing feel considered — down to a fishpond at the door.',
   },
   {
@@ -848,8 +1027,15 @@ const entries: Building[] = [
     geo: 'Yehuda Halevi 131, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.069278, lng: 34.780598 },
     image: IMG,
-    innovation:
-      "At Tel Aviv's then-eastern edge, with Sarona's fields still beyond it, the building gave speculative apartment housing a composed, symmetrical Art Deco face — more urban than the agricultural horizon around it. Michael Nastissin had bought the citrus land in 1913; the 'Common House' that built it was a private company, not a socialist cooperative. The poet Uri Zvi Greenberg later lived here, tying the apartment house to the city's cultural and political history.",
+    whyItMatters:
+      "It matters as an idea about urbanity arriving ahead of the city itself — speculative apartment housing given a composed, symmetrical Art Deco face at the edge of the built city: the city's front, drawn before the city reached it.",
+    timeline: [
+      { year: '1913', note: 'Michael Nastissin — a merchant and public man — buys some twelve dunam here through his company "HaBayit HaMeshutaf," the Common House.' },
+      { year: '1925–26', note: "Zuckerman gives the speculative apartment house a composed, symmetrical Art Deco front at the city's then-eastern edge, Sarona's fields beyond." },
+      { year: '1931', note: 'Nastissin dies; Dizengoff eulogises him — a hand also in founding the Electric and Potash companies.' },
+      { year: 'Late 1940s', note: 'The poet Uri Zvi Greenberg lives here with Dr Yehoshua Yeivin, both of the Brit HaBirionim.' },
+      { year: '1950s on', note: 'The gardener Yosef West takes the building; the ground floor runs an atelier, a grocery, a printing press, now a music company.' },
+    ],
     thread: "A composed Art Deco front at the city's edge, the poet Greenberg upstairs.",
   },
   {
@@ -863,10 +1049,15 @@ const entries: Building[] = [
     geo: 'Yefet 27, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.051779, lng: 34.753185 },
     image: IMG,
-    innovation:
-      "The twin towers make a girls' school look almost defensive — a European institutional image announcing permanence and authority just as Jaffa pushed beyond its walls. Built in the 1880s for the Sisters of Saint Joseph of the Apparition as the Pensionnat Saint Joseph, it later became part of a luxury-hotel complex (adaptive reuse by John Pawson with Ramy Gill, 2007–18); salvage excavations before conversion exposed Crusader and late-Ottoman remains, setting the school inside a much deeper urban palimpsest. The original architect is explicitly unknown.",
+    whyItMatters:
+      "It matters as architecture wielded as a claim — stone turrets raised to project a foreign institution's permanence at the very moment the walled old city broke open, authority made visible before the neighbourhood around it even existed.",
     materials:
-      'A symmetrical, twin-turreted Yefet-street front over high-ceilinged halls with decorated tile floors and broad marble staircases; exposed kurkar-like masonry at the base is a strong field observation, not proof of the whole structure.',
+      'A symmetrical, twin-turreted Yefet-Street front over high-ceilinged halls with decorated tile floors and broad marble staircases; exposed kurkar-like masonry at the base is a strong field observation, not proof of the whole structure.',
+    timeline: [
+      { year: '1883–1917', note: "Built by the Sisters of Saint Joseph of the Apparition, newly arrived from Jerusalem's Old City, as the Pensionnat Saint Joseph — a French Catholic boarding school for girls, its twin turrets giving it the authority of a French palace as Jaffa pushed beyond its walls." },
+      { year: '20th century', note: 'Serves for decades as a girls’ school; later protected under the Yehuda Margoza conservation plan (2530).' },
+      { year: '2007–18', note: "Reworked by John Pawson (with Ramy Gill) as part of the W Hotel, set in the former French Hospital at 36 Yefet; salvage digs place it inside a Crusader-and-Ottoman palimpsest." },
+    ],
     thread: "Twin towers that made a girls' school look like a fortress.",
   },
   {
@@ -880,10 +1071,15 @@ const entries: Building[] = [
     geo: '57 Balfour Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.066902, lng: 34.777132 },
     image: IMG,
-    innovation:
-      "An early Dov Karmi caught exactly at the turn: the historicist façade has fallen away — plain rendered planes, strong horizontal slab lines, a deep recessed entrance behind a garden setback — but the massing is still heavier and more domestic than the light White-City block to come. Its argument is circulation: the municipal conservation catalogue singled out the stair and its railing as a characteristic early-modernist detail, because here the way up is made architecture, not hidden. And the modernism is Mediterranean — deep projecting slabs, recessed openings, external shutters and balcony depth handle the sun rather than importing pure abstraction. Handasa dates it to 1933; the catalogue gave only a 1930–40 range.",
+    whyItMatters:
+      "It matters as a first exploration of modernist principles adapted to the Tel Aviv climate — the façade worked in depth, projection and recess to answer the sun rather than import a ready-made abstraction. The argument Karmi would resolve three years later at Liebling House, already here in draft.",
     materials:
-      "Rendered wall planes with regular openings and external shutters; strong horizontal slab and balcony lines; a deep recessed entrance framed by vertical supports; a metal stair railing carried through the circulation — the conserved detail.",
+      "Rendered wall planes with regular openings and external shutters; strong horizontal slab and balcony lines; a deep recessed entrance framed by vertical supports; a metal stair railing carried through the circulation, singled out in the municipal conservation catalogue as the building's characteristic early-Modernist detail.",
+    timeline: [
+      { year: '1933', note: 'Built — Karmi at the turn to modernism; the earliest signed permit-plan is dated 20 June 1933. The original commissioner is not documented — an open question in the record.' },
+      { year: '1951', note: 'Manfred Geis — a Berlin-born theatre critic, Hebrew reciter and publisher (Moadim, with Margot Klausner), and a correspondent of Max Brod — is documented living at Balfour 57.' },
+      { year: 'Since', note: 'Remains residential.' },
+    ],
     thread: 'The moment Tel Aviv housing left façade-decoration for modernist massing — read in a single stair.',
   },
   {
@@ -897,10 +1093,17 @@ const entries: Building[] = [
     geo: "Karl Netter 9, Tel Aviv-Yafo, Israel",
     resolved: { lat: 32.064938, lng: 34.774124 },
     image: IMG,
-    innovation:
-      "A dense Eclectic corner of 1926 with a chamfered, polygonal corner and layered balconies — and one quietly radical detail. At the entrance an octagonal precast-concrete column carries the cornice: a shaped component cast in a mould away from the site and assembled into an otherwise hand-made plaster façade. The point isn't the material — precast was already made locally by the Templer and Shalush Brothers factories, so this is not the first in Tel Aviv — but the logic: manufacture split from site-work, an industrial product made part of the architectural language, years before the whole city turned modern. Built for the land dealer Yosef Klein; its signed 1927 permit is autographed by the owner, not an architect, so the designer stays genuinely unknown.",
+    whyItMatters:
+      "It matters as an early instance of a logic, not a first — a manufactured, precast component set into an otherwise hand-made plaster façade, factory-work entering the architectural language years before the modern turn made it the norm. (Precast was already made locally, so the Atlas is careful not to call it the city's first.)",
     materials:
-      "Rendered façade with plaster relief and incised ornament, Greek-Doric entrance columns, decorated balcony railings, a zinc roof element at the polygonal corner, the 1926 date set into the first-floor balcony — and the documented octagonal precast-concrete column carrying the entrance cornice.",
+      "Rendered façade with plaster relief and incised ornament; Greek-Doric entrance columns; decorated balcony railings; a zinc roof element at the polygonal corner; the 1926 date set into the first-floor balcony — and a documented octagonal precast-concrete column carrying the entrance cornice.",
+    timeline: [
+      { year: '1926', note: "Built for Yosef and Haya-Sarah Klein — Klein a prominent Tel Aviv land dealer; the family, with their grown children Abraham and Malka, lived in one flat and let the rest." },
+      { year: 'late 1920s–30s', note: "A mixed house of tenants — the widower Tzvi Kroupen with his teenagers Mary and Moses, and the Epstein family — a cross-section of the young city under one roof." },
+      { year: '1931', note: 'Benjamin Heller brings his German-method physical-culture practice — massage, therapeutic exercise, rhythmic gymnastics — into the building.' },
+      { year: '1944', note: "Haya-Sarah Klein dies in the house on 12 June, still living where it began." },
+      { year: '1990s', note: 'Elaborate painted ceiling decoration in the stairwell is photographed, then painted over — heritage lost beneath a new coat.' },
+    ],
     thread: 'Industrialised ornament — a manufactured column planted in a hand-made city, its architect unknown.',
   },
   {
@@ -914,13 +1117,16 @@ const entries: Building[] = [
     geo: 'Yehuda Halevi 58, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.065539, lng: 34.778541 },
     image: IMG,
-    innovation:
-      "The plot made the building. On a narrow three-street corner where Yehuda Halevi, Mazeh and Goldberg meet — tightened further when Yehuda Halevi was widened in 1933 — Cherner drew a slim modernist volume with rounded corners and concrete balconies wrapping the exposed sides, so taut it is usually called ship-like. Its structure is the modern shift itself: a reinforced-concrete frame with silicate-brick infill, load-bearing masonry giving way to frame-and-infill that frees the façade. And its modernity ran deeper than looks — a coal-fired basement boiler fed central hot water through the flats. Above all it records an architect changing with his city: the same Cherner whose Eclectic corners fill the 1920s Atlas, now working firmly in the International Style. Maariv moved its offices in from 1951.",
+    whyItMatters:
+      "It matters because the structure is the idea — this is Cherner fully arrived at the International Style, the corner where load-bearing masonry gives way to the frame that frees the façade. The same architect of the 1920s Eclectic corners, now working in a wholly different logic.",
     materials:
-      "Reinforced-concrete frame with silicate-brick infill; concrete floors and projecting balconies; flat roof on a lightweight-block parapet; rendered finish. A coal-fired basement boiler supplied central hot water — advanced domestic services for the 1930s. Mixed-use from the start, shop and flats over a service basement.",
+      "Reinforced-concrete frame with silicate-brick infill — load-bearing masonry giving way to frame-and-infill; concrete floors and projecting balconies; flat roof on a lightweight-block parapet; rendered finish. A coal-fired basement boiler supplied central hot water — advanced domestic services for the 1930s. Mixed-use from the start: shop and flats over a service basement.",
     timeline: [
-      { year: '1933', note: 'Yehuda Halevi is widened, tightening the narrow three-street corner plot.' },
-      { year: '1934–35', note: 'Cherner builds the ship-like modernist block, with a coal-fired basement boiler feeding central hot water to the flats.' },
+      { year: 'Oct 1932', note: 'David Yerdani — an assistant to a train driver, on 20 grush a day until dismissed for ill health — buys the corner plot as an income investment, not a family home.' },
+      { year: '1933', note: 'Yehuda Halevi is widened, tightening the three-street corner; Yerdani commissions Cherner (two storeys, a third approved mid-build).' },
+      { year: '1934–35', note: 'Cherner builds the ship-like modernist block, a coal-fired basement boiler feeding central hot water to the flats.' },
+      { year: '1936–37', note: "Yerdani wins approval for a ground-floor grocery he'd run himself — but his finances fail, and by 1937 the family is living in the rooftop laundry." },
+      { year: '1940', note: 'Yerdani loses the building; it passes to buyers (Tzarkov and Lebanon), then others, its ground floor becoming a parade of shops.' },
       { year: '1951', note: 'The newspaper Maariv moves its administrative departments in.' },
     ],
     thread: 'The plot made the building, and Cherner changed with the city.',
@@ -936,11 +1142,460 @@ const entries: Building[] = [
     geo: '81 Rothschild Boulevard, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.0667, lng: 34.777289 },
     image: IMG,
-    innovation:
-      "Cherner drew this corner in 1931 — the same architect whose Eclectic 'dream houses' fill the 1920s Atlas, here at the hinge, letting the ornament go. Rounded concrete balconies stack at the Balfour–Rothschild corner and a vertical 'thermometer' window lights the stair, the whole front rendered smooth under a flat roof: his transitional moment, three years before the fully International Beit Yerdani. It stands one plot from Joseph Berlin's contemporary house at Rothschild 79, and the two were later stitched into a single conservation-and-addition project by Bar Orian Architects — the rebuild that now sits above Cherner's preserved base. Project TLV lists it as Beit Zehovit Shalush.",
+    whyItMatters:
+      "It matters as the hinge in one architect's development — the corner where Cherner's Eclectic decade lets the ornament go, three years before he arrives fully at the International Style at Beit Yerdani.",
     materials:
-      'A rendered corner block with rounded concrete balconies and a full-height stairwell window; the original permit was received on 27 August 1931 (archive file 00080810, Gush 7435/20, signed plans 6 September 1931). Cherner’s base is preserved beneath a later conservation-and-addition scheme by Bar Orian Architects.',
+      'A rendered corner block with rounded concrete balconies and a full-height stairwell window. Permit received 27 August 1931 (archive file 00080810, Gush 7435/20; signed plans 6 September 1931). Cherner’s base is preserved beneath a later conservation-and-addition scheme by Bar Orian Architects.',
+    timeline: [
+      { year: '1931', note: "Cherner builds the corner block for the Ashkenazi family — Reizel (Shoshana) and Shvach Ashkenazi, who had already commissioned his neighbouring Beit Shevach Ashkenazi at Balfour 44 (1926) — letting the ornament go (permit 27 August; plans signed 6 September)." },
+      { year: 'Later', note: "The base preserved beneath a conservation-and-addition scheme by Bar Orian Architects." },
+    ],
     thread: 'Cherner letting the ornament go — the corner where his Eclectic decade turns modern.',
+  },
+  {
+    id: 53,
+    name: 'Beit Balder',
+    architect: 'Shmuel Balder',
+    year: '1925–26',
+    style: 'Eclectic',
+    styleNote: "The engineer's own villa, on Bialik Square",
+    address: '23 Bialik Street / 31 Idelson',
+    geo: '23 Bialik Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.07352, lng: 34.7705 },
+    image: IMG,
+    whyItMatters:
+      "It matters as a study in incremental architecture — a house never built to a finished plan but grown floor by floor and use by use with its family's fortunes, the slow opposite of the designed-all-at-once modernism rising around it.",
+    materials:
+      "A picturesque Eclectic villa in plastered masonry, crowned by a turret-like roof element and turning the corner on a light-railed rounded balcony — the detail the municipal catalogue singles out. Built as a single storey and raised to three within roughly five years; the structural system is undocumented.",
+    timeline: [
+      { year: '1919', note: 'The Balder family arrives from Vienna; Shmuel Balder, an engineer, is a friend of the poet Bialik.' },
+      { year: '1925–26', note: 'Balder builds the corner villa for his family — one storey (Emil Tyner assisting the plan). Handasa file 00230230.' },
+      { year: 'c. 1930', note: 'Raised vertically — a second floor, then a partial third — within about five years.' },
+      { year: '1937', note: 'Balder dies; Regina Balder turns much of the house over to rented rooms and offices.' },
+      { year: '1970s–80s', note: 'A haunt of artists.' },
+      { year: 'Later', note: 'Home to the Camera Obscura photography school.' },
+    ],
+    thread: 'The engineer\'s own villa that kept turning into something else.',
+  },
+  {
+    id: 54,
+    name: 'Beit Peltzman',
+    architect: 'Eliyahu & Emanuel Friedman',
+    year: 1936,
+    style: 'International Style',
+    styleNote: "The Doctors' House",
+    address: '18 Bialik Street',
+    geo: '18 Bialik Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.07245, lng: 34.77085 },
+    image: IMG,
+    whyItMatters:
+      "It matters as the moment Bialik Street turns modern — a mature International-Style apartment house set down among the street's eclectic 1920s neighbours, the new language arriving in the middle of the old.",
+    materials:
+      "A rendered apartment house in two sub-volumes — one to the street, one set back — with rounded balconies on one side and rectangular on the other over a garden entrance, under a flat roof carrying the shared laundry rooms customary in those years. A reinforced-concrete frame is likely (the rounded balcony forms are concrete) but unverified in the permit record.",
+    timeline: [
+      { year: '1934', note: 'The earlier Berlin villa on the plot is sold.' },
+      { year: '1936', note: 'The Friedman brothers complete the International-Style apartment house.' },
+      { year: 'From the 1930s', note: "Many tenants are physicians running clinics from their flats — the street calls it the Doctors' House." },
+      { year: 'Later', note: 'Long associated with the artists Yossi Mar-Chaim and Michal Na\'aman.' },
+    ],
+    thread: "When the modern apartment plan took in the doctor's clinic.",
+  },
+  {
+    id: 55,
+    name: 'Hava Shapira House',
+    architect: 'Joseph Berlin',
+    year: 1922,
+    style: 'Eclectic',
+    styleNote: 'Later the Husiatyn House',
+    address: '19 Bialik Street',
+    geo: '19 Bialik Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.07265, lng: 34.77065 },
+    image: IMG,
+    whyItMatters:
+      "It matters as a building remade by each new use — few Atlas entries show so plainly that a building's identity can be made by a chain of reuses rather than by a single original program.",
+    materials:
+      "A large single-storey neo-classical villa in plastered historic masonry, formal at the entrance and roofline, with a conservation-era upper floor, basement and lift added under permit; the original structural system awaits the conservation file. Conservation by Prof. Amnon Bar Or.",
+    timeline: [
+      { year: '1922', note: 'Joseph Berlin builds the low neo-classical villa (associated early with Hava Shapira).' },
+      { year: '1920s', note: 'Converted to a sanatorium/clinic under Dr Gerhard Schreiber (Reinman).' },
+      { year: '1931', note: 'Bought by the Ismailoff (Shamellov) family; back to domestic use.' },
+      { year: '1936', note: 'The Husiatyn Rebbe and community take the house, remaining for decades.' },
+      { year: '2018', note: 'A strict-conservation permit — restoration with an added floor, basement and lift; development rights transferred off the plot (plan 2650/B).' },
+    ],
+    thread: 'A house whose identity was written by each new tenant.',
+  },
+  {
+    id: 56,
+    name: 'Beit Zlocisti',
+    architect: 'Lotte Cohn',
+    year: 1922,
+    style: 'Eclectic',
+    styleNote: 'Eretz-Israeli transitional — Lotte Cohn',
+    address: '30 Idelson Street',
+    geo: '30 Idelson Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.0734, lng: 34.77048 },
+    image: IMG,
+    whyItMatters:
+      "It matters as a house built to hold a profession — the home and the private clinic drawn as a single act, in the reduced regional manner just before the International Style. A small, early demonstration that a Tel Aviv house could be shaped by the work done inside it.",
+    materials:
+      "A two-storey house whose façade is worked in silicate brick (documented in the architectural literature); load-bearing masonry is likely but unverified. The original design carried a rooftop tower that was never built; a third floor was added in 1950.",
+    timeline: [
+      { year: '1922', note: 'Lotte Cohn designs the house-and-clinic for Dr Theodor Zlocisti — physician, author and translator, a delegate to the First Zionist Congress who had reached Tel Aviv in 1921; a planned roof tower goes unbuilt.' },
+      { year: '1920s', note: "Zlocisti runs his clinic here and sits on the Tel Aviv city council and its executive; already known as the first biographer of the socialist-Zionist thinker Moses Hess, and once chief medical officer of the Red Cross mission in Constantinople. He later moves his practice to Haifa (d. 1943)." },
+      { year: '1950', note: 'A third floor is added.' },
+      { year: 'Later', note: 'Passes into public/municipal-service use (reported).' },
+    ],
+    thread: 'A pioneering woman architect\'s house built around a clinic.',
+  },
+  {
+    id: 57,
+    name: 'Beit Gross',
+    architect: 'Pinhas Hütt',
+    year: 1928,
+    style: 'Eclectic',
+    styleNote: 'Late Eclectic — the publishing-house ground floor',
+    address: '9 Bialik Street',
+    geo: '9 Bialik Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.07185, lng: 34.7712 },
+    image: IMG,
+    whyItMatters:
+      "It matters as the Atlas's hardest question about conservation itself: what is actually preserved when a building's plaster is saved but the shared social life it was built to hold is dissolved in the very same act? The fabric, or only its ghost?",
+    materials:
+      "A densely ornamented Late-Eclectic apartment block in rendered, plastered masonry with corner balconies; its wood windows and doors were restored and reproduced in the conservation. A new basement was cut during the 2007 project; the original structural system is undocumented.",
+    timeline: [
+      { year: '1928', note: 'Pinhas Hütt builds the eclectic apartment house for the Gross family.' },
+      { year: 'Mid-century', note: 'The Am HaSefer publishing house works from the ground floor — a node of Hebrew literary life.' },
+      { year: '2007', note: 'Bought and comprehensively conserved (Bar Orian Architects) — the apartments merged into a single private townhouse, a new basement added.' },
+    ],
+    thread: 'Conservation saved the building and dissolved the apartment house.',
+  },
+  {
+    id: 58,
+    name: 'Beit Hazin',
+    architect: 'Yehuda Magidovitch',
+    year: '1921–25',
+    style: 'Eclectic',
+    styleNote: "Beit HaLords — the Jekkes' house",
+    address: '15 Rambam Street',
+    geo: '15 Rambam Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.0677, lng: 34.77058 },
+    image: IMG,
+    whyItMatters:
+      "It matters for a small industrial detail and a very long afterlife — a manufactured precast component set into a hand-made eclectic front (fittingly, for a cement importer's house), on a building that then spent three-quarters of a century as everything but a private home. The same precast idea surfaces at Beit Klein.",
+    materials:
+      "Rendered historic masonry with a projecting balcony whose railing is precast concrete — a manufactured component (with ventilation slots) set into an otherwise hand-made eclectic front, and fittingly so, for a cement importer's house. The main structural system awaits the building file.",
+    timeline: [
+      { year: '1921–25', note: "Magidovitch builds the house for the cement importer Ze'ev Wolf Hazin (sources split between 1921–22 and 1925)." },
+      { year: '1920s', note: "Ze'ev and Esther Hazin live here with their children (Yaakov, Yitzhak, Aharon, Pola, Sarah); so do the Zelikovich family — the parents of the painter Reuven Rubin — and Reuven and Esther Rubin hold their own wedding on the building's roof. Café Rafael, the address's best-known tenant, takes rooms below, alongside the Gymnasia." },
+      { year: '1939', note: "The Organization of Central European Jews — the 'Jekkes' — moves in, and stays about seventy-five years." },
+    ],
+    thread: "A cement importer's house, its balcony railing cast in the new material.",
+  },
+  {
+    id: 59,
+    name: 'Beit Nathaniel',
+    architect: 'Yehuda Magidovitch',
+    year: 1931,
+    style: 'Art Deco',
+    styleNote: 'Magidovitch at the turn — the Adenite developers',
+    address: '26 Rambam Street / 82 Allenby',
+    geo: '26 Rambam Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.06752, lng: 34.77084 },
+    image: IMG,
+    whyItMatters:
+      "It matters for who paid for it as much as who drew it — one of Magidovitch's corners caught mid-turn toward the International Style, and a reminder that the money building the Hebrew city came from an Adenite immigrant family, not only from its European founders.",
+    materials:
+      "A prominent corner block with a geometric, angular front and reduced relief ornament under a flat roof — Magidovitch between eclecticism and the International Style. Reinforced-concrete/masonry construction is likely but unverified in the permit record.",
+    timeline: [
+      { year: '1924', note: 'The Nathaniel family — wealthy merchants — arrive from Aden; a plot is bought for the young couple at the Rambam / Allenby corner, on land known as the "Kerem Mishraui".' },
+      { year: '1931', note: 'Magidovitch designs their corner block at Rambam/Allenby (construction runs on; sources give 1931–34).' },
+      { year: 'Later', note: 'The same family commissions Cinema Esther (1939) — the picture palace named for Esther Nathaniel; a conservation rights-transfer scheme now governs the building.' },
+    ],
+    thread: 'The Adenite developers\' corner — Magidovitch letting the ornament go.',
+  },
+  {
+    id: 60,
+    name: "Howard's Hotel",
+    architect: 'Unknown',
+    year: 1892,
+    style: 'Ottoman Era',
+    styleNote: "Jaffa's hotel of arrival",
+    address: '15 Raziel Street (Jaffa)',
+    geo: '15 David Raziel Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.05578, lng: 34.75737 },
+    image: IMG,
+    whyItMatters:
+      "It matters as the architecture of arrival — a building whose whole purpose was the threshold, the first impression the country made on a traveller stepping off the Jaffa quay — and now as one of the sharpest tests in the city of whether endangered late-Ottoman heritage is saved at all.",
+    materials:
+      "Load-bearing stone masonry in the late-Ottoman Jaffa manner. Over the ceremonial entrance a carved-stone 'parochet' (curtain) carries three inscriptions — 'Chevalier A Howard', the Hebrew 'Shalom al Yisrael' (Peace to Israel) and the Arabic 'Salaam al Ibrahim' — a trilingual welcome from a Christian hotelier. The architect is unrecorded, Howard being the hotelier rather than the designer. Severely deteriorated, it partially collapsed in 2003 and has since been stabilised under conservation controls (plan TA/2572).",
+    timeline: [
+      { year: 'Before 1888', note: 'Iskander Awad — a Malta-born Maronite Christian, and a Freemason — becomes Thomas Cook’s agent in Jaffa and anglicises his name to Alexander Howard. His friend Scheinberg’s memoir claims (versions vary) a past as a Garibaldi volunteer knighted by the Italian Crown, a fighter in the 1870 Franco-Prussian War, who turned to the Bible and to a lifelong friendship with the Jews.' },
+      { year: '1888', note: 'Howard publishes a "Guide to Jerusalem and Vicinity", runs a carriage line up from the port, and keeps a hotel in Jerusalem; his first Jaffa hotel stands at 13 Raziel.' },
+      { year: '1892', note: 'He builds the luxurious new hotel-and-residence at 15 Raziel and lives there — first-class rooms, hot and cold baths, and the trilingual "Peace to Israel / Peace to Ibrahim" curtain over the door.' },
+      { year: '1904', note: 'Howard dies and is buried in the garden behind the house; after his wife Helen’s death his body is moved to the Maronite church he had helped establish, where a plaque marks it.' },
+      { year: '1912', note: 'Helen funds a bell tower in his memory and bequeaths the houses to the church — still registered as the "Alexander Howard Endowment" (reported, per Kesari).' },
+      { year: '2003', note: 'The long-deteriorated building partially collapses, setting off a demolition-versus-preservation fight that runs to this day.' },
+    ],
+    thread: 'The hotel that carried pilgrims from the port — and nearly fell.',
+  },
+  {
+    id: 61,
+    name: 'Beit Ravnitzki',
+    architect: 'Joseph Berlin',
+    year: 1929,
+    style: 'Art Deco',
+    styleNote: 'Late Berlin — exposed silicate brick',
+    address: "80 Ahad Ha'am / 40 Mazeh",
+    geo: "80 Ahad Ha'am Street, Tel Aviv-Yafo, Israel",
+    resolved: { lat: 32.066, lng: 34.7769 },
+    image: IMG,
+    whyItMatters:
+      "It matters because the building's meaning is inseparable from the man who lived in it — the Atlas's clearest case of a house that reads as a portrait of its owner, one of the two editors who together assembled the canon of modern Hebrew literature.",
+    materials:
+      "Exposed silicate brick worked as a sculptural, geometric front — the material left to decorate itself, as at Berlin's Beit Mann — over a compact villa on a trapezoidal plot, flat-roofed, with an upper verandah; the wood windows, shutters and doors were reconstructed in the 2017–19 restoration (conservation sign: plan 2575/B).",
+    timeline: [
+      { year: '1929', note: 'Joseph Berlin builds the corner villa for his friend, the writer and publisher Yehoshua Hana Ravnitzki (completed 1929–30).' },
+      { year: '1930s–40s', note: "Ravnitzki's home becomes a gathering point for writers and scholars; much of the work of the Dvir publishing house — which he ran with Bialik and Shmaryahu Levin — is done here at Ahad Ha'am 80." },
+      { year: '2009', note: 'A memorial plaque to Ravnitzki is unveiled at the house on the 150th anniversary of his birth.' },
+      { year: '2017–19', note: 'Conserved and extended (Kimmel Eshkolot Architects / Hadas Ricks), the wood joinery reconstructed.' },
+    ],
+    thread: 'Berlin\'s bare brick, turned Art Deco, for Bialik\'s collaborator.',
+  },
+  {
+    id: 62,
+    name: 'Beit Oplatka',
+    architect: 'Unattributed',
+    year: 1925,
+    style: 'Eclectic',
+    styleNote: "Later Hashomer Hatzair's headquarters",
+    address: "7 Bezalel Yafe / 66 Ahad Ha'am",
+    geo: "66 Ahad Ha'am Street, Tel Aviv-Yafo, Israel",
+    resolved: { lat: 32.0646, lng: 34.77543 },
+    image: IMG,
+    whyItMatters:
+      "It matters as domestic architecture turned into political infrastructure — a private family house that became, for decades, the working headquarters of a national movement. A home converted, room by room, into the face of a politics.",
+    materials:
+      "A rounded corner block in plastered masonry, its junction made inhabitable by a covered balcony carried on columns, with a precast-concrete balustrade of repeated openings — the corner given a public face while the rooms stayed domestic. Handasa file 00110660 (Gush 7455/8); architect unresolved (reported A. Tiner/Tainer or A. Sieber/Siber).",
+    timeline: [
+      { year: '1925', note: 'Built for Dr Raphael Oplatka — Jerusalem-born, trained in medicine in Paris and a former Ottoman military medical officer, by then chief physician of the government health office in Mandate Tel Aviv — and his wife Yocheved, who ran the building; the childless couple take one large flat and let the rest.' },
+      { year: '1930s', note: 'Tenants include a Sorbonne-trained teacher giving French, English and German lessons.' },
+      { year: '1948 / 1951', note: 'Dr Oplatka dies in his apartment (1948); Yocheved in 1951; the property passes to heirs.' },
+      { year: '1950s onward', note: "Much of the building is let to Hashomer Hatzair / Kibbutz HaArtzi under protected tenancy, becoming the movement's central leadership address for decades — 'the leadership.'" },
+      { year: '1958', note: "Hashomer Hatzair's technical department reports severe deterioration — falling balcony, cornice and railing pieces." },
+      { year: '2015', note: 'Sold, with neighbouring Rothschild 55, for a reported ~₪100 million.' },
+    ],
+    thread: "The private corner that became a movement's address.",
+  },
+  {
+    id: 63,
+    name: 'Beit Shmuel David',
+    architect: 'Yehoshua Tzvi Tabachnik',
+    year: '1922–30',
+    style: 'Eclectic',
+    styleNote: "Tabachnik's Jewish Jugendstil — the David Strike",
+    address: '79 Allenby / 2 Mazeh',
+    geo: '79 Allenby Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.06689, lng: 34.77165 },
+    image: IMG,
+    whyItMatters:
+      "It matters as the one Atlas building whose making mattered more than its design — where the act of construction itself, not the finished façade, became a political event the young country would remember.",
+    materials:
+      "A prominent Eclectic corner in plastered masonry, dressed in Tabachnik's Jewish-Jugendstil vocabulary — a crenellated parapet, arched upper windows on twisted colonettes, an Art-Nouveau entrance — over a commercial ground floor. The 1925 façade signed off that December under permit 1059 (engineer Grinberg); Handasa file 00040790 (Gush 6937/4). The original permit specified four shops beneath a residential floor, on Allenby at the corner of Gruzenberg — the street renamed Mazeh in 1924 after Rabbi Yaakov Mazeh; the contractor was Mizrahi.",
+    timeline: [
+      { year: '1921', note: 'The corner plot is fenced for building.' },
+      { year: '1922–23', note: 'Construction begins for the David family — Shmuel and Menachem David, textile merchants from Salonica.' },
+      { year: 'July 1923', note: "The 'David Strike' — a wage dispute on the site turns to blows, drawing in unemployed workers and the labour movement; police intervene and prosecutions follow. Ben-Gurion would recall it in later years." },
+      { year: '1925', note: 'The façade is signed off (permit 1059).' },
+      { year: '1930', note: 'The upper floor is completed.' },
+      { year: '1930s', note: 'David-Shmuel asks to enclose balconies — extra enclosed room for the poor families he rents to.' },
+      { year: '1940s', note: "Two eateries share the ground floor — Moshe Wald's coffee house, famous for its sought-after 'Balsam' ice cream, and Abraham Padlossov's restaurant." },
+      { year: 'Since', note: 'The four ground-floor shops run through a cosmetics shop, a bookshop-and-theatre-ticket agency, a grocery, the Bigdei Ofir / ATA clothing store (1960), and the Israeli Gallery of Medals and Coins (1970s).' },
+    ],
+    thread: 'A merchant\'s house that became a labour battleground.',
+  },
+  {
+    id: 64,
+    name: 'Israel Kimball House',
+    architect: 'Moshe Cherner',
+    year: '1932–34',
+    style: 'International Style',
+    styleNote: "Transitional — Mania Bialik's home",
+    address: '3 Melchett / 28 Mazeh',
+    geo: '3 Melchett Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.06639, lng: 34.77485 },
+    image: IMG,
+    whyItMatters:
+      "It matters for who lived in it and what it became — a plain modern apartment house that turned, through one tenant and one museum, into a keeper of the city's cultural memory. Significance carried by use, not by design.",
+    materials:
+      "Cubic, rendered volumes with a strong corner and broad balconies read as outdoor rooms; a central stairwell lit by a vertical 'thermometer' window. Built in stages — a two-storey north wing (1932, permit approved 31 July; plan 1929), a three-storey south wing (1934), a later third floor (1950s). Handasa file 00140280 (Gush 7451/12). Conserved and extended by Bar Orian Architects, 2019–22.",
+    timeline: [
+      { year: '1932', note: 'The two-storey north wing goes up for Israel Kimball (permit approved 31 July).' },
+      { year: '1934', note: 'A three-storey south wing is added.' },
+      { year: '1937–1972', note: 'Mania Bialik makes it her home for some thirty-five years — a literary meeting place, drawing Tchernichovsky and the Fichmanns.' },
+      { year: '1976', note: "Her former apartment opens as the first home of the Tel Aviv Municipal Theatre Museum, built around Yehuda Gabay's collection." },
+      { year: '2004', note: 'The theatre archive moves to Beit Ariela; the building returns to residential and heritage life.' },
+      { year: '2019–22', note: 'Conserved and extended by Bar Orian Architects as a five-storey, nine-apartment residential project.' },
+    ],
+    thread: "The modern house that kept the city's theatre memory.",
+  },
+  {
+    id: 65,
+    name: 'Strauss Health Center',
+    architect: 'Benjamin Chaikin',
+    year: '1928–30',
+    style: 'Eclectic',
+    styleNote: "Nathan & Lina Strauss Health Center — Haganah Mak'l 6",
+    address: '14 Balfour Street',
+    geo: '14 Balfour Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.0674, lng: 34.77399 },
+    image: IMG,
+    whyItMatters:
+      "It matters as the city's first building for keeping people well rather than treating the sick — preventive health as architecture, in a city that had only ever built to cure. And it lived a rare double life, a civic clinic that was also a covert arm of the pre-state underground.",
+    materials:
+      "An H-shaped two-storey block — a central wing and two side wings — wrapped around a large therapeutic garden with a grove, a playground and a fish pond (landscape by Menachem Katz). An arched entrance with timber double-leaf doors, arched glazing and decorative plaster over masonry and render; interior art by Gor Arie and Ze'ev Raban. A third floor and rear wings were added in 1943; restored 2022–23 (Grill Oppenheim Architects), the late balconies removed and the auditorium returned to its documented original. Handasa file 00160141 (Gush 7431/23\u201324) \u2014 primary-confirmed; the file carries material back to 1932.",
+    timeline: [
+      { year: '1928', note: "Cornerstone laid on 31 January — Sir Alfred Mond, H.N. Bialik and Meir Dizengoff among the speakers — for a health centre given by the American philanthropists Nathan and Lina Strauss (of Macy's), on ~6 dunams from the municipality, at Henrietta Szold's urging." },
+      { year: '1930', note: 'Opens beside Hadassah Hospital on Balfour 8 — Tipat Halav infant care, a school dental clinic, a hygiene station, food-testing and health laboratories, a lecture hall, an infant nursery and a school for deaf children, all set around the garden.' },
+      { year: '1936–48', note: "Doubles as the Haganah's Mak'l 6 — training in small arms, fieldcraft, topography, first aid and communications, a headquarters, and a hidden weapons cache (slik) inside the working clinic." },
+      { year: '1943', note: 'A third floor and rear wings are added.' },
+      { year: '1944–45', note: 'A nursing school is commissioned and moves into the building.' },
+      { year: '1950s', note: 'A long-running vaccination and preventive-health station — tuberculosis, and later the Salk polio campaigns.' },
+      { year: '2022–23', note: 'Major conservation (Grill Oppenheim): exterior and auditorium restored to original documentation.' },
+    ],
+    thread: 'A house for keeping the city well — that also armed it in secret.',
+  },
+  {
+    id: 66,
+    name: 'Beit Ussishkin',
+    architect: 'Alexander Levy',
+    year: 1922,
+    style: 'Eclectic',
+    styleNote: 'Ussishkin\u2019s house — three generations of architects',
+    address: '52 HaYarkon / 7 Allenby',
+    geo: '52 HaYarkon Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.07348, lng: 34.76624 },
+    image: IMG,
+    whyItMatters:
+      "It matters as a house that is also a political biography — built in 1922 for Menachem Ussishkin, soon chairman of the Jewish National Fund, when the city's western edge was still sand; written over by three generations of architects; and saved from a 23-storey tower only because preservation moved the development value elsewhere.",
+    materials:
+      "Tel Aviv Eclecticism — pointed and arched windows and a large arched entrance carrying Eastern, Jaffa-derived references, set against classical cornices, columns and a formal composition — in stone, plaster and masonry. The sea air wore it hard. In 1999 Benjamin Moczewski restored the shell and set three new floors of steel, aluminium and glass above it, deliberately legible as a separate layer rather than imitation. Handasa file 00040070 (Gush 6909/21) \u2014 primary-confirmed; original specification still a Handasa question.",
+    timeline: [
+      { year: '1922', note: 'Alexander Levy builds the two-storey house for Menachem Ussishkin, on a plot bought from Hachsharat Hayishuv when the western edge of the city was still sand; one flat is kept for the family, the rest let.' },
+      { year: '1925', note: "Leopold Pilichowski paints Ahad Ha'am and Ussishkin together on the balcony — a rare record of two founders of Hebrew intellectual life in the building itself." },
+      { year: '1930s', note: 'Joseph Minor adds a third floor — a second architectural layer.' },
+      { year: '1940s–80s', note: 'Ussishkin dies in 1941; the family keeps one apartment while most is rented and the ground floor turns to shops; the building slowly declines.' },
+      { year: '1992–93', note: "Ussishkin's grandson sells to investors who plan a 23-storey tower; preservation rules block demolition." },
+      { year: 'mid-1990s', note: 'A proposal to house Palestinian Authority representation here draws controversy and fails.' },
+      { year: '1999', note: 'Benjamin Moczewski restores and extends the building — three contemporary floors in steel and glass, kept legibly apart from the historic shell.' },
+    ],
+    thread: "A Zionist leader's house that became a stage for the city's politics.",
+  },
+  {
+    id: 67,
+    name: 'Beit Victor Nagi',
+    architect: 'Ben-Ami Shulman',
+    year: 1937,
+    style: 'International Style',
+    styleNote: "Shulman's sculptural modernism — the Taussig salon",
+    address: "3 Mapu / 1 Yeho'ash",
+    geo: '3 Mapu Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.08076, lng: 34.76882 },
+    image: IMG,
+    whyItMatters:
+      "It matters twice over — as architecture and as a room. As architecture, Shulman's experimental open ground floor drew a 1937 municipal demolition order that the city's architects collectively fought and overturned — one of the first times the profession defended a modern building against the regulator. As a room, one apartment held a fifty-year literary salon.",
+    materials:
+      "Two primary masses composed to read almost as separate volumes, their seam emphasised by deeply recessed balconies, over a partly open columned ground floor; three residential floors above, horizontal strip windows, strong horizontal balconies, an original rooftop pergola (since gone), and a free-standing wall carried past the volume as an independent plane. Sculptural International Style, not applied Bauhaus motif. Handasa file 00970030 (Gush 6968/141) \u2014 primary-confirmed; original drawings a Handasa question.",
+    timeline: [
+      { year: '1937', note: 'Ben-Ami Shulman builds the apartment house for Victor Nagi, a senior figure of the Alliance / Mikve Israel educational world; the open columned ground floor draws a municipal demolition order.' },
+      { year: '1937', note: "Tel Aviv's architects, led by Joseph Neufeld through the Engineers' Association, rally to Shulman's defence — the order is annulled and the experimental ground floor survives." },
+      { year: '1941', note: 'Nadja and Ernst F. Taussig take an apartment; on 3 May the first lecture of what becomes a fifty-year German-language salon — a cultural island for Central-European émigrés — is given.' },
+      { year: '1943', note: "On 6 May the salon stages a mock trial on immigration and the language question — Sammy Gronemann judging, Moshe Sharett prosecuting." },
+      { year: '1940s–80s', note: "Regulars include Max Brod (Kafka's literary executor), Arnold Zweig, Sammy Gronemann and Margot Klausner; the apartment is at once home, the REKTA/Aufbau office, and a cultural institution." },
+      { year: '~1991', note: 'The salon ends after some fifty years; in 2018 its surviving papers — ~230 letters, ~70 of them from Max Brod — are bought by the National Library of Israel.' },
+    ],
+    thread: "A modern apartment that held a fifty-year salon — and Kafka's memory.",
+  },
+  {
+    id: 68,
+    name: "Ahad Ha'am School",
+    architect: 'Dov Hershkovitz',
+    year: 1924,
+    style: 'Eclectic',
+    styleNote: 'Bezalel ceramic façade — now Beit Yaakov',
+    address: "37 Ahad Ha'am Street",
+    geo: "37 Ahad Ha'am Street, Tel Aviv-Yafo, Israel",
+    resolved: { lat: 32.06497, lng: 34.77485 },
+    image: IMG,
+    whyItMatters:
+      "It matters as the city's first municipal school, and for the plainest kind of continuity in the Atlas — it has done one thing, taught children, for a century, through every change of language, gender and regime that has passed over it.",
+    materials:
+      "A two-storey, long rectangular institutional block, its principal Ahad Ha'am façade rising to a raised central entrance under a double-arched composition. The front carries a major glazed-ceramic programme by Ze'ev Raban and Yaakov Eisenberg of the Bezalel workshops (1924) — landscapes of the Land, menorahs, winged figures and the Twelve Tribes, with verses from Isaiah and Psalms. Eleven classrooms, a workshop and administrative rooms behind; structural system awaits the Handasa file.",
+    timeline: [
+      { year: '1913', note: "The Hebrew boys' school is founded in Jaffa by Alexander Ziskind Rabinowitz amid the 'War of the Languages'." },
+      { year: '1924', note: "Dov Hershkovitz's permanent two-storey school opens at Ahad Ha'am 37 — the city's first municipal school building — its façade set with Bezalel ceramics; the site is still half sand, and the school helps anchor the growth of Lev Tel Aviv." },
+      { year: '1924–1945', note: 'Pinchas Auerbach directs a secular Hebrew boys\u2019 school; the writer Yehuda Burla teaches here (1933–44).' },
+      { year: '1936–1947', note: 'The building doubles as a Haganah communications-training site, with a concealed weapons cache (slik) inside the working school.' },
+      { year: 'mid-1940s', note: "The school turns coeducational, then joins the state's secondary system (Municipal High School A)." },
+      { year: '1980s', note: 'A demolition threat is beaten back by public protest, and the building is preserved.' },
+      { year: '2010s–now', note: 'Now the Beit Yaakov girls\u2019 school; the ceramic façade documented, conserved and restored (Studio Techelet; Ezra & Bitzaron).' },
+    ],
+    thread: 'A hundred years of teaching — the language, the pupils and the politics all changed; the schooling did not.',
+  },
+  {
+    id: 69,
+    name: 'Beit Mintz',
+    architect: 'Chaim Kris',
+    year: 1932,
+    style: 'International Style',
+    styleNote: 'A hundred years of cafés at Bialik 2',
+    address: '2 Bialik Street / 39 Allenby',
+    geo: '2 Bialik Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.07155, lng: 34.77155 },
+    image: IMG,
+    whyItMatters:
+      "It matters as a building made for sociability — a modernist corner given over from the start to the café as the young city's public living room. Its rounded, ship's-prow corner and glazed shopfront turn to greet three streets, and its roof became an open-air social room; the International Style here is not austere but theatrical, an architecture of looking, meeting and being seen.",
+    materials:
+      "An International-Style commercial building — architect Shmuel Dov Chaim Kris, engineer David Tobia, 1932 — whose rounded 'ship's prow' corner addresses Bialik, Allenby and Tchernichovsky at once, with a horizontal balcony, a projecting canopy, a curved display window, and a roof terrace behind a tubular metal-pipe railing where the café itself sat. Behind the modernist corner block stood a separate, older arched structure with a garden — the café known as 'Three Monkeys' for a rooftop sign of three little waiter-figures. Handasa file 00040390 (Gush 7226 / Helka 94) holds only the 2016–2025 conservation-and-redevelopment paperwork; the original 1932 sheets are not digitised, and the modern drawings are CAD — so no measured plan or elevation could be pulled.",
+    timeline: [
+      { year: '1932', note: 'The building goes up at the acute Bialik / Allenby / Tchernichovsky corner (architect Shmuel Dov Chaim Kris, engineer David Tobia; some accounts credit Tobia/Tuvia as architect), and in September Jacob Courbelnik opens Café Sapir on its roof — a Haaretz notice calls it "an elegant café worthy of the great European capitals" and crowds press at the windows. Photographed the same year by Ze’ev Alexandrowicz.' },
+      { year: '1930s', note: 'Café Sapir draws students and the neighbourhood’s intellectuals — Bialik and the mayor Meir Dizengoff among the regulars — and on Thursday nights the rooftop terrace becomes a dance floor for the tango, Charleston and foxtrot arriving from Europe and America.' },
+      { year: '1934', note: 'Ben-Zion Mintz, a US-immigrant real-estate investor, acquires the building and gives it its lasting name; Café Gan Raveh takes the corner — its name suggested by Bialik — serving an English "Five o’clock tea".' },
+      { year: '1930s–40s', note: 'The café passes through names — Sapir, Zamir, Gan Raveh, Par — a long-lived café node rather than one famous room.' },
+      { year: '1996', note: 'Café Bialik reopens the corner as a music-and-nightlife venue.' },
+      { year: '2002', note: 'On 30 March a suicide bombing on the corner — claimed by the Al-Aqsa Martyrs’ Brigades — kills one, Rachel Tzarchi, and wounds many: a scar in a building otherwise made for gathering.' },
+      { year: '2007–11', note: 'The owner, Daniella Weiss, wins a permit to demolish the corner for a tower; a residents’ campaign — the architect Dan Levin among them — overturns it, and the building is kept and protected under conservation plan TA/2650/B.' },
+      { year: '2021–25', note: "Gidi Bar Orian's practice keeps the historic corner and raises new residential floors above and behind it — preservation carried out while developing." },
+    ],
+    thread: 'One corner that has poured coffee for a hundred years.',
+  },
+  {
+    id: 70,
+    name: 'Beit Dr. Alfes',
+    architect: 'Alexander Levy',
+    year: 1922,
+    style: 'Eclectic',
+    styleNote: 'The façade Levy fought the city to build',
+    address: '4 Balfour Street',
+    geo: '4 Balfour Street, Tel Aviv-Yafo, Israel',
+    resolved: { lat: 32.068288, lng: 34.771408 },
+    image: IMG,
+    whyItMatters:
+      "It matters as a building whose argument outlasted its drawings. No original plan of Beit Alfes was ever filed, yet its building file — correspondence in Russian, French, German and Hebrew — preserves an architect fighting the young city's by-laws for a façade he wanted purely for its beauty: the pointed-arch loggias and street balconies he called a 'delicate Oriental' front, allowed against the rules only because the owner would pay extra for the city's good looks. Here the Eclectic façade is not decoration but a documented position in an argument about what the Hebrew city should look like.",
+    materials:
+      "An Eclectic residence of two storeys over a partial basement — four flats, planned flexibly as an investment. Only the north face, to Balfour, is a designed front; the others are plain service elevations, so the architecture is concentrated in a single symmetrical composition whose strength is massing rather than ornament. Two pitched-roofed end pavilions frame a recessed centre: a ground-floor arched entrance under a radiating fanlight, a first-floor arcade behind a crenellated parapet, and tall pointed-arch windows set in deep recessed loggias that throw the front into shadow. The Eclectic vocabulary is spare and deliberate — pointed ('Oriental') arches, precast-concrete dressings, serrated parapets and characteristic timber joinery — the 'delicate Oriental' effect Levy argued the city should pay for. Above the entrance stair he set a projecting arched loggia (the contested 'arker'), flanked by the two cantilevered balconies added mid-build. Structurally it is a load-bearing-wall building stiffened with reinforced concrete at the floors and the cantilevered balconies: ground-floor bearing walls of 72 cm silicate brick, a ground-floor street face of precast concrete blocks, thinner concrete-block walls above, all in a lime-based yellow-brown plaster. Over the ground floor Levy laid a monolithic reinforced-concrete ceiling rather than the rail-and-filler (railsim) floors then common — a European method he took personal responsibility for, approved by the Central Association of Engineers in Palestine in June 1922; the first-floor ceiling is plastered timber beams, and a single external stair of two parallel terrazzo flights climbs the entrance front behind a cast-iron railing with a timber handrail. No original architectural plan was ever digitised; the drawing shown is the conservation team's reconstruction of the 1922 street elevation, read back from the standing building, a 1934 alteration permit and historic photographs. Handasa file 00160040 (Gush 6933 / Helka 114).",
+    timeline: [
+      { year: '1921', note: "Dr. Akiva Alfes (1879–1962) — a urologist and kidney surgeon trained in Paris who had practised in Cairo — is recorded as owner of the Balfour corner plot (21 October). It sits beside the new Camp Balfour, thrown up after the May 1921 riots, on ground where the municipal Hadassah Hospital would soon rise next door at Balfour 8." },
+      { year: '1922', note: "Levy designs the house (built by the 'Bniya' cooperative building company). A dispute erupts over the arched structure above the stairwell and two street balconies, which the city architect Magidovitch rules against the by-laws; Levy argues for them on artistic grounds, to give the front a 'delicate Oriental' look, telling the Va'ad the building is, 'as far as aesthetic taste is concerned, exceptional'. Alfes has the builders raise the balconies while Levy is absent; the city weighs putting the architect on trial (July), and Levy resigns site management and sues for his fee. His reinforced-concrete ground-floor ceiling is approved in June." },
+      { year: '1924–25', note: "Alfes's family follows him to the country; he and his wife Rachel (née Chabas) live in one flat, the others rented and a pharmacy or medical tenant advertised for. Their only son, Lev, dies of tuberculosis in London at eighteen (1925)." },
+      { year: '1926', note: 'Levy resigns from the project entirely; some details — the entrance stair among them — are resolved on site without him.' },
+      { year: '1932–34', note: "The pediatrician Dr. Grodski-Nasirovsky lives in the building (1932). In 1934 the architect Dr. Leo Adler proposes a third floor and an International-Style reface, demanded by the city engineer Ya'akov Ben-Sira — refused for exceeding the building limits, so the Eclectic front survives unchanged." },
+      { year: '1940s–50s', note: "The ground floor fills with trades — an antiques shop, a cobbler, a textile works, a sock-and-linen shop, the tailor Nissel — while Dr. Ernst Gotthelf's eye clinic runs upstairs. In 1949 the neighbouring Agrobank sues over the deafening hammering from a workshop in the house." },
+      { year: '1967', note: "The city engineer declares it a 'dangerous building'; the rickety cantilevered balconies are taken down and basic repairs made." },
+      { year: '1960s–80s', note: "The A. Armoni book-and-pamphlet distribution agency holds the building for two decades; then, briefly in the late 1980s, 'Pub Balfour' opens on the upper floor (the waitress Dana Berger remembered with it). By the early 2000s the house is abandoned." },
+      { year: '2024', note: "The Michakashvili family — owners of Balfour 4 since 1963 — see their landmark Tel Aviv portfolio, the Balfour Street lots among it, sold in a NIS 540 million court-ordered auction after a protracted family dispute. A conservation plan (Gal Peleg Architects) has been drawn but, as of 2025, has yet to begin." },
+      { year: 'Today', note: 'Vacant and derelict, its roof leaking; listed for strict conservation under plan 2650B and in the UNESCO buffer zone.' },
+    ],
+    thread: 'The house the city knows from its quarrel file, not its plans.',
   },
 ];
 

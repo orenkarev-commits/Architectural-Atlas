@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -18,7 +18,7 @@ import { buildings } from '../data/buildings';
 import { architects } from '../data/architects';
 import { feed, type FeedStory } from '../lib/feed';
 import { rotatedSlice } from '../lib/rotate';
-import { matchBuilding, suggest, type Suggestion } from '../lib/search';
+import { suggest, type Suggestion } from '../lib/search';
 import { colors, radii, spacing } from '../theme/tokens';
 import { editorial, ui } from '../theme/typography';
 
@@ -33,7 +33,6 @@ function StoriesMarquee({ items, onOpen }: { items: FeedStory[]; onOpen: (s: Fee
   const setWidth = items.length * (STORY_CARD_W + STORY_GAP);
   const x = useSharedValue(0);
   useEffect(() => {
-    // ~22 px/sec — slow, constant, seamless (translate one full set, then repeat).
     x.value = 0;
     x.value = withRepeat(withTiming(-setWidth, { duration: setWidth * 45, easing: Easing.linear }), -1, false);
   }, [x, setWidth]);
@@ -51,35 +50,25 @@ function StoriesMarquee({ items, onOpen }: { items: FeedStory[]; onOpen: (s: Fee
   );
 }
 
-/** A large map button — a plus in a circle with a slow pulsing ring behind it. */
-function PulsingMapButton({ onPress }: { onPress: () => void }) {
+/** A pulsing ring behind a circle button. */
+function PulseRing() {
   const scale = useSharedValue(1);
-  const opacity = useSharedValue(0.55);
+  const opacity = useSharedValue(0.5);
   useEffect(() => {
-    scale.value = withRepeat(withTiming(2.3, { duration: 1800, easing: Easing.out(Easing.ease) }), -1, false);
+    scale.value = withRepeat(withTiming(2.2, { duration: 1800, easing: Easing.out(Easing.ease) }), -1, false);
     opacity.value = withRepeat(withTiming(0, { duration: 1800, easing: Easing.out(Easing.ease) }), -1, false);
   }, [scale, opacity]);
   const ring = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }], opacity: opacity.value }));
-  return (
-    <Pressable onPress={onPress} style={({ pressed }) => [styles.mapBtnWrap, pressed && styles.pressedScale]}>
-      <Animated.View style={[styles.mapPulseRing, ring]} pointerEvents="none" />
-      <View style={styles.mapBtnCircle}>
-        <View style={styles.plusIcon}>
-          <View style={styles.plusBarH} />
-          <View style={styles.plusBarV} />
-        </View>
-      </View>
-    </Pressable>
-  );
+  return <Animated.View style={[styles.mapPulseRing, ring]} pointerEvents="none" />;
 }
+
+const CIRCLE = 72; // 25% smaller than the previous 96
 
 export default function Welcome() {
   const [query, setQuery] = useState('');
   const { pickStart, advanceStories, findNearMe, nearError } = useAtlas();
   const insets = useSafeAreaInsets();
 
-  // The bottom marquee draws a rotating slice of the whole story feed; `pickStart`
-  // advances on every return to the welcome screen, so it refreshes each visit.
   const feedSlice = rotatedSlice(feed, pickStart, 16);
   const openFeed = (s: FeedStory) => {
     if (s.storyId) router.push({ pathname: '/story/[id]', params: { id: s.storyId } });
@@ -109,14 +98,11 @@ export default function Welcome() {
     }
   };
 
+  // On submit (return key or the send arrow) just dismiss the keyboard and leave the
+  // suggestion list up, so the user can pick a result themselves rather than being
+  // jumped straight to the first match.
   const submitSearch = () => {
-    const first = suggest(query, buildings, architects)[0];
-    if (first) return goToSuggestion(first);
-    const building = matchBuilding(query, buildings, architects);
-    if (building) {
-      setQuery('');
-      router.push({ pathname: '/locating', params: { buildingId: String(building.id) } });
-    }
+    Keyboard.dismiss();
   };
 
   const onOpenMap = () => {
@@ -126,115 +112,138 @@ export default function Welcome() {
 
   return (
     <GradientBackground>
-      <ScrollView
-        contentContainerStyle={[
-          styles.content,
-          { paddingTop: insets.top + 28, paddingBottom: insets.bottom + spacing.xl },
-        ]}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.rule} />
-        <Text style={styles.title}>The Architectural Atlas</Text>
-        <Text style={styles.standfirst}>
-          Tel Aviv, building by building — who made it, why it matters, and what it hides.
-        </Text>
+      <View style={[styles.screen, { paddingTop: insets.top + 16, paddingBottom: insets.bottom + 6 }]}>
+        {/* Top: identity + search */}
+        <View style={styles.top}>
+          <View style={styles.rule} />
+          <Text style={styles.title}>
+            <Text style={styles.titleThe}>The </Text>Architectural Atlas
+          </Text>
+          <Text style={styles.standfirst}>
+            Tel Aviv, building by building — who made it, why it matters, and what it hides.
+          </Text>
 
-        {/* Centred search, in line with its dot */}
-        <View style={styles.searchWrap}>
-          <ExpandingSearchInput value={query} onChangeText={setQuery} onSubmit={submitSearch} />
-          {suggestions.length > 0 ? (
-            <View style={styles.suggestions}>
-              {suggestions.map((s, i) => (
-                <Pressable
-                  key={`${s.kind}-${s.buildingId ?? s.architectName ?? i}`}
-                  onPress={() => goToSuggestion(s)}
-                  style={({ pressed }) => [styles.suggestionRow, pressed && styles.suggestionPressed]}
-                >
-                  <Text style={styles.suggestionTitle} numberOfLines={1}>{s.title}</Text>
-                  <Text style={styles.suggestionSub} numberOfLines={1}>{s.subtitle}</Text>
-                </Pressable>
-              ))}
-            </View>
-          ) : null}
+          <View style={styles.searchWrap}>
+            <ExpandingSearchInput
+              value={query}
+              onChangeText={setQuery}
+              onSubmit={submitSearch}
+              placeholder="What is that building?"
+            />
+            {suggestions.length > 0 ? (
+              <View style={styles.suggestions}>
+                {suggestions.map((s, i) => (
+                  <Pressable
+                    key={`${s.kind}-${s.buildingId ?? s.architectName ?? i}`}
+                    onPress={() => goToSuggestion(s)}
+                    style={({ pressed }) => [styles.suggestionRow, pressed && styles.suggestionPressed]}
+                  >
+                    <Text style={styles.suggestionTitle} numberOfLines={1}>{s.title}</Text>
+                    <Text style={styles.suggestionSub} numberOfLines={1}>{s.subtitle}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            ) : null}
+          </View>
         </View>
 
-        {/* Enlarged, pulsing map button */}
-        <View style={styles.nearMeWrap}>
-          <PulsingMapButton onPress={onOpenMap} />
-          <Text style={styles.mapHint}>Open the map</Text>
-          {nearError ? <Text style={styles.nearError}>{nearError}</Text> : null}
-        </View>
-
-        <View style={styles.circleRow}>
-          <Pressable
-            onPress={() => router.push('/atlas')}
-            style={({ pressed }) => [styles.circle, pressed && styles.liftLarge]}
-          >
-            <View style={styles.atlasClip}>
-              <Image source={fieldTexture} style={styles.atlasTexture} />
-              <View style={styles.atlasTextureWrap}>
-                <Text style={styles.atlasLabel}>Atlas</Text>
+        {/* Middle: the map button, then the three destination circles */}
+        <View style={styles.middle}>
+          <Pressable onPress={onOpenMap} style={({ pressed }) => [styles.mapBtnWrap, pressed && styles.pressedScale]}>
+            <PulseRing />
+            <View style={styles.mapBtnCircle}>
+              <View style={styles.plusIcon}>
+                <View style={styles.plusBarH} />
+                <View style={styles.plusBarV} />
               </View>
             </View>
           </Pressable>
-          <Pressable
-            onPress={() => router.push('/architects')}
-            style={({ pressed }) => [styles.circle, styles.glassCircle, pressed && styles.liftLarge]}
-          >
-            <Text style={styles.inkLabel}>Architects</Text>
-          </Pressable>
+          <Text style={styles.mapHint}>Open the map</Text>
+          {nearError ? <Text style={styles.nearError}>{nearError}</Text> : null}
+
+          <View style={styles.circleRow}>
+            <Pressable
+              onPress={() => router.push('/field')}
+              style={({ pressed }) => [styles.circleItem, pressed && styles.lift]}
+            >
+              <View style={[styles.circle, styles.storiesCircle]}>
+                <Text style={styles.storiesLabel} numberOfLines={1} adjustsFontSizeToFit>Stories</Text>
+              </View>
+            </Pressable>
+
+            <Pressable
+              onPress={() => router.push('/atlas')}
+              style={({ pressed }) => [styles.circleItem, pressed && styles.lift]}
+            >
+              <View style={styles.atlasClip}>
+                <Image source={fieldTexture} style={styles.atlasTexture} />
+                <View style={styles.atlasTextureWrap}>
+                  <Text style={styles.atlasLabel} numberOfLines={1} adjustsFontSizeToFit>Atlas</Text>
+                </View>
+              </View>
+            </Pressable>
+
+            <Pressable
+              onPress={() => router.push('/architects')}
+              style={({ pressed }) => [styles.circleItem, pressed && styles.lift]}
+            >
+              <View style={[styles.circle, styles.glassCircle]}>
+                <Text style={styles.inkLabel} numberOfLines={1} adjustsFontSizeToFit>Architects</Text>
+              </View>
+            </Pressable>
+          </View>
         </View>
 
-        {/* Stories — a slow, constant stream along the bottom; the centred title opens Field research */}
-        <View style={styles.storiesWrap}>
-          <Pressable
-            onPress={() => router.push('/field')}
-            style={({ pressed }) => [styles.storiesBand, pressed && styles.storiesBandPressed]}
-          >
-            <Text style={styles.storiesTitle}>Stories ›</Text>
-          </Pressable>
+        {/* Bottom: the always-visible scrolling stories */}
+        <View style={styles.bottom}>
           <StoriesMarquee items={feedSlice} onOpen={openFeed} />
         </View>
-      </ScrollView>
+      </View>
     </GradientBackground>
   );
 }
 
-const CIRCLE = 96;
-
 const styles = StyleSheet.create({
-  content: {
-    paddingTop: 76,
-    paddingHorizontal: 30,
+  screen: {
+    flex: 1,
+    paddingHorizontal: 28,
+  },
+  top: {
     alignItems: 'center',
   },
   rule: {
     width: 32,
     height: 2,
     backgroundColor: colors.terracotta,
-    marginBottom: 20,
+    marginBottom: 14,
   },
   title: {
     ...editorial.welcomeTitle,
     color: colors.ink,
     textAlign: 'center',
   },
+  titleThe: {
+    fontSize: 20,
+    color: colors.muted,
+  },
   standfirst: {
     ...ui.bodyLarge,
+    fontSize: 9,
+    lineHeight: 13,
     color: colors.muted,
-    maxWidth: 300,
-    marginTop: spacing.lg,
+    maxWidth: 230,
+    marginTop: spacing.xs,
     textAlign: 'center',
   },
   searchWrap: {
-    marginTop: spacing.xxl,
+    marginTop: spacing.lg,
     width: '100%',
     alignItems: 'center',
   },
   suggestions: {
     marginTop: spacing.base,
     width: '100%',
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     borderRadius: radii.lg,
     borderWidth: 1,
     borderColor: colors.glassBorder,
@@ -250,30 +259,31 @@ const styles = StyleSheet.create({
   suggestionTitle: { ...editorial.cardTitle, fontSize: 15, color: colors.ink },
   suggestionSub: { ...ui.metadataSmall, color: colors.muted, marginTop: 2 },
 
-  nearMeWrap: {
-    marginTop: spacing.xxl,
+  middle: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     gap: spacing.md,
   },
   mapBtnWrap: {
-    width: 96,
-    height: 96,
+    width: 104,
+    height: 104,
     alignItems: 'center',
     justifyContent: 'center',
   },
   mapPulseRing: {
     position: 'absolute',
-    width: 92,
-    height: 92,
-    borderRadius: 46,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     backgroundColor: colors.terracotta,
   },
   mapBtnCircle: {
-    width: 92,
-    height: 92,
-    borderRadius: 46,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     borderWidth: 2,
-    borderColor: colors.white,
+    borderColor: colors.surface,
     backgroundColor: colors.terracotta,
     alignItems: 'center',
     justifyContent: 'center',
@@ -283,24 +293,24 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 6 },
     elevation: 6,
   },
-  plusIcon: { width: 36, height: 36 },
+  plusIcon: { width: 40, height: 40 },
   plusBarH: {
     position: 'absolute',
-    top: 16,
+    top: 18,
     left: 0,
-    width: 36,
+    width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
   },
   plusBarV: {
     position: 'absolute',
-    left: 16,
+    left: 18,
     top: 0,
     width: 4,
-    height: 36,
+    height: 40,
     borderRadius: 2,
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
   },
   pressedScale: { transform: [{ scale: 1.05 }] },
   mapHint: { ...ui.buttonLabel, color: colors.white },
@@ -309,9 +319,16 @@ const styles = StyleSheet.create({
   circleRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: spacing.xl,
-    marginTop: spacing.xxl,
+    alignItems: 'center',
+    gap: spacing.lg,
+    marginTop: spacing.lg,
   },
+  circleItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  lift: { transform: [{ translateY: -3 }] },
   circle: {
     width: CIRCLE,
     height: CIRCLE,
@@ -319,7 +336,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  liftLarge: { transform: [{ translateY: -3 }] },
   atlasClip: {
     width: CIRCLE,
     height: CIRCLE,
@@ -340,6 +356,9 @@ const styles = StyleSheet.create({
   },
   atlasLabel: {
     ...ui.buttonLabel,
+    fontSize: 10,
+    paddingHorizontal: 5,
+    textAlign: 'center',
     color: colors.white,
     fontWeight: '700',
     textShadowColor: 'rgba(70,26,10,0.55)',
@@ -347,31 +366,19 @@ const styles = StyleSheet.create({
     textShadowRadius: 8,
   },
   glassCircle: { backgroundColor: colors.glassFill, borderWidth: 1, borderColor: colors.glassBorder },
-  inkLabel: { ...ui.buttonLabel, color: colors.ink },
-
-  storiesWrap: {
-    marginTop: spacing.xxxl,
-    width: '100%',
-    alignItems: 'center',
-    gap: spacing.md,
-  },
-  storiesBand: {
-    alignSelf: 'stretch',
-    backgroundColor: colors.terracotta,
-    borderRadius: radii.md,
-    paddingVertical: 11,
-    paddingHorizontal: spacing.lg,
-    alignItems: 'center',
-  },
-  storiesBandPressed: {
-    opacity: 0.88,
-  },
-  storiesTitle: {
-    ...ui.label,
+  inkLabel: { ...ui.buttonLabel, fontSize: 10, paddingHorizontal: 5, color: colors.ink, textAlign: 'center' },
+  storiesCircle: { backgroundColor: colors.terracotta },
+  storiesLabel: {
+    ...ui.buttonLabel,
+    fontSize: 10,
+    paddingHorizontal: 5,
     color: colors.white,
     fontWeight: '700',
-    letterSpacing: 1.2,
     textAlign: 'center',
+  },
+
+  bottom: {
+    width: '100%',
   },
   marqueeClip: {
     width: '100%',

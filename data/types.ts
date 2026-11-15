@@ -26,8 +26,10 @@ export interface Building {
   /** Authoritative map pin + distance-sort coordinates. */
   resolved: { lat: number; lng: number };
   image: ImageSourcePropType;
-  /** "Why it matters" */
-  innovation: string;
+  /** "Why it matters" — applies to EVERY building. Sourced from the vault's
+   *  "## Why it matters" section (see scripts/sync-why-it-matters.js).
+   *  NOT the same as an "innovation"/first — those live in app/innovations.tsx. */
+  whyItMatters: string;
   /** "Materials & construction" */
   materials?: string;
   /**

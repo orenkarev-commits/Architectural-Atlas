@@ -44,7 +44,7 @@ export default function StoryScreen() {
         tag: b.style,
         title: b.thread,
         place: `${b.name} · ${b.address}`,
-        reveal: b.materials ? `${b.innovation}\n\n${b.materials}` : b.innovation,
+        reveal: b.materials ? `${b.whyItMatters}\n\n${b.materials}` : b.whyItMatters,
         slotHint: b.name,
         buildingId: b.id,
         buildingName: b.name,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   illustrationPanel: {
     height: 250,
     borderRadius: radii.xl,
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.glassBorder,
     alignItems: 'center',

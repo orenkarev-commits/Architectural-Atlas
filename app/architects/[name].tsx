@@ -8,6 +8,8 @@ import { SectionLabel } from '../../components/SectionLabel';
 import { architects } from '../../data/architects';
 import { buildings } from '../../data/buildings';
 import { portraitFor } from '../../data/portraits';
+import { quotesFor } from '../../data/architectQuotes';
+import { toBullets } from '../../lib/bullets';
 import { colors, radii, spacing } from '../../theme/tokens';
 import { editorial, ui } from '../../theme/typography';
 
@@ -22,19 +24,43 @@ function Fact({ label, value }: { label: string; value?: string }) {
   );
 }
 
+/** The style arc as a small left-to-right progression — only when there's more than one stage. */
+function StyleStages({ arc }: { arc?: string }) {
+  const stages = (arc ?? '')
+    .split(/[→>]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (stages.length < 2) return null;
+  return (
+    <View style={styles.section}>
+      <SectionLabel>Style, over time</SectionLabel>
+      <View style={styles.stagesRow}>
+        {stages.map((s, i) => (
+          <React.Fragment key={`${s}-${i}`}>
+            <View style={styles.stageChip}>
+              <Text style={styles.stageText}>{s}</Text>
+            </View>
+            {i < stages.length - 1 ? <Text style={styles.stageArrow}>→</Text> : null}
+          </React.Fragment>
+        ))}
+      </View>
+    </View>
+  );
+}
+
 export default function ArchitectProfile() {
   const { name } = useLocalSearchParams<{ name: string }>();
   const architect = architects.find((a) => a.name === name);
   const architectBuildings = buildings.filter((b) => b.architect === name);
   const atlasNames = new Set(architectBuildings.map((b) => b.name));
   const notYet = (architect?.works ?? []).filter((w) => !atlasNames.has(w.name));
-  // The compass aims at this architect's own nearest building; if none are in the
-  // Atlas yet, it falls back to the nearest building overall.
   const compassBuildings = architectBuildings.length > 0 ? architectBuildings : buildings;
 
   if (!architect) return null;
 
   const portrait = portraitFor(architect.name);
+  const storyBullets = toBullets(architect.innovation);
+  const quotes = quotesFor(architect.name);
 
   return (
     <View style={styles.container}>
@@ -53,12 +79,27 @@ export default function ArchitectProfile() {
           </View>
         </View>
 
-        <View style={styles.factsCard}>
-          <Fact label="Active" value={architect.active} />
-          <Fact label="Education" value={architect.education} />
-          <Fact label="Style arc" value={architect.styleArc ?? architect.school} />
-        </View>
+        {/* 1 — the quote(s) lead, with context + date in small print */}
+        {quotes.length > 0 ? (
+          <View style={styles.section}>
+            <SectionLabel>In their words</SectionLabel>
+            <View style={styles.quoteList}>
+              {quotes.map((q, i) => (
+                <View key={i} style={styles.quoteBlock}>
+                  <Text style={styles.quoteText}>“{q.text}”</Text>
+                  {q.context || q.date ? (
+                    <Text style={styles.quoteContext}>
+                      {q.date ? q.date + ' — ' : ''}
+                      {q.context}
+                    </Text>
+                  ) : null}
+                </View>
+              ))}
+            </View>
+          </View>
+        ) : null}
 
+        {/* 2 — major work */}
         {architect.signature ? (
           <View style={styles.signatureBlock}>
             <Text style={styles.signatureLabel}>Major work</Text>
@@ -67,15 +108,26 @@ export default function ArchitectProfile() {
           </View>
         ) : null}
 
-        {architect.quote ? (
-          <View style={styles.quoteBlock}>
-            <Text style={styles.quoteText}>“{architect.quote}”</Text>
-          </View>
-        ) : null}
+        {/* 3 — a timeline of stylistic change, if relevant */}
+        <StyleStages arc={architect.styleArc ?? architect.school} />
 
+        {/* 4 — the story, bulleted for legibility */}
         <View style={styles.section}>
           <SectionLabel>The story</SectionLabel>
-          <Text style={styles.prose}>{architect.innovation}</Text>
+          <View style={styles.bullets}>
+            {storyBullets.map((b, i) => (
+              <View key={i} style={styles.bulletRow}>
+                <Text style={styles.bulletDot}>•</Text>
+                <Text style={styles.bulletText}>{b}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        {/* 5 — active / education, near the end */}
+        <View style={styles.factsCard}>
+          <Fact label="Active" value={architect.active} />
+          <Fact label="Education" value={architect.education} />
         </View>
 
         {architectBuildings.length > 0 ? (
@@ -125,12 +177,10 @@ export default function ArchitectProfile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
   },
   content: {
     paddingHorizontal: spacing.xxl,
-    // Clears the floating back button (top 52 + 38 high) so the 30px
-    // architect name is never printed underneath it.
     paddingTop: 104,
     paddingBottom: spacing.huge,
     gap: spacing.xl,
@@ -186,15 +236,26 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   quoteBlock: {
-    backgroundColor: '#F5EFE7',
+    backgroundColor: colors.bubble,
     borderLeftWidth: 3,
     borderLeftColor: colors.terracotta,
     borderRadius: radii.lg,
     padding: spacing.xl,
   },
   quoteText: {
-    ...editorial.cardTitle,
+    ...editorial.cardTitleLg,
+    fontSize: 17,
+    lineHeight: 25,
     color: colors.inkSoft,
+  },
+  quoteList: {
+    gap: spacing.md,
+  },
+  quoteContext: {
+    ...ui.metadataSmall,
+    color: colors.muted,
+    marginTop: spacing.sm,
+    lineHeight: 16,
   },
   signatureBlock: {
     backgroundColor: colors.terracotta,
@@ -219,8 +280,37 @@ const styles = StyleSheet.create({
   section: {
     gap: spacing.sm,
   },
-  prose: {
+  stagesRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+  stageChip: {
+    backgroundColor: colors.surfaceTint,
+    borderWidth: 1,
+    borderColor: colors.hairline,
+    borderRadius: radii.circle,
+    paddingHorizontal: spacing.base,
+    paddingVertical: 5,
+  },
+  stageText: { ...editorial.cardTitle, fontSize: 13, color: colors.ink },
+  stageArrow: { ...ui.body, color: colors.terracotta, marginHorizontal: 2 },
+  bullets: {
+    gap: spacing.sm,
+  },
+  bulletRow: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+  },
+  bulletDot: {
     ...ui.body,
+    color: colors.terracotta,
+    lineHeight: 22,
+  },
+  bulletText: {
+    ...ui.body,
+    flex: 1,
     color: colors.body,
   },
   worksList: {

@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     borderRadius: 11,
-    backgroundColor: colors.white,
+    backgroundColor: colors.surface,
     borderWidth: 2,
     borderColor: colors.terracotta,
   },

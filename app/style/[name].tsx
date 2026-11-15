@@ -72,7 +72,7 @@ export default function StylePage() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.white },
+  container: { flex: 1, backgroundColor: colors.surface },
   content: { paddingHorizontal: spacing.xxl, paddingTop: 104, paddingBottom: spacing.huge, gap: spacing.md },
   kicker: { ...ui.label, color: colors.terracotta },
   name: { ...editorial.architectName, color: colors.ink },

@@ -1,6 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, UIManager, View } from 'react-native';
 import { router } from 'expo-router';
+
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 import { GradientBackground } from '../../components/GradientBackground';
 import { BackButton } from '../../components/BackButton';
 import { GlassCard } from '../../components/GlassCard';
@@ -21,6 +25,8 @@ function openStory(s: FeedStory) {
 
 export default function FieldResearch() {
   const [cat, setCat] = useState<string | null>(null);
+  const [catTouched, setCatTouched] = useState(false);
+  const [openTourCat, setOpenTourCat] = useState<string | null>(null);
   const [query, setQuery] = useState('');
 
   // Address (and name) lookup so stories can be searched by where they are.
@@ -53,41 +59,16 @@ export default function FieldResearch() {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Text style={styles.header}>Field research</Text>
 
-        <NolliBand />
+        {/* The Nolli band opens the main map. */}
+        <Pressable onPress={() => router.push('/map')}>
+          <NolliBand />
+        </Pressable>
 
-        <View style={styles.section}>
-          <Text style={styles.toursTitle}>Tours</Text>
-          <Text style={styles.explainer}>
-            Guided walks — by architect, by style, or through history. Tap to run one on the map.
-          </Text>
-          {tourCategories.map((c) => (
-            <View key={c.key} style={styles.tourCat}>
-              <Text style={styles.tourCatName}>
-                {c.name} · <Text style={styles.tourCatBlurb}>{c.blurb}</Text>
-              </Text>
-              <View style={styles.tourList}>
-                {c.tours.map((t) => (
-                  <Pressable
-                    key={t.key}
-                    style={styles.tourRow}
-                    onPress={() => router.push({ pathname: '/map', params: { tour: t.key } })}
-                  >
-                    <View style={styles.tourRowText}>
-                      <Text style={styles.tourRowName}>{t.name}</Text>
-                      <Text style={styles.tourRowSub}>{t.subtitle}</Text>
-                    </View>
-                    <Text style={styles.tourRowMeta}>{t.stopIds.length} stops ›</Text>
-                  </Pressable>
-                ))}
-              </View>
-            </View>
-          ))}
-        </View>
-
+        {/* Stories at the top — search + categories only; the list stays hidden until you search or pick a category. */}
         <View style={styles.section}>
           <Text style={styles.toursTitle}>Stories</Text>
           <Text style={styles.explainer}>
-            Every building and every architect has one ({shown.length}) — search by address, or sift by category.
+            Every building and every architect has one — search by address, or sift by category.
           </Text>
 
           <TextInput
@@ -102,31 +83,78 @@ export default function FieldResearch() {
           />
 
           <View style={styles.filters}>
-            <Pressable onPress={() => setCat(null)} style={[styles.filter, !cat && styles.filterOn]}>
+            <Pressable onPress={() => { setCat(null); setCatTouched(true); }} style={[styles.filter, !cat && styles.filterOn]}>
               <Text style={[styles.filterText, !cat && styles.filterTextOn]}>All</Text>
             </Pressable>
             {activeCategories.map((c) => {
               const on = cat === c;
               return (
-                <Pressable key={c} onPress={() => setCat(c)} style={[styles.filter, on && styles.filterOn]}>
+                <Pressable key={c} onPress={() => { setCat(c); setCatTouched(true); }} style={[styles.filter, on && styles.filterOn]}>
                   <Text style={[styles.filterText, on && styles.filterTextOn]}>{c}</Text>
                 </Pressable>
               );
             })}
           </View>
 
-          <View style={styles.list}>
-            {shown.map((s) => (
-              <GlassCard key={s.key} style={styles.storyCard} onPress={() => openStory(s)}>
-                <View style={styles.storyTagRow}>
-                  <Text style={styles.storyTag}>{s.category}</Text>
-                  <Text style={styles.chevron}>›</Text>
-                </View>
-                <Text style={styles.storyTitle}>{s.title}</Text>
-                <Text style={styles.storyPlace}>{s.subtitle}</Text>
-              </GlassCard>
-            ))}
-          </View>
+          {query.trim() || catTouched ? (
+            <View style={styles.list}>
+              {shown.map((s) => (
+                <GlassCard key={s.key} style={styles.storyCard} onPress={() => openStory(s)}>
+                  <View style={styles.storyTagRow}>
+                    <Text style={styles.storyTag}>{s.category}</Text>
+                    <Text style={styles.chevron}>›</Text>
+                  </View>
+                  <Text style={styles.storyTitle}>{s.title}</Text>
+                  <Text style={styles.storyPlace}>{s.subtitle}</Text>
+                </GlassCard>
+              ))}
+              {shown.length === 0 ? <Text style={styles.explainer}>No stories match yet.</Text> : null}
+            </View>
+          ) : null}
+        </View>
+
+        {/* Tours below. */}
+        <View style={styles.section}>
+          <Text style={styles.toursTitle}>Tours</Text>
+          <Text style={styles.explainer}>
+            Guided walks — by architect, by style, or through history. Tap to run one on the map.
+          </Text>
+          {tourCategories.map((c) => {
+            const open = openTourCat === c.key;
+            return (
+              <View key={c.key} style={styles.tourCat}>
+                <Pressable
+                  style={styles.tourCatHead}
+                  onPress={() => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                    setOpenTourCat(open ? null : c.key);
+                  }}
+                >
+                  <Text style={styles.tourCatName}>
+                    {c.name} · <Text style={styles.tourCatBlurb}>{c.blurb}</Text>
+                  </Text>
+                  <Text style={[styles.tourChevron, open && styles.tourChevronOpen]}>⌄</Text>
+                </Pressable>
+                {open ? (
+                  <View style={styles.tourList}>
+                    {c.tours.map((t) => (
+                      <Pressable
+                        key={t.key}
+                        style={styles.tourRow}
+                        onPress={() => router.push({ pathname: '/map', params: { tour: t.key } })}
+                      >
+                        <View style={styles.tourRowText}>
+                          <Text style={styles.tourRowName}>{t.name}</Text>
+                          <Text style={styles.tourRowSub}>{t.subtitle}</Text>
+                        </View>
+                        <Text style={styles.tourRowMeta}>{t.stopIds.length} stops ›</Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                ) : null}
+              </View>
+            );
+          })}
         </View>
 
       </ScrollView>
@@ -141,7 +169,14 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.huge,
     gap: spacing.xxl,
   },
-  header: { ...editorial.screenHeader, color: colors.ink, marginLeft: 46 },
+  header: {
+    ...editorial.screenHeader,
+    fontSize: 40,
+    lineHeight: 46,
+    color: colors.ink,
+    textAlign: 'center',
+    paddingTop: 8,
+  },
   section: { gap: spacing.base },
   explainer: { ...ui.bodySmall, color: colors.body },
   search: {
@@ -175,10 +210,21 @@ const styles = StyleSheet.create({
   storyTitle: { ...editorial.cardTitleLg, color: colors.inkSoft, marginTop: spacing.xs },
   storyPlace: { ...ui.metadata, color: colors.muted, marginTop: 3 },
   toursTitle: { ...editorial.cardTitleLg, color: colors.ink, fontWeight: '700', fontSize: 21 },
-  tourCat: { marginTop: spacing.base },
-  tourCatName: { ...ui.label, color: colors.terracotta, marginBottom: spacing.xs },
+  tourCat: { marginTop: spacing.sm },
+  tourCatHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.warmScrim,
+    borderRadius: radii.md,
+    paddingHorizontal: spacing.base,
+    paddingVertical: spacing.md,
+  },
+  tourChevron: { ...ui.body, fontSize: 18, lineHeight: 18, color: colors.terracotta },
+  tourChevronOpen: { transform: [{ rotate: '180deg' }] },
+  tourCatName: { ...ui.label, color: colors.terracotta },
   tourCatBlurb: { ...ui.metadataSmall, color: colors.muted, textTransform: 'none' },
-  tourList: { gap: spacing.base, marginTop: spacing.xs },
+  tourList: { gap: spacing.base, marginTop: spacing.sm },
   tourRow: {
     flexDirection: 'row',
     alignItems: 'center',

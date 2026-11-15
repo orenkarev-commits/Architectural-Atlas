@@ -19,7 +19,7 @@ export const architects: Architect[] = [
     innovation:
       'Architect and engineer, and the first chief engineer of Solel Boneh. Tobia helped establish reinforced concrete construction in Mandate Palestine, working from private houses to civic and cultural buildings with that expertise as the constant.',
     works: [
-      { name: 'Café Bialik, 2 Bialik Street', year: '' },
+      { name: 'Beit Mintz (café building), 2 Bialik Street — engineer, with architect Chaim Kris', year: '1932' },
       { name: 'Ophir Cinema, 37–39 Gruzenberg Street', year: '' },
       { name: 'Residential building, 26 Levontin Street', year: '' },
       { name: 'Davar newspaper building, Shenkin Street', year: '' },
@@ -59,13 +59,13 @@ export const architects: Architect[] = [
     school: 'Eclectic',
     quote: '',
     innovation:
-      "Born in Berlin in 1883, Levy trained three years as a carpenter before studying architecture in the city, then brought a Berliner's eye to Tel Aviv and Jaffa from 1920 — importing roof forms and ornament as narrative devices, and installing one of the city's earliest passenger elevators at the Pagoda House. He returned to Germany in 1927 and moved to Paris in 1932; deported under the Nazi occupation, he was murdered at Auschwitz in 1942.",
+      "Born in Berlin on 21 December 1883 to a textile-industrialist family, Levy trained three years as a carpenter before studying architecture in the city, and by 1912 was chief designer at the office where he worked. He gave himself to the Zionist cause early — offering his services to Arthur Ruppin in 1908, drawing immigrant-housing schemes and a Jaffa-port proposal for Palestine in 1912, and in 1919 founding the Palästina-Baugesellschaft to bring Western-European Jewish architects into the building of the country. He settled in Tel Aviv from 1920, worked from a small office at Allenby 45, advised the Zionist movement on building and town planning and sat on the Tel Aviv town council. In his early work here he set oriental motifs — pointed-arch windows, enclosed balconies — over otherwise European designs, and installed one of the city's earliest passenger elevators at the Pagoda House. Worn down by lack of work and professional disputes — the Alfes house among the bitterest — he left for Berlin in 1927, where he turned to prefabricated construction (signing himself 'Levy-LEE') until 1931. With the rise of Nazism he moved to Paris in 1932; interned as a German national at the outbreak of war and refused a US visa, he was deported to Auschwitz on 28 August 1942 and murdered there, aged 59.",
     works: [
       { name: 'Galibrman–Epstein House, 3 Gruzenberg Street', year: '1921' },
       { name: 'Agricultural experimental station, Ahad Ha’am Street', year: '1921' },
       { name: 'Dr. Alfes House, 4 Balfour Street', year: '1922' },
+      { name: 'Beit Eliezer-Pesach Yafo, 2 Balfour / 63 Allenby', year: '1922' },
       { name: 'Leah Bolda House, 3 Bialik Street', year: '1922' },
-      { name: 'Beit Ussishkin, Hayarkon Street', year: '1922' },
       { name: 'Moshe Abramson House, 6 Nachalat Binyamin', year: '' },
       { name: 'Alexander Levy House, 7 Yehuda HaLevi Street', year: '1924' },
       { name: 'Lipschitz House, 52 Allenby / 44 Geula', year: '1924' },
@@ -85,7 +85,7 @@ export const architects: Architect[] = [
     school: 'International Style',
     quote: '',
     innovation:
-      'Introduced pilotis to Tel Aviv housing, freeing the ground plane for shade and circulation.',
+      "One of the founders of Israeli modernism. Trained as an engineer at Nikolayev, then in Rome and Paris, Rechter brought the International Style to Tel Aviv and, at Engel House (1933), introduced pilotis to the city's housing — lifting the block off the ground to give the street back as shaded public space, a civic argument as much as a stylistic import. A founding member of the 'Chug' (Circle) group of modernists, he later partnered with Dov Karmi on the young state's landmark public buildings — Heichal HaTarbut (the Mann Auditorium) and the Helena Rubinstein Pavilion among them — and his son Yaacov Rechter carried the practice into the next generation.",
     works: [
       // Tel Aviv
       { name: 'Beit Suskin, Yehuda HaLevi Street', year: '1933–35' },
@@ -119,7 +119,7 @@ export const architects: Architect[] = [
     school: 'International Style',
     quote: '',
     innovation:
-      'Refined shading, ventilation and balcony depth into a distinctly local modernism. First recipient of the Israel Prize for Architecture, in 1957.',
+      "One of the fathers of Israeli modernism and the first recipient of the Israel Prize for Architecture (1957). After painting at Bezalel and architecture at Ghent, Karmi co-founded the 'Chug' (Circle) group and, across some two hundred buildings, refined the International Style into a distinctly local modernism — shading, cross-ventilation and deep recessed balconies answering the Tel Aviv sun, the argument he first drafted at Liebling House. With Ze'ev Rechter he built the state's great post-war public works; his children Ram Karmi and Ada Karmi-Melamede — architects of the Supreme Court in Jerusalem — carried the name into the next generation.",
     works: [
       { name: 'Passage Allenby — with Arieh Sharon', year: '1948–50' },
       { name: 'Workers’ Council Building', year: '1949–55' },
@@ -141,9 +141,10 @@ export const architects: Architect[] = [
     signature: { work: "Beit Bialik", note: "The eclectic house as a poet's setting — ornament placed in the service of a new national culture." },
     years: '1885–1966',
     school: 'Eclectic / Arts & Crafts',
-    quote: '',
+    quote:
+      'We have still not developed a unique local style, as we keep adapting international trends in architecture — architects must take into account the local climate, the available building materials, the social and cultural aspects, and the unique character of the city itself.',
     innovation:
-      'Blended Oriental motifs with craft detailing to build cultural meaning into domestic architecture. Trained in Moscow, then worked in Berlin on the planning of the Hebrew University campus on Mount Scopus.',
+      "Blended Oriental motifs with craft detailing to build cultural meaning into domestic architecture. Trained in Moscow, then worked in Berlin on the planning of the Hebrew University campus on Mount Scopus. A student of Alexander Baerwald, he carried his teacher's comprehensive 'modern-oriental' approach — material, plan and motif together, not applied decoration — into Beit Bialik, whose solitude tower is borrowed from Baerwald's Hebrew Reali School in Haifa.",
     works: [
       { name: 'Jacob Garbuv House, 22 Montefiore Street', year: '1924' },
       { name: 'Katzman House, 35 Ahad Ha’am Street', year: '1925' },
@@ -161,7 +162,7 @@ export const architects: Architect[] = [
     school: 'Eclectic',
     quote: '',
     innovation:
-      'Trained at the Chernivtsi school and in Tel Aviv from 1920, Cherner became one of the city’s leading eclectic architects — Western frames carrying Oriental motifs, concave and curved façades, the "dream house" manner of the 1920s. His Beit Romanov is now the heart of the Norman Hotel.',
+      'Trained at the Chernivtsi school and in Tel Aviv from 1920, Cherner became one of the city’s leading eclectic architects — Western frames carrying Oriental motifs, concave and curved façades, the "dream house" manner of the 1920s. His Beit Shafran on King Albert Square is now part of the Norman Hotel.',
     works: [
       { name: 'Gatzel-Spira House, 2 Simtat Plonit', year: '1920' },
       { name: 'Bleiberg House, 3 Har Sinai Street', year: '1924' },
@@ -202,8 +203,12 @@ export const architects: Architect[] = [
     school: 'Eclectic → Art Deco',
     quote: '',
     innovation:
-      "Tel Aviv's first city engineer, appointed in 1920, and then — from 1923, working through his own firm — its most prolific architect, with several hundred buildings to his hand. He began in the eclectic manner of the 1920s and moved through Art Deco toward the International Style, without ever quite letting go of a personal, ornamental signature. The Great Synagogue on Allenby is his most public gesture.",
-    works: [],
+      "Tel Aviv's first city engineer, appointed in 1920, and then — from 1923, working through his own firm — its most prolific architect, with several hundred buildings to his hand. He began in the eclectic manner of the 1920s and moved through Art Deco toward the International Style, without ever quite letting go of a personal, ornamental signature. In that eclectic decade he was among the first to set Bezalel ceramic tiles into his façades — the Moorish Kavalkin House on Rothschild, named in Boris Schatz's letter to the mayor — and his orientalism ran Spanish-Moorish rather than local-Arab. The Great Synagogue on Allenby is his most public gesture.",
+    works: [
+      { name: 'Kavalkin House, 44 Rothschild Boulevard — Moorish, with Bezalel tiles', year: '1924' },
+      { name: 'Ismaylov House, 93 Allenby Street', year: '1925' },
+      { name: 'Moshav Zekenim Synagogue, 89 Allenby Street — twelve-tribes Bezalel tiles', year: '1928' },
+    ],
   },
   {
     name: 'Genia Averbuch',
@@ -216,7 +221,13 @@ export const architects: Architect[] = [
     quote: '',
     innovation:
       "Born in Ukraine and raised in Tel Aviv, she trained a year in Rome and four at the Royal Academy in Brussels (qualifying in 1930), worked under Richard Kaufmann at the Jewish Agency, and opened her own office in 1932. In 1934, at twenty-five, she won the competition for Zina Dizengoff Square — drawing not the buildings but the rule they would share: one clean-lined International-Style face curving at the corners, so a ring of houses by different architects would read as a single room (she designed one herself, at the Ben-Ami corner). During the Second World War she directed the Tel Aviv municipality's town-planning department — a rare woman at the head of the city's planning — and remained one of the defining hands of the White City, likely the only plaza in the world laid out on Bauhaus principles among her legacy.",
-    works: [],
+    works: [
+      { name: 'Café Galina, Levant Fair — with Elsa Gidoni-Mandelstamm', year: '1934' },
+      { name: 'Apartment houses and urban villas — often with Shlomo Ginzburg', year: '1930s' },
+      { name: 'Offices for the women\u2019s Zionist organisations', year: '' },
+      { name: 'Midrashiyat Noam synagogue, Pardes Hanna', year: '' },
+      { name: 'Youth villages for new immigrants (for WIZO and others)', year: '1948\u201355' },
+    ],
   },
   {
     name: 'Carl Rubin',
@@ -230,5 +241,287 @@ export const architects: Architect[] = [
     innovation:
       "Vienna-trained and in Tel Aviv from 1920, Rubin went back to Berlin in 1931 to work in Erich Mendelsohn's office, then returned in 1932 and opened his own — bringing Mendelsohn's flowing modernism home to become one of the White City's defining hands, working almost wholly in the International Style. His most famous commission was the quietest sort of alteration: recasting Meir Dizengoff's old house on Rothschild into the room where the state would be declared.",
     works: [{ name: 'Apartment house, 85 Rothschild Boulevard', year: '1932' }],
+  },
+  {
+    name: 'Shmuel Balder',
+    active: 'In Tel Aviv from 1919 (from Vienna)',
+    education: 'Not documented — an engineer by training',
+    styleArc: 'Eclectic',
+    signature: { work: 'Beit Balder', note: "The engineer's own villa on Bialik Square — a one-storey house that grew upward, then rented itself out." },
+    years: 'd. 1937',
+    school: 'Eclectic',
+    quote: '',
+    innovation:
+      "An engineer and man of the theatre who built his own house and left, in that one building, a small lesson in how a Tel Aviv villa lives. He came from Vienna in 1919 and settled by Bialik Square — a friend of the poet Bialik — and in the mid-1920s drew and built the family house at the square's western edge, with Emil Tyner assisting the plan: a fortress-like villa with a crenellated roofline on which, it is said, his own plays were staged. It began as a single storey, grew upward as the family did, and after his death in 1937 turned to letting rooms; little else of his work is documented.",
+    works: [],
+  },
+  {
+    name: 'Eliyahu & Emanuel Friedman',
+    active: 'Practising in the 1930s',
+    education: 'Not documented',
+    styleArc: 'International Style',
+    signature: { work: 'Beit Peltzman', note: "Bialik Street's turn to the modern — the apartment house the street knew as the Doctors' House." },
+    years: 'Not documented',
+    school: 'International Style',
+    quote: '',
+    innovation:
+      "A brothers' partnership working in the mature International Style of the mid-1930s. On Bialik Street they cleared an eclectic villa and put up a two-part modern apartment house — the considered rental block that turned the White City from a style into a working city. Little else of their practice is documented.",
+    works: [],
+  },
+  {
+    name: 'Lotte Cohn',
+    active: 'In Palestine from the early 1920s; worked in the circle of Richard Kaufmann',
+    education: 'Berlin-born (Charlottenburg, 1893); the third woman to earn an architecture degree from the Technical University of Berlin; first assistant to Richard Kauffmann in Palestine from 1921',
+    styleArc: 'Eretz-Israeli → modern',
+    signature: { work: 'Beit Zlocisti', note: "A pioneering woman architect's early house — a home built around a private clinic." },
+    years: '1893–1983',
+    school: 'Eretz-Israeli',
+    quote: '',
+    innovation:
+      "One of the first women to practise architecture in the country. Berlin-born and Berlin-trained, Cohn reached Palestine in the early 1920s and worked in the circle of Richard Kaufmann, drawing houses, farms and institutions in a restrained, regionally-adapted manner as the country moved from European historicism toward a local modern architecture. Her house-and-clinic for Theodor Zlocisti on Idelson is among her early Tel Aviv works.",
+    works: [
+      { name: 'Assistant to Richard Kauffmann, and the Palestine Land Development Company, on kibbutz planning \u2014 Ein Harod, Tel Yosef, Ginnegar', year: '1921\u201327' },
+      { name: 'Nahalal Agricultural Girls\u2019 School (WIZO), five buildings', year: '1923\u201346' },
+      { name: 'WIZO workers\u2019 restaurant and training kitchen, Tel Aviv', year: '1931' },
+      { name: 'WIZO Mothercraft & Child-Welfare Centre, Kerem HaTeimanim', year: '1933' },
+      { name: 'Home for the Aged, Ramot HaShavim', year: '1937' },
+    ],
+  },
+  {
+    name: 'Pinhas Hütt',
+    active: 'In Tel Aviv from the early 1920s',
+    education: 'Architecture at the Polytechnic in Czernowitz (Bukovina); opened his own practice in his native Lwów before emigrating',
+    styleArc: 'Eclectic → Art Deco → International Style',
+    signature: { work: 'Beit Gross', note: "Bialik Street's densest eclectic ornament, a late flourish before the modern turn." },
+    years: '1888–1949',
+    school: 'Eclectic',
+    quote: '',
+    innovation:
+      "Born in Lwów (Lviv) in Galicia in 1888, Hütt studied architecture at the Polytechnic in Czernowitz and practised in his home city before coming to Tel Aviv, where much of the picture we carry of the city's founding years is his — a prolific hand behind residential houses along Rothschild Boulevard and a series of synagogues, worked in a dense, confident eclecticism. His Bialik Street houses read as the last, most ornamented phase before the modernist turn: the Gross House (Bialik 9, 1928) in full eclectic dress, and the Dina Shoshana Goldberg House (Bialik 15, 1929) already sliding toward Art Deco. He died in Tel Aviv in 1949.",
+    works: [
+      { name: 'Gross House, 9 Bialik Street', year: '1928' },
+      { name: 'Dina Shoshana Goldberg House, 15 Bialik Street (Art Deco)', year: '1929' },
+      { name: '48 Rothschild Boulevard (International Style)', year: '1933' },
+      { name: 'Yitzhaki House, 89–91 Rothschild Boulevard (International Style)', year: '1935' },
+      { name: '65 Hovevei Zion Street (International Style)', year: '1935' },
+      { name: 'Residential houses along Rothschild Boulevard, and several synagogues', year: '1920s' },
+    ],
+  },
+  {
+    name: 'Yehoshua Tzvi Tabachnik',
+    active: 'Tel Aviv, 1919–1925; thereafter Brooklyn, New York',
+    education: 'Art school in Odessa and a three-year apprenticeship; then the Bezalel Academy in Jerusalem under Boris Schatz',
+    styleArc: 'Jewish Jugendstil (Eclectic)',
+    signature: { work: 'Beit Shmuel David', note: "Jewish Jugendstil — palm trees, menorahs and a broken-triangle 'missing fragment' for the ruined Temple, worked into the façade." },
+    years: 'b. Dubova, Ukraine',
+    school: 'Eclectic',
+    quote: '',
+    innovation:
+      "The most committed of Tel Aviv's 'Hebrew-style' architects. Born in Dubova in the Uman district of Ukraine — son of Rabbi Kalman Tabachnik of Odessa, and a nephew of the writer Micha Yosef Berdichevsky — he studied to twelve in yeshiva, then at an Odessa art school, before reaching Jerusalem in 1912 to study at the Bezalel Academy under Boris Schatz, whose dream of a Hebrew national art he carried into building. He sailed to Palestine on the Ruslan in 1919 with his wife Nadia and settled in Tel Aviv, and into almost every façade set two motifs — a palm tree for the Orient, and a small broken triangle, a 'missing fragment' for the destruction of the Temple — alongside menorahs, Stars of David and four-horned altars. He stood for city architect in 1923; in 1925 he left for Brooklyn, where he went on designing synagogues in the same Hebrew idiom.",
+    works: [
+      { name: 'Beit Skopsky, 5 Nachalat Binyamin Street', year: '1921' },
+      { name: 'Palm House (Beit HaDekel), 8 Nachalat Binyamin Street — for Isser Cohen', year: '1922' },
+      { name: 'Beit Elhanan Karbarski, 73 Allenby Street', year: '' },
+      { name: 'Beit Shmuel David, 79 Allenby Street', year: '1930' },
+    ],
+  },
+  {
+    name: 'Benjamin Chaikin',
+    active: 'Jerusalem practice from 1920; British Army major (Royal Engineers) in both World Wars',
+    education: 'Architectural School, London; Fellow of the RIBA and member of the Institute of Structural Engineers',
+    styleArc: 'Restrained classical modernism',
+    signature: { work: 'Strauss Health Center', note: 'Dignified civic architecture — an H-shaped preventive-health centre wrapped around a therapeutic garden, meticulous and modestly monumental.' },
+    years: '1883–1950',
+    school: 'Eclectic',
+    quote: '',
+    innovation:
+      "Born in St Petersburg in 1883, son of Rabbi Avigdor Chaikin (Chief Minister of London's Federation of Synagogues), he trained in architecture in London and qualified as a district surveyor before the First World War. He came to Palestine with the British Army under Allenby, and after demobilisation in 1920 built a Jerusalem practice — a Fellow of the RIBA who, though he never signed up to the International Style, worked in a restrained, meticulous manner of modest monumental proportions for wealthy and official clients. His best-known work is the King David Hotel in Jerusalem (with Emil Vogt); in Tel Aviv, the Strauss Health Center is his mark on the Atlas.",
+    works: [
+      { name: 'King David Hotel, Jerusalem — with Emil Vogt', year: '1929–31' },
+      { name: 'Open-air theatre, Hebrew University, Mount Scopus', year: '' },
+      { name: 'Nathan & Lina Strauss Health Center, 14 Balfour Street — with engineer Arpad Gut', year: '1928–30' },
+    ],
+  },
+  {
+    name: 'Ben-Ami Shulman',
+    active: 'Tel Aviv, 1932–1947; later Montreal and Los Angeles',
+    education: 'Architecture and engineering, Brussels (graduated 1931)',
+    styleArc: 'International Style',
+    signature: { work: 'Beit Victor Nagi', note: 'Two masses joined at a seam of recessed balconies over an open columned ground floor — the International Style read as sculpture, not formula.' },
+    years: '1907–1986',
+    school: 'International Style',
+    quote: '',
+    innovation:
+      "Born in Jaffa, he trained in architecture and engineering in Brussels and graduated in 1931, then practised in Tel Aviv from 1932 to 1947 before emigrating to Montreal and Los Angeles. His Tel Aviv work is unusually free and sculptural within the International Style rather than a mechanical repeat of Bauhaus formulas — mass, void and free-standing plane composed as design, not decoration. When the municipality ordered the open ground floor of his Victor Nagi house demolished in 1937, the city's architects rallied to his defence and the order was overturned.",
+    works: [
+      { name: 'Apartment houses across the White City, Tel Aviv', year: '1932\u201347' },
+      { name: 'Later practice in Montreal, then Los Angeles', year: 'from 1947' },
+    ],
+  },
+  {
+    name: 'Dov Hershkovitz',
+    active: 'Second city engineer of Tel Aviv, 1924–1927',
+    education: 'The State Institute for Civil Engineers, St Petersburg — academic training in engineering and architecture; schooled in Kherson',
+    styleArc: 'Eclectic → Art Deco → International Modern',
+    signature: { work: "Ahad Ha'am School", note: 'Civic architecture as visual curriculum — a Bezalel ceramic façade fused into a public school entrance.' },
+    years: '1878–1935',
+    school: 'Eclectic',
+    quote: '',
+    innovation:
+      "Born Boris Hershkovitz in Kakhovka, Ukraine, in 1878, he trained at the State Institute for Civil Engineers in St Petersburg and built a full career in the Russian Empire before Zionism — seven years as city engineer of Taganrog, then architect-engineer in Kharkiv, and after the Revolution chief engineer of the Don region. In 1923 he came to Tel Aviv at the personal invitation of his friend Mayor Meir Dizengoff and became the city's second municipal engineer (1924–27), a post from which he shaped the young town's civic fabric — its first schools, its hospital, its memorials — moving fluently from eclecticism through Art Deco to the International Modern. His Ahad Ha'am School (1924), the city's first municipal school, wears a Bezalel-made ceramic façade as a public argument for Hebrew education. He died in Jerusalem in 1935 and is buried at Trumpeldor.",
+    works: [
+      { name: "Ahad Ha'am (Municipal) School, 37 Ahad Ha'am Street", year: '1924' },
+      { name: 'Commercial High School, 30 Geula Street', year: '1925' },
+      { name: 'Hadassah Hospital, Balfour Street', year: '1925–29' },
+      { name: 'The Red House, HaYarkon Street (Histadrut headquarters)', year: '1923–26' },
+      { name: 'Renovation of Beit Dizengoff, 16 Rothschild Boulevard', year: 'late 1920s' },
+      { name: 'Talpiot Girls’ School', year: '1926' },
+    ],
+  },
+  {
+    name: 'Arpad Gut',
+    active: 'Mandate Tel Aviv, 1920s–1940s',
+    education: 'Engineering (Hungary)',
+    styleArc: 'Structural engineering',
+    signature: { work: "Haganah Water Tower", note: "The tallest structure in 1920s Tel Aviv — reinforced concrete and a steel tank, engineering made landmark." },
+    years: '1877–1948',
+    school: 'Infrastructure',
+    quote: '',
+    innovation:
+      "A Hungarian-born structural engineer (Kéthely, 1877 – Tel Aviv, 1948) who became the city's great builder of water towers — the Mazeh Street tower among them — and engineered the dome of the Great Synagogue on Allenby and the reinforced-concrete of many landmarks (the Casino, the Nesher cement works near Nahariya). In Hungary he had built the spa dome of the Gellért Hotel and department stores. Where the Atlas credits a building to an engineer rather than an architect, it is often his hand.",
+    works: [
+      { name: 'Dome, the Great Synagogue, Allenby Street', year: 'c. 1926' },
+      { name: 'Water towers across Tel Aviv and Jaffa', year: '1920s' },
+      { name: 'Nesher cement works, near Nahariya', year: '' },
+      { name: 'Gellért Hotel spa dome, Budapest', year: '' },
+    ],
+  },
+  {
+    name: 'Shulamit & Michael Nadler',
+    active: 'Israel, 1950s–1990s',
+    education: 'Technion, Haifa — Shulamit trained under Zeev Rechter, the second woman to qualify there',
+    styleArc: 'Modernism → Brutalism',
+    signature: { work: "Agricultural Bank of Israel — Head Office", note: "Modernism turning muscular and material — the light White City giving way to the weight of the young state." },
+    years: 'Michael 1921–1993; Shulamit 1923–2016',
+    school: 'Modernism',
+    quote: '',
+    innovation:
+      "An architect couple who shaped the monumental architecture of the young state. Michael Nadler (b. Sofia, 1921 – 1993) and Shulamit Nadler (née Knibski, Tel Aviv, 1923–2016) met at the Technion — where Shulamit, trained under Ze'ev Rechter, was the second woman to qualify in architecture — and worked together for decades. Their work ran from the National Library of Israel (1956) and the Jerusalem Theatre to the Brutalist Zalman Aranne Library at Ben-Gurion University; their 1950s Agricultural Bank is an early, muscular statement of that turn. Michael won the Rokach Prize in 1970.",
+    works: [
+      { name: 'National Library of Israel, Jerusalem', year: '1956' },
+      { name: 'Jerusalem Theatre', year: 'designed 1958' },
+      { name: 'Zalman Aranne Central Library, Ben-Gurion University', year: '1968–71' },
+    ],
+  },
+  {
+    name: 'Yehuda Zuckerman',
+    active: 'Tel Aviv, 1920s–1930s',
+    education: 'Herzliya Gymnasium, Tel Aviv; then architecture at university in New York and in Italy',
+    styleArc: 'Eclectic → Art Deco',
+    signature: { work: 'Nastissin House / “The Common House”', note: "A composed, symmetrical Art Deco face at the city's edge — urbanity drawn before the city arrived." },
+    years: 'b. Gedera',
+    school: 'Eclectic',
+    quote: '',
+    innovation:
+      "A rare native-trained architect of the founders' generation. Born in the moshava of Gedera and schooled there and at Tel Aviv's Herzliya Gymnasium, Zuckerman took his architecture degree abroad — at university in New York and in Italy — before practising back home from the 1920s. His work is a scatter across the young city: the Shalom Asch House (1925), the added upper floor of the Zeidman house on Nachalat Binyamin, a villa for Dr Chaim Stein on Balfour, and buildings on Mikveh Israel and Balfour. His Atlas building is the composed Art Deco 'Common House' at the then-eastern edge of the city.",
+    works: [
+      { name: 'Shalom Asch House (Eclectic)', year: '1925' },
+      { name: 'Residential building, 19 Mikveh Israel Street', year: '' },
+      { name: 'Villa for Dr Chaim Stein, Balfour Street; upper floor of Beit Zeidman, Nachalat Binyamin', year: '' },
+    ],
+  },
+  {
+    name: 'Pinchas Bijonski',
+    active: 'Tel Aviv, 1920s–1930s',
+    education: 'Not yet documented',
+    styleArc: 'Eclectic → International Style',
+    signature: { work: "Rubin Museum", note: "Restrained urban-villa modernism on Bialik Street — the eclectic street turning modern." },
+    years: '1885–1992',
+    school: 'International Style',
+    quote: '',
+    innovation:
+      "Born in Poland in 1885 (died Tel Aviv, 1992), Bijonski drew a cluster of Bialik-Street houses at the turn from Eclecticism to the International Style — the house at Bialik 14 that became the painter Reuven Rubin's home and museum, the Goldin House at Bialik 6, and the since-demolished Bialik 20 — and the H-shaped block at 96 Hayarkon (1935) with its curved balconies. He built a house-and-office for himself and his wife Hannah (Beit Bizionski, 4 Ein Vered Street, 1936), and worked across the young city's grid. His formal training is not yet documented.",
+    works: [
+      { name: 'Goldin House, 6 Bialik Street', year: '' },
+      { name: 'Fisher House, 14 Mapu Street', year: '1930' },
+      { name: '96 Hayarkon Street', year: '1935' },
+      { name: 'Beit Bizionski (his own house & office), 4 Ein Vered Street', year: '1936' },
+      { name: 'Rothschild 63; King George 31; Bialik 20 (demolished)', year: '' },
+    ],
+  },
+  {
+    name: 'Fritz Steller',
+    active: 'Sarona, 1930s',
+    education: 'The Bauhochschule at Lemgo, near Detmold, northern Germany (early 1930s) — where he studied alongside Hugo Wennagel',
+    styleArc: 'Templer → International Style',
+    signature: { work: "Eugene Steller House", note: "The International Style arriving in the German Templer colony, at house scale." },
+    years: 'Not yet documented',
+    school: 'International Style',
+    quote: '',
+    innovation:
+      "A builder-architect of the German Templer colony of Sarona who brought the International Style home to it. Steller trained in the early 1930s at the Bauhochschule in Lemgo, near Detmold in northern Germany — the same school as his Sarona contemporary Hugo Wennagel — and returned to design some of the colony's most modern houses, among them the Albrecht Aberle and Eugene & Elly Steller houses, standout examples of the style. His own family held a large orange grove and dairy farm in the colony. Little more of his biography is documented beyond Sarona.",
+  },
+  {
+    name: 'Hugo Wennagel',
+    active: 'Sarona and Wilhelma, 1930s',
+    education: 'The Bauhochschule at Lemgo, near Detmold, northern Germany (early 1930s) — alongside Fritz Steller',
+    styleArc: 'Templer → International Style',
+    signature: { work: "Roland Neef House", note: "A Templer colony house drawn in the new modern language, before the colony became state ground." },
+    years: 'Not yet documented',
+    school: 'International Style',
+    quote: '',
+    innovation:
+      "A builder-architect born into a Sarona dynasty of Templer builders. His father, Joseph Wennagel, put up the first houses of the Templer colony of Wilhelma, houses in the Jewish settlements of Degania and Kinneret, and the twenty-arch railway bridge over Wadi Ghazze near Asluj in the south — so Hugo grew up inside the trade. He trained at the Bauhochschule in Lemgo, in northern Germany, in the early 1930s — the same school and years as his Sarona contemporary Fritz Steller — and brought the International Style home to the colony: his own Wennagel House in Sarona dates to about 1935, and in the Atlas his hand is the Roland Neef House, the colony's late modern turn before it became state ground. His individual dates are not yet documented.",
+    works: [
+      { name: 'Roland Neef House, Sarona', year: 'c. 1930s' },
+      { name: 'Wennagel House, Sarona', year: '1934' },
+      { name: 'Father Joseph Wennagel: first houses of the Wilhelma colony; Degania & Kinneret houses; the 20-arch Wadi Ghazze railway bridge', year: '' },
+    ],
+  },
+  {
+    name: 'Mordechai Zabrodsky & Yitzhak Blaks',
+    active: 'Tel Aviv partnership, 1933–1939',
+    education: 'Both graduated together from the Technion, Haifa, in 1930',
+    styleArc: 'International Style',
+    signature: { work: "Fruma Gourevitz House", note: "Everyday White City housing raised to a considered standard — care in the thresholds and finishes." },
+    years: 'Firm 1933–1939',
+    school: 'International Style',
+    quote: '',
+    innovation:
+      "One of the White City's technically sharpest partnerships. Mordechai Zabrodsky and Yitzhak Blaks — who later Hebraised his name to Yitzhak Bonneh, 'the builder' — studied together at the Technion in Haifa and qualified in 1930, then opened their Tel Aviv office in 1933; its opening and its closing in 1939 track the economic and political swings of the decade. In six years they drew dozens of buildings, private and public, in a clear, confident International Style marked by technical excellence and a bold palette of finishes — varied ceramic tiles, glass bricks, moulded plaster, prefabricated elements. The Fruma Gourevitz House on Yehuda Halevi (1937) is their mark on the Atlas.",
+    works: [
+      { name: 'Fruma Gourevitz House, Yehuda Halevi Street', year: '1937' },
+      { name: 'Apartment house, 131 Rothschild Boulevard', year: '1936' },
+      { name: 'Apartment house, 73 Yehuda Halevi Street', year: '1934' },
+      { name: "Netanya's first municipal building, and the Coastal Development Company building", year: '' },
+    ],
+  },
+  {
+    name: 'Eyal Klein',
+    active: "Tel Aviv, Eclectic period — documented 1926",
+    education: 'Not documented',
+    styleArc: 'Eclectic',
+    signature: { work: "Beit Tzemach Shkanovsky", note: "Eclecticism at its most experimental — a circular window in a patterned concrete surround the municipal catalogue reads as Japanese-influenced." },
+    years: 'Not documented',
+    school: 'Eclectic',
+    quote: '',
+    innovation:
+      "An architect of Tel Aviv's Eclectic period whose work survives more clearly than his biography. The municipal Eclectic-detail catalogue and Project TLV both name him as the architect of Beit Tzemach Shkanovsky (48 Allenby, 1926) — the attribution is firm — and the catalogue singles out its unusual window detailing, a circular opening in a patterned concrete surround it reads as Japanese-influenced: evidence of how experimental 1920s Tel Aviv Eclecticism could be, borrowing freely beyond Europe. Beyond this one documented building, no reliable record of his birth, training, office or later career has yet surfaced — the accessible sources are crowded with unrelated present-day namesakes — and the Atlas leaves those fields open rather than filling them by inference.",
+  },
+  {
+    name: 'Chaim Kris',
+    active: 'Tel Aviv, 1920s–1930s; a founder of Moshav Avichayil (1932)',
+    education: 'Engineer and architect (training not yet documented)',
+    styleArc: 'International Style',
+    signature: { work: 'Beit Mintz', note: 'A café building at the head of Bialik Street — the International Style put to public, sociable use.' },
+    years: 'Not documented',
+    school: 'International Style',
+    quote: '',
+    innovation:
+      "Fuller name Shmuel Dov Chaim Kris — and far more than a jobbing architect. He came up through the Jewish Legion in the First World War, ran an architecture-and-engineering office in Tel Aviv, sat in the Assembly of Representatives (the Yishuv's elected assembly) and went as a delegate to the 1931 Zionist Congress in Basel. In 1932 he organised a group of demobilised Legion veterans to found the moshav of Avichayil. In the Atlas his hand is Beit Mintz (1932), the ship's-prow café building at the Bialik–Allenby–Tchernichovsky corner, drawn with the engineer David Tobia. His birth and formal training are not yet documented.",
+    works: [
+      { name: 'Beit Mintz (café building), 2 Bialik Street — with engineer David Tobia', year: '1932' },
+      { name: 'A founder of Moshav Avichayil, with Jewish Legion veterans', year: '1932' },
+    ],
   },
 ];

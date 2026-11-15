@@ -16,4 +16,14 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   return context.resolveRequest(context, moduleName, platform);
 };
 
+// The Photo Studio companion server (studio/) is a Node tool with its own
+// node_modules; keep Metro from crawling or bundling it.
+const studioDir = path
+  .resolve(__dirname, 'studio')
+  .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+config.resolver.blockList = [
+  ...[].concat(config.resolver.blockList ?? []),
+  new RegExp(`^${studioDir}[\\\\/].*`),
+];
+
 module.exports = config;

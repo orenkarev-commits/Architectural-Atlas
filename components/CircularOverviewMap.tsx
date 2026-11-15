@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: colors.terracotta,
     borderWidth: 2,
-    borderColor: colors.white,
+    borderColor: colors.surface,
   },
   attribution: {
     ...ui.label,

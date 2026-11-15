@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atlas Design Lab</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Comfortaa:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--terra:#C2531F;--terraText:#9E4A22;--tint:rgba(194,83,31,.14);--ink:#2E2620;--body:#4A403A;--muted:#6B5E55;--label:#7D6B5E;--hair:#E8E2DA;--surf:#F7F3EE;--sheet:#FFFFFF;--map:#F0EBE4;--block:#D9B8A8}
+.dark{--terra:#E0703C;--terraText:#F0A47E;--tint:rgba(224,112,60,.18);--ink:#F4ECE4;--body:#D8CCC2;--muted:#A8998E;--label:#A8998E;--hair:#3E3530;--surf:#2C2521;--sheet:#211B18;--map:#191412;--block:#4A3A32}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+.press{user-select:none;-webkit-user-select:none;touch-action:manipulation;cursor:pointer}
+.scroll{overscroll-behavior:contain}
+::selection{background:var(--tint)}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}[hidden]{display:none!important}
+body{margin:0;font-family:Comfortaa,system-ui,sans-serif;background:#E8E6E1;color:#2E2620;display:flex;gap:32px;justify-content:center;align-items:flex-start;padding:28px 16px;flex-wrap:wrap}
+.phone{background:#0e0e10;border-radius:52px;padding:11px;box-shadow:0 30px 70px rgba(40,30,20,.28)}
+.screen{container-type:inline-size;width:var(--w,390px);height:812px;border-radius:42px;overflow:hidden;background:var(--map);position:relative;transition:width .3s}
+.scroll{height:100%;overflow-y:auto;scrollbar-width:none}
+.map{height:300px;position:absolute;inset:0 0 auto 0;background:var(--map);
+ background-image:repeating-linear-gradient(0deg,transparent 0 34px,var(--map) 34px 42px),repeating-linear-gradient(90deg,var(--block) 0 28px,var(--map) 28px 36px)}
+.pin{position:absolute;left:50%;top:130px;width:18px;height:18px;border-radius:50%;background:var(--terra);border:3px solid #fff;transform:translate(-50%,-50%)}
+.back{position:absolute;top:52px;left:16px;width:38px;height:38px;border-radius:19px;background:rgba(255,255,255,.85);display:grid;place-items:center;z-index:3;font-size:18px;color:#2E2620}
+.sheet{position:relative;margin-top:272px;background:var(--sheet);border-radius:28px 28px 0 0;padding:22px 22px 60px;display:flex;flex-direction:column;gap:14px;min-height:560px;color:var(--ink)}
+.grab{width:38px;height:4px;border-radius:2px;background:var(--hair);align-self:center}
+.head{display:flex;gap:14px}
+.photo{width:92px;height:116px;border-radius:12px;object-fit:cover;flex-shrink:0;background:var(--surf)}
+.ph-empty{border:1px dashed var(--hair)}
+.ph-nolli{display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-size:12px;color:var(--label);
+ background:repeating-linear-gradient(45deg,var(--surf) 0 7px,var(--hair) 7px 8px)}
+.name{font-family:'Madimi One';font-size:24px;line-height:1.15;margin:0;overflow-wrap:anywhere}
+.nowrap .name{white-space:nowrap;overflow:hidden}
+.addr{font-size:13px;color:var(--terraText)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.badge{font-size:12px;padding:4px 10px;border-radius:12px;background:var(--tint);color:var(--terraText)}
+.badge.y{background:rgba(127,107,94,.12);color:var(--body)}
+.arch{background:var(--surf);border-radius:16px;padding:14px}
+.lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--label)}
+.aname{font-family:'Madimi One';font-size:17px;margin-top:4px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fact{border:1px solid var(--hair);border-radius:14px;padding:12px}
+.fact .v{font-family:'Madimi One';font-size:17px;margin-top:4px;font-variant-numeric:tabular-nums}
+.st{font-size:11px;margin-top:4px;color:var(--muted)}
+.st.warn{color:var(--terra)}
+.sec{border-top:1px solid var(--hair);padding-top:12px}
+.sh{display:flex;justify-content:space-between;align-items:center;font-family:'Madimi One';font-size:16px;cursor:pointer;user-select:none}
+.chev{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.open .chev{transform:rotate(180deg)}
+.body{display:grid;grid-template-rows:0fr;transition:none}
+.open .body{grid-template-rows:1fr}
+.motion .body{transition:grid-template-rows .28s cubic-bezier(.2,.8,.2,1)}
+.body>div{overflow:hidden}
+.line{height:9px;border-radius:5px;background:var(--surf);margin-top:9px}
+.press{transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+.pressfx .press:active{transform:scale(.97);transition-duration:100ms}
+@media (hover:hover) and (pointer:fine){.mp-act:hover,.fact:hover{filter:brightness(.97)}}
+.sheet.enter{animation:in .35s linear both}
+.motion .sheet.enter{animation:spring .5s cubic-bezier(.2,1.1,.3,1) both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+@keyframes spring{from{opacity:0;transform:translateY(40px)}}
+.motion .fl-fill{animation:grow 900ms cubic-bezier(.16,1,.3,1) 200ms both}
+.motion .fl-dot{animation:fade 300ms ease-out 900ms both}
+@keyframes grow{from{width:0}}
+@keyframes fade{from{opacity:0}}
+.motion.d-maps .mp-act{animation:rise 400ms cubic-bezier(.23,1,.32,1) both}
+.motion.d-maps .mp-act:nth-child(2){animation-delay:40ms}.motion.d-maps .mp-act:nth-child(3){animation-delay:80ms}.motion.d-maps .mp-act:nth-child(4){animation-delay:120ms}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+.motion.d-listing .ls-hero{animation:unblur 500ms cubic-bezier(.23,1,.32,1) both}
+@keyframes unblur{from{filter:blur(8px);transform:scale(1.04)}}
+.viewer.drag{transition:none}
+.viewer{touch-action:none;transition:transform 300ms cubic-bezier(.23,1,.32,1),opacity 300ms}
+@media (prefers-reduced-motion:reduce){.sheet.enter,.fl-fill,.fl-dot,.mp-act,.ls-hero,.viewer.on{animation:none!important}.press,.chev,.body{transition:none!important}}
+.plan{height:150px;border-radius:12px;background:var(--surf);display:grid;place-items:center;color:var(--label);font-size:12px;cursor:zoom-in}
+.viewer{position:absolute;inset:0;background:rgba(10,8,7,.94);display:none;place-items:center;color:#fff;z-index:9;font-size:13px}
+.viewer.on{display:grid}
+.motion .viewer.on{animation:zoom .3s cubic-bezier(.2,.9,.3,1)}
+@keyframes zoom{from{opacity:0;transform:scale(.6)}}
+.splash{position:absolute;inset:0;z-index:20;background:var(--map);display:grid;place-items:center;font-family:'Madimi One';font-size:34px;color:var(--ink);transition:opacity .5s}
+/* DIRECTIONS — patterns from well-designed apps */
+.i{width:28px;height:28px;border-radius:8px;display:inline-grid;place-items:center;font-size:14px;flex-shrink:0}
+/* Maps place card */
+.mp-sub{font-size:14px;color:var(--muted);margin-top:2px}
+.mp-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mp-act{background:var(--surf);border-radius:12px;padding:10px 4px;text-align:center;font-size:11px;color:var(--terraText)}
+.mp-act b{display:block;font-size:18px;font-weight:400;margin-bottom:2px}
+.mp-act.primary{background:var(--terra);color:#fff}
+.mp-strip{display:flex;scroll-snap-type:x mandatory;touch-action:pan-x pan-y;gap:8px;overflow-x:auto;margin:0 -22px;padding:0 22px;scrollbar-width:none}
+.mp-strip>*{scroll-snap-align:start;flex:0 0 150px;height:110px;border-radius:12px;object-fit:cover;background:var(--surf)}
+.mp-group{background:var(--surf);border-radius:14px}
+.mp-row{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-top:1px solid var(--hair);font-size:14px}
+.mp-row:first-child{border-top:0}
+.mp-row span:first-child{color:var(--muted);flex-shrink:0}
+.mp-row span:last-child{text-align:right;min-width:0;overflow-wrap:anywhere}
+.ls-facts b{overflow-wrap:anywhere}
+.ls-facts>div{min-width:0;padding:0 6px}
+.fl-num{overflow-wrap:anywhere}
+@container (max-width:340px){.head{flex-direction:column}.head .photo{width:100%;height:150px}.mp-act{font-size:10px}.fl-big>div{padding:10px}}
+/* Flighty facts board */
+.fl-big{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--hair);border-radius:16px;overflow:hidden}
+.fl-big>div{padding:14px}
+.fl-big>div+div{border-left:1px solid var(--hair)}
+.fl-num{font-family:'Madimi One';font-size:clamp(20px,7cqw,30px);font-variant-numeric:tabular-nums;line-height:1.1}
+.pill{display:inline-block;margin-top:6px;font-size:11px;padding:3px 8px;border-radius:10px;background:rgba(44,95,78,.15);color:#2C5F4E}
+.dark .pill{color:#8FD0B5}
+.pill.warn{background:var(--tint);color:var(--terraText)}
+.fl-track{position:relative;height:6px;border-radius:3px;background:var(--surf);margin:22px 0 6px}
+.fl-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--terra)}
+.fl-dot{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--sheet);border:2px solid var(--terra);transform:translate(-50%,-50%)}
+.fl-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+/* Things / Bear calm */
+.th .sheet{padding-left:28px;padding-right:28px;gap:20px}
+.th-title{font-family:'Madimi One';font-size:30px;line-height:1.15}
+.th-meta{font-size:13px;color:var(--muted)}
+.th-row{display:flex;gap:12px;align-items:center;font-size:15px;padding:4px 0}
+.th-row .k{color:var(--muted);font-size:12px;display:block}
+.th-h{display:flex;gap:10px;align-items:center;font-family:'Madimi One';font-size:16px;color:var(--ink)}
+/* Listing (Airbnb-style) */
+.ls-hero{position:relative;margin:-22px -22px 0;height:250px;border-radius:28px 28px 0 0;overflow:hidden;background:var(--surf)}
+.ls-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.ls-track>*{flex:0 0 100%;height:100%;object-fit:cover;scroll-snap-align:start}
+.ls-dots i{transition:background 200ms ease-out}
+.ls-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.ls-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.6)}.ls-dots i:first-child{background:#fff}
+.ls-count{position:absolute;right:12px;bottom:10px;font-size:11px;background:rgba(0,0,0,.55);color:#fff;padding:3px 8px;border-radius:8px}
+.ls-facts{display:flex;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:12px 0}
+.ls-facts>div{flex:1;text-align:center;font-size:12px;color:var(--muted)}
+.ls-facts>div+div{border-left:1px solid var(--hair)}
+.ls-facts b{display:block;font-weight:400;font-size:15px;color:var(--ink);font-family:'Madimi One'}
+.ls-host{display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--hair);padding-bottom:14px}
+.ls-av{width:44px;height:44px;border-radius:50%;background:var(--tint);display:grid;place-items:center;color:var(--terraText);font-family:'Madimi One'}
+.ls-bar{position:sticky;bottom:0;margin:0 -22px -60px;padding:12px 22px 28px;background:var(--sheet);border-top:1px solid var(--hair);display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.ls-btn{background:var(--terra);color:#fff;border-radius:10px;padding:10px 16px;font-size:14px}
+.d-listing .grab{display:none}
+.d-listing a{color:inherit;text-decoration:none}
+.d-listing .addr{display:inline-flex;gap:4px;align-items:center;color:var(--terraText)}
+.ls-note{font-size:13px;color:var(--muted);margin-top:2px}
+.ls-facts>a{flex:1;text-align:center;font-size:12px;color:var(--muted);min-width:0;padding:0 6px}
+.ls-facts>a+a{border-left:1px solid var(--hair)}
+.ls-h{font-family:'Madimi One';font-size:18px;margin-bottom:10px}
+.ls-aname{font-size:16px;color:var(--ink);overflow-wrap:anywhere}
+img.ls-av{object-fit:cover}
+.ls-host{border-bottom:0}
+.dir{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dir button{text-align:left;line-height:1.25}
+.dir small{display:block;color:#6B5E55;font-size:11px}
+.dir button.on small{color:#fde7da}
+/* panel */
+.panel{width:330px;background:#fff;border-radius:18px;padding:20px;font-size:14px}
+.panel h1{font-family:'Madimi One';font-weight:400;font-size:22px;margin:0 0 4px}
+.panel p{color:#6B5E55;font-size:12px;margin:0 0 14px}
+.panel h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#7D6B5E;margin:18px 0 8px}
+.panel label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer;line-height:1.35}
+.panel select,.panel button{font:inherit;padding:6px 10px;border-radius:10px;border:1px solid #E8E2DA;background:#F7F3EE;cursor:pointer}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button.on{background:#C2531F;color:#fff;border-color:#C2531F}
+.proto-picker {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.82);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 8px 24px rgba(0, 0, 0, 0.24),
+    0 2px 6px rgba(0, 0, 0, 0.12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.proto-picker-highlight {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  will-change: transform;
+}
+
+/* The slide is enabled only after first paint (data-ready), so load doesn't animate. */
+.proto-picker[data-ready] .proto-picker-highlight {
+  transition:
+    transform 250ms cubic-bezier(0.23, 1, 0.32, 1),
+    width 250ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto-picker[data-ready] .proto-picker-highlight { transition: none; }
+}
+
+.proto-picker-item {
+  position: relative; /* sits above the highlight */
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font: inherit;
+  cursor: pointer;
+  transition: color 150ms ease-out;
+}
+
+.proto-picker-item:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.proto-picker-item:active {
+  transform: scale(0.97);
+}
+
+.proto-picker-item:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 2px;
+}
+
+.proto-picker-item[data-active] {
+  color: #fff;
+}
+
+.proto-picker-divider {
+  width: 1px;
+  height: 16px;
+  margin: 0 4px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.proto-picker-replay {
+  padding: 0 10px;
+  font-size: 14px;
+}
+
+.proto-picker[data-position="top"] {
+  bottom: auto;
+  top: 24px;
+}
+</style>
+</head>
+<body>
+<div class="phone"><div class="screen" id="screen">
+  <div class="splash" id="splash" hidden>Architectural Atlas</div>
+  <div class="map"><div class="pin"></div></div>
+  <div class="back press" aria-label="Back"><i class="ti ti-chevron-left"></i></div>
+  <div class="scroll"><div class="sheet enter" id="sheet"></div></div>
+  <div class="viewer" id="viewer"><div style="text-align:center"><i class="ti ti-file-text" style="font-size:40px"></i><br>Plan viewer<br><small style="opacity:.7">Tap or swipe down to close</small></div></div>
+</div></div>
+
+<div class="panel">
+  <h1>Design lab</h1>
+  <p>Mock of the building page in the app's colours and fonts. Switch each proposed change on and off. Nothing here touches the app.</p>
+  <p style="margin-top:-6px">Switch design with the bar at the bottom, keys 1–5 or ← →. R replays.</p>
+  <h2>Building</h2>
+  <select id="bld"></select>
+  <h2>Phone width</h2>
+  <div class="seg" id="widths"></div>
+  <h2>Theme</h2>
+  <div class="seg" id="themes"></div>
+  <h2>Changes</h2>
+  <div id="toggles"></div>
+  <h2>Replay</h2>
+  <div class="seg"><button id="replay">Replay entrance / splash</button></div>
+</div>
+
+<nav class="proto-picker" aria-label="Prototype variants">
+  <span class="proto-picker-highlight" aria-hidden="true"></span>
+  <button class="proto-picker-item">Current</button>
+  <button class="proto-picker-item">Place card</button>
+  <button class="proto-picker-item">Facts board</button>
+  <button class="proto-picker-item">Calm list</button>
+  <button class="proto-picker-item">Listing</button>
+  <span class="proto-picker-divider" aria-hidden="true"></span>
+  <button class="proto-picker-item proto-picker-replay" aria-label="Replay animation (R)">↻</button>
+</nav>
+<div id="stage" hidden></div>
+<script>
+const B=[
+ {id:11,name:"Beit HaTe'omim",addr:'7–9 Mazeh Street',arch:'Joseph Berlin',bio:true,portrait:'../assets/images/architects/joseph-berlin.jpg',year:'1922–27',style:'Eclectic',note:'The Twins House',img:'../assets/images/buildings/11-beit-hateomim.jpg'},
+ {id:37,name:'Beit Tzemach Shkanovsky',addr:'Address as in app data',arch:'Eyal Klein',year:'1926',style:'Eclectic',note:'Now the Assemblage hotel',img:'../assets/images/buildings/37-Beit-Tzemach-Shkanovsky.jpeg'},
+ {id:7,name:'Moshe Greidinger House / Pittman School',addr:'38 Balfour Street',arch:'Unverified — municipal sign names none',year:'Early 1920s',style:'Eclectic',note:'The Greidinger villa, then Pittman School',img:null},
+];
+const T=[
+ ['facts','1 · Architect + year as headline tiles with status'],
+ ['nosplash','2 · Skip splash on deep links'],
+ ['names','3 · Long names wrap (off = clipped on one line)'],
+ ['nolli','4 · Plan-pattern placeholder for missing photo'],
+ ['dark','5 · Dark theme available'],
+ ['pressfx','6 · Press feedback (scale 0.97)'],
+ ['motion','7–9 · Spring entrance, smooth sections, zoom-in viewer'],
+];
+const D=[['current','A · Current','today + fixes'],['maps','B · Place card','Apple Maps'],['flighty','C · Facts board','Flighty'],['things','D · Calm list','Things 3 / Bear'],['listing','E · Listing','Airbnb']];
+const S={d:'current',b:0,w:390,theme:'light',facts:true,nosplash:true,names:true,nolli:true,dark:true,pressfx:true,motion:true};
+const $=id=>document.getElementById(id);
+$('bld').innerHTML=B.map((b,i)=>`<option value=${i}>${b.id} · ${b.name}</option>`).join('');
+$('bld').onchange=e=>{S.b=+e.target.value;render(true)};
+$('widths').innerHTML=[320,375,390,430].map(w=>`<button data-w=${w}>${w}</button>`).join('');
+$('widths').onclick=e=>{if(e.target.dataset.w){S.w=+e.target.dataset.w;render()}};
+$('themes').innerHTML=['light','dark'].map(t=>`<button data-t=${t}>${t}</button>`).join('');
+$('themes').onclick=e=>{if(e.target.dataset.t){S.theme=e.target.dataset.t;render()}};
+$('toggles').innerHTML=T.map(([k,l])=>`<label><input type=checkbox data-k=${k} checked> ${l}</label>`).join('');
+$('toggles').onchange=e=>{S[e.target.dataset.k]=e.target.checked;render()};
+//=D.map(([k,l,s])=>`<button data-d=${k}>${l}<small>${s}</small></button>`).join('');
+//=e=>{const b=e.target.closest('button');if(b){S.d=b.dataset.d;render(true)}};
+$('replay').onclick=()=>render(true,true);
+
+function status(b){
+  const a=/unverified|unknown/i.test(b.arch), y=/early|c\.|undated|–/i.test(b.year);
+  return {a:a?'Open — still hunting':'Status from data',aw:a,y:y?'Approximate':'Status from data',yw:y};
+}
+function render(replay,splash){
+  const b=B[S.b], sc=$('screen'), st=status(b);
+  sc.style.setProperty('--w',S.w+'px');
+  sc.classList.toggle('dark',S.theme==='dark'&&S.dark);
+  D.forEach(([k])=>sc.classList.toggle('d-'+k,S.d===k));
+  //.forEach(x=>x.classList.toggle('on',x.dataset.d===S.d));
+  sc.classList.toggle('nowrap',!S.names);
+  sc.classList.toggle('pressfx',S.pressfx);
+  sc.classList.toggle('motion',S.motion);
+  document.querySelectorAll('#widths button').forEach(x=>x.classList.toggle('on',+x.dataset.w===S.w));
+  document.querySelectorAll('#themes button').forEach(x=>x.classList.toggle('on',x.dataset.t===S.theme));
+  const photo=b.img?`<img class="photo press" src="${b.img}">`:(S.nolli?`<div class="photo ph-nolli">${b.year}</div>`:`<div class="photo ph-empty"></div>`);
+  const small=S.names&&S.w<=320;
+  const head=small?`${photo.replace('class="photo','style="width:100%;height:150px" class="photo')}<div><h2 class="name">${b.name}</h2><div class="addr press">${b.addr}</div>${badges(b)}</div>`
+    :`<div class="head">${photo}<div style="flex:1;min-width:0"><h2 class="name">${b.name}</h2><div class="addr press">${b.addr}</div>${badges(b)}</div></div>`;
+  const facts=S.facts?`<div class="facts"><div class="fact press"><div class="lbl">Architect</div><div class="v">${b.arch} ›</div><div class="st ${st.aw?'warn':''}">${st.a}</div></div><div class="fact"><div class="lbl">Year</div><div class="v">${b.year}</div><div class="st ${st.yw?'warn':''}">${st.y}</div></div></div>`
+    :`<div class="arch press"><div class="lbl">Architect</div><div class="aname">${b.arch}</div></div>`;
+  const sec=(t,o,extra='')=>`<div class="sec ${o?'open':''}"><div class="sh press" onclick="this.parentNode.classList.toggle('open')">${t}<i class="ti ti-chevron-down chev"></i></div><div class="body"><div>${extra||'<div class="line"></div><div class="line" style="width:85%"></div><div class="line" style="width:92%"></div><div class="line" style="width:60%"></div>'}</div></div></div>`;
+  const sheet=$('sheet');
+  sc.classList.toggle('th',S.d==='things');
+  if(S.d!=='current'){sheet.innerHTML=tpl(S.d,b,st,photo,sec);}else sheet.innerHTML=`<div class="grab"></div>${head}${facts}${sec('The Story',true)}${sec('Why it Matters',false)}${sec('Life of the Building',false)}${sec('From the Archive',false,'<div class="plan press" onclick="openV()">Plan sheet · tap to study</div>')}`;
+  if(replay){sheet.classList.remove('enter');void sheet.offsetWidth;sheet.classList.add('enter')}
+  const sp=$('splash');
+  if(splash&&!S.nosplash){sp.hidden=false;sp.style.opacity=1;setTimeout(()=>sp.style.opacity=0,1600);setTimeout(()=>sp.hidden=true,2100)}
+}
+function badges(b){return `<div class="badges"><span class="badge press">${b.style}</span>${S.facts?'':`<span class="badge y">${b.year}</span>`}${b.note?`<span class="badge y">${b.note}</span>`:''}</div>`}
+function tpl(d,b,st,photo,sec){
+ const yr=parseInt(b.year)||1920, age=2026-yr, pct=Math.max(0,Math.min(100,(yr-1880)/(2026-1880)*100));
+ const img=b.img?`<img src="${b.img}">`:`<div class="ph ph-nolli photo" style="width:100%;height:100%;border-radius:0">${b.year}</div>`;
+ const secs=sec('The Story',true)+sec('Why it Matters',false)+sec('Life of the Building',false)+sec('From the Archive',false,'<div class="plan press" onclick="openV()">Plan sheet · tap to study</div>');
+ const pa=`<span class="pill ${st.aw?'warn':''}">${st.a}</span>`, py=`<span class="pill ${st.yw?'warn':''}">${st.y}</span>`;
+ if(d==='maps') return `<div class="grab"></div><div><h2 class="name">${b.name}</h2><div class="mp-sub">${b.style} · ${b.year} · ${b.addr}</div></div>
+  <div class="mp-actions"><div class="mp-act primary press"><b><i class="ti ti-walk"></i></b>Walk</div><div class="mp-act press"><b><i class="ti ti-user"></i></b>Architect</div><div class="mp-act press" onclick="openV()"><b><i class="ti ti-layout-grid"></i></b>Plans</div><div class="mp-act press"><b><i class="ti ti-share"></i></b>Share</div></div>
+  <div class="mp-strip">${b.img?`<img src="${b.img}">`:''}<div class="photo ph-nolli">Plan</div><div class="photo ph-nolli">Elevation</div></div>
+  <div class="mp-group"><div class="mp-row"><span>Architect</span><span>${b.arch} ›</span></div><div class="mp-row"><span>Year</span><span>${b.year} · ${st.y}</span></div><div class="mp-row"><span>Style</span><span>${b.style}</span></div><div class="mp-row"><span>Known as</span><span>${b.note}</span></div></div>${secs}`;
+ if(d==='flighty') return `<div class="grab"></div><div class="head">${photo}<div style="flex:1;min-width:0"><h2 class="name">${b.name}</h2><div class="addr">${b.addr}</div></div></div>
+  <div class="fl-big"><div><div class="lbl">Built</div><div class="fl-num">${b.year}</div>${py}</div><div><div class="lbl">Standing</div><div class="fl-num">${age} yrs</div><span class="pill">${b.style}</span></div></div>
+  <div class="fact"><div class="lbl">Architect</div><div class="v">${b.arch} ›</div>${pa}</div>
+  <div><div class="lbl">Tel Aviv timeline</div><div class="fl-track"><div class="fl-fill" style="width:${pct}%"></div><div class="fl-dot" style="left:${pct}%"></div></div><div class="fl-ends"><span>1880</span><span>1909</span><span>1957</span><span>2026</span></div></div>${secs}`;
+ if(d==='things') return `<div class="grab"></div><div><div class="th-title">${b.name}</div><div class="th-meta">${b.addr}</div></div>
+  <div><div class="th-row"><span class="i" style="background:var(--tint);color:var(--terraText)"><i class="ti ti-user"></i></span><span><span class="k">Architect</span>${b.arch}</span></div>
+  <div class="th-row"><span class="i" style="background:rgba(44,95,78,.15);color:#2C5F4E"><i class="ti ti-calendar"></i></span><span><span class="k">Built · ${st.y}</span>${b.year}</span></div>
+  <div class="th-row"><span class="i" style="background:var(--surf);color:var(--muted)"><i class="ti ti-building"></i></span><span><span class="k">Style</span>${b.style} — ${b.note}</span></div></div>
+  ${['The Story','Why it Matters','Life of the Building','From the Archive'].map((t,i)=>`<div class="sec ${i?'':'open'}" style="border:0;padding:0"><div class="sh th-h press" onclick="this.parentNode.classList.toggle('open')"><span class="i" style="background:var(--surf);color:var(--terra)"><i class="ti ti-${['book','bulb','timeline','file-text'][i]}"></i></span><span style="flex:1">${t}</span><i class="ti ti-chevron-down chev"></i></div><div class="body"><div style="padding-left:38px"><div class="line"></div><div class="line" style="width:80%"></div><div class="line" style="width:90%"></div></div></div></div>`).join('')}`;
+ if(d==='listing'){
+  const A='http://localhost:8081', go=(path)=>`href="${A}${path}" target="_blank" rel="noopener"`;
+  const initials=b.arch.split(' ').filter(w=>/^[A-Z]/.test(w)).map(w=>w[0]).slice(0,2).join('')||'?';
+  const av=b.portrait?`<img class="ls-av" src="${b.portrait}" alt="">`:`<div class="ls-av">${initials}</div>`;
+  const archInner=`${av}<div style="flex:1;min-width:0"><div class="ls-aname">${b.arch}</div><div class="st ${st.aw?'warn':''}">${st.a}</div></div>${b.bio?'<i class="ti ti-chevron-right" style="color:var(--muted)"></i>':''}`;
+  const arch=b.bio?`<a class="ls-host press" ${go('/architects/'+encodeURIComponent(b.arch))}>${archInner}</a>`:`<div class="ls-host">${archInner}</div>`;
+  return `<div class="ls-hero"><div class="ls-track" onscroll="lsDots(this)">${b.img?`<img src="${b.img}" class="press" onclick="openV()">`:img}<div class="ph ph-nolli photo press" style="width:100%;border-radius:0" onclick="openV()">Plan sheet</div><div class="ph ph-nolli photo press" style="width:100%;border-radius:0" onclick="openV()">Elevation</div></div><div class="ls-dots"><i></i><i></i><i></i></div><div class="ls-count">1 / 3</div></div>
+  <div><h2 class="name">${b.name}</h2><a class="addr press" ${go('/map?focus='+b.id)}><i class="ti ti-map-pin"></i> ${b.addr}</a><div class="ls-note">${b.note}</div></div>
+  <div class="ls-facts"><a class="press" ${go('/atlas')}><b>${b.year}</b>built</a><a class="press" ${go('/atlas?style='+encodeURIComponent(b.style))}><b>${b.style}</b>style</a><a class="press" ${go('/atlas')}><b>${age}</b>years</a></div>
+  <div><div class="ls-h">Architect</div>${arch}</div>
+  ${secs}<div class="ls-bar"><a class="press" style="color:var(--muted)" ${go('/map?focus='+b.id)}>${b.addr}</a><a class="ls-btn press" ${go('/map?focus='+b.id)}>Walk there</a></div>`;}
+}
+function openV(){$('viewer').classList.add('on')}
+(()=>{const v=$('viewer');let y0=null,t0=0,dy=0;
+v.onpointerdown=e=>{y0=e.clientY;t0=performance.now();dy=0;v.classList.add('drag');v.setPointerCapture(e.pointerId)};
+v.onpointermove=e=>{if(y0==null)return;dy=Math.max(0,e.clientY-y0);v.style.transform=`translateY(${dy}px) scale(${1-dy/2000})`;v.style.opacity=1-dy/600};
+v.onpointerup=()=>{const vel=dy/(performance.now()-t0);v.classList.remove('drag');
+ if(dy<6||dy>140||vel>.6){v.style.transform='translateY(100%)';v.style.opacity=0;setTimeout(()=>{v.classList.remove('on');v.style.transform='';v.style.opacity=''},250)}else{v.style.transform='';v.style.opacity=''}y0=null}})();
+function lsDots(t){const i=Math.round(t.scrollLeft/t.clientWidth);const h=t.parentNode;h.querySelectorAll('.ls-dots i').forEach((d,j)=>d.style.background=j===i?'#fff':'rgba(255,255,255,.6)');h.querySelector('.ls-count').textContent=`${i+1} / 3`}
+// `variants` is an array of render functions, one per variant, in picker order.
+const variants = D;
+const picker = document.querySelector('.proto-picker');
+const highlight = picker.querySelector('.proto-picker-highlight');
+const items = [...picker.querySelectorAll('.proto-picker-item:not(.proto-picker-replay)')];
+const replay = picker.querySelector('.proto-picker-replay');
+let current = 0;
+
+function moveHighlight() {
+  const el = items[current];
+  highlight.style.width = el.offsetWidth + 'px';
+  highlight.style.transform = `translateX(${el.offsetLeft}px)`;
+}
+
+function mount(i) { S.d = D[i][0]; render(true); }
+
+function setActive(i) {
+  if (i < 0 || i >= variants.length) return;
+  current = i;
+  items.forEach((el, j) => {
+    el.toggleAttribute('data-active', j === i);
+    if (j === i) el.setAttribute('aria-current', 'true');
+    else el.removeAttribute('aria-current');
+  });
+  moveHighlight();
+  const url = new URL(location);
+  url.searchParams.set('v', i + 1);
+  history.replaceState(null, '', url);
+  mount(i);
+}
+
+items.forEach((el, i) => el.addEventListener('click', () => setActive(i)));
+replay?.addEventListener('click', () => mount(current));
+window.addEventListener('resize', moveHighlight);
+
+document.addEventListener('keydown', (e) => {
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const num = parseInt(e.key, 10);
+  if (num >= 1 && num <= variants.length) setActive(num - 1);
+  else if (e.key === 'ArrowRight') setActive((current + 1) % variants.length);
+  else if (e.key === 'ArrowLeft') setActive((current - 1 + variants.length) % variants.length);
+  else if (e.key === 'r' || e.key === 'R') mount(current);
+});
+
+setActive((parseInt(new URLSearchParams(location.search).get('v'), 10) || 1) - 1);
+// Enable the slide only after first paint, so load doesn't animate.
+requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute('data-ready', '')));
+
+</script>
+</body>
+</html>

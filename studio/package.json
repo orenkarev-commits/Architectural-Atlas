@@ -1,0 +1,15 @@
+{
+  "name": "atlas-photo-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Local companion server for the Atlas Photo Studio: edits photos with Nano Banana and files approved ones into the app.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/studio.test.mjs"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "sharp": "^0.34.4"
+  }
+}

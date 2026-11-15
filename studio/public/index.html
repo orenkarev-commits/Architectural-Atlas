@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas Photo Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Madimi+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terracotta: #C2531F; --terracotta-dark: #A34115; --tint: rgba(194,83,31,.12); --tint-text: #9E4A22;
+    --ink: #2E2620; --body: #4A403A; --muted: #6B5E55; --hair: #E8E2DA; --surface: #F7F3EE; --paper: #FFFFFF;
+    --mint: #2C5F4E; --mint-tint: rgba(44,95,78,.1);
+    --ui: 'Comfortaa', ui-rounded, system-ui, sans-serif; --title: 'Madimi One', 'Comfortaa', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { font: 14px/1.55 var(--ui); color: var(--body); background: var(--surface); display: grid; grid-template-columns: 330px 1fr; }
+  button, input, textarea { font: inherit; color: inherit; }
+  h1, h2 { font-family: var(--title); font-weight: 400; color: var(--ink); margin: 0; }
+  .label { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #7D6B5E; }
+  .muted { color: var(--muted); font-size: 12px; }
+
+  /* Sidebar */
+  aside { border-right: 1px solid var(--hair); background: var(--paper); display: flex; flex-direction: column; min-height: 0; }
+  .brand { padding: 22px 20px 14px; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .brand h1 { font-size: 24px; }
+  .mode { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+  .mode.live { background: var(--mint-tint); color: var(--mint); }
+  .mode.mock { background: var(--tint); color: var(--tint-text); }
+  .search { padding: 0 20px 10px; display: grid; gap: 8px; }
+  .search input[type=search] { width: 100%; padding: 9px 12px; border: 1px solid var(--hair); border-radius: 12px; background: var(--surface); }
+  .search label { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; cursor: pointer; }
+  .list { overflow-y: auto; flex: 1; padding: 0 10px 20px; }
+  .row { display: grid; grid-template-columns: 52px 1fr; gap: 12px; align-items: center; width: 100%; text-align: left; padding: 8px 10px; border: 0; border-radius: 12px; background: none; cursor: pointer; }
+  .row:hover { background: var(--surface); }
+  .row.active { background: var(--tint); }
+  .row img, .row .ph { width: 52px; height: 52px; border-radius: 9px; object-fit: cover; background: var(--hair); }
+  .row .ph { display: grid; place-items: center; font-size: 10px; color: var(--muted); }
+  .row .name { color: var(--ink); font-weight: 600; font-size: 13px; line-height: 1.3; }
+  .row .addr { color: var(--muted); font-size: 11.5px; }
+  .folder { padding: 12px 20px; border-top: 1px solid var(--hair); font-size: 11px; color: var(--muted); word-break: break-all; }
+
+  /* Main */
+  main { overflow-y: auto; padding: 28px 36px 60px; min-width: 0; }
+  .empty { height: 70vh; display: grid; place-items: center; text-align: center; color: var(--muted); }
+  .head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+  .head h2 { font-size: 30px; line-height: 1.1; }
+  .cols { display: grid; grid-template-columns: minmax(280px, 420px) 1fr; gap: 28px; align-items: start; }
+  .card { background: var(--paper); border: 1px solid var(--hair); border-radius: 16px; padding: 18px; display: grid; gap: 12px; }
+  .source-img { width: 100%; aspect-ratio: 4/5; object-fit: contain; background: var(--surface); border-radius: 12px; }
+  .drop { border: 1.5px dashed #D9CFC4; border-radius: 12px; padding: 14px; text-align: center; color: var(--muted); font-size: 12.5px; cursor: pointer; transition: .15s; }
+  .drop.over, .drop:hover { border-color: var(--terracotta); color: var(--tint-text); background: var(--tint); }
+  .text { width: 100%; padding: 10px 12px; border: 1px solid var(--hair); border-radius: 12px; background: var(--paper); }
+  textarea.text { min-height: 92px; resize: vertical; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 7px 13px; border-radius: 99px; border: 1px solid var(--hair); background: var(--paper); cursor: pointer; font-size: 12.5px; }
+  .chip[aria-pressed=true] { background: var(--tint); border-color: var(--terracotta); color: var(--tint-text); }
+  .opts { display: flex; flex-wrap: wrap; gap: 18px 28px; align-items: center; }
+  .seg { display: inline-flex; border: 1px solid var(--hair); border-radius: 12px; padding: 3px; background: var(--paper); }
+  .seg button { border: 0; background: none; padding: 6px 13px; border-radius: 9px; cursor: pointer; font-size: 12.5px; }
+  .seg button[aria-pressed=true] { background: var(--terracotta); color: #fff; }
+  .opt { display: flex; gap: 10px; align-items: center; }
+  .check { display: flex; gap: 8px; align-items: start; cursor: pointer; }
+  .check input { accent-color: var(--terracotta); margin-top: 3px; }
+  .btn { border: 0; border-radius: 12px; padding: 13px 22px; background: var(--terracotta); color: #fff; font-weight: 700; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; }
+  .btn:hover { background: var(--terracotta-dark); }
+  .btn:disabled { opacity: .4; cursor: default; background: var(--terracotta); }
+  .btn.ghost { background: none; color: var(--terracotta); border: 1.5px solid var(--terracotta); }
+  .actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .error { color: var(--terracotta-dark); font-size: 13px; }
+  .ok { background: var(--mint-tint); color: var(--mint); border-radius: 12px; padding: 12px 14px; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .tile { border: 2px solid transparent; border-radius: 14px; background: var(--paper); overflow: hidden; cursor: pointer; padding: 0; text-align: left; position: relative; }
+  .tile img { display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover; background: var(--hair); }
+  .tile .cap { padding: 8px 12px; font-size: 12.5px; display: flex; justify-content: space-between; }
+  .tile.chosen { border-color: var(--terracotta); }
+  .tile.chosen .cap { color: var(--tint-text); }
+  .zoom { position: absolute; top: 8px; right: 8px; border: 0; border-radius: 9px; background: rgba(255,255,255,.92); padding: 4px 9px; font-size: 12px; cursor: pointer; }
+  .spinner { width: 18px; height: 18px; border: 2.5px solid var(--tint); border-top-color: var(--terracotta); border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  section + section { margin-top: 30px; }
+
+  /* Lightbox with hold-to-compare */
+  .lightbox { position: fixed; inset: 0; background: rgba(46,38,32,.92); display: none; place-items: center; z-index: 10; }
+  .lightbox.open { display: grid; }
+  .lightbox img { max-width: 92vw; max-height: 84vh; border-radius: 10px; }
+  .lightbox .bar { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 13px; display: flex; gap: 16px; align-items: center; }
+  .lightbox .bar button { background: rgba(255,255,255,.14); color: #fff; border: 0; border-radius: 10px; padding: 8px 14px; cursor: pointer; }
+  .tabs { display: flex; gap: 6px; padding: 0 20px 12px; }
+  .tabs button { flex: 1; border: 1px solid var(--hair); background: var(--paper); border-radius: 10px; padding: 7px 8px; cursor: pointer; font-size: 12.5px; }
+  .tabs button[aria-pressed=true] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .pill { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: var(--surface); color: var(--muted); }
+  .pill.queued { background: #EFE9E2; color: var(--body); }
+  .pill.in_flow { background: var(--tint); color: var(--tint-text); }
+  .pill.returned { background: var(--mint-tint); color: var(--mint); }
+  .pill.approved { background: var(--ink); color: #fff; }
+  .pill.discarded { text-decoration: line-through; }
+  .promptbox { white-space: pre-wrap; font-size: 12.5px; background: var(--surface); border-radius: 12px; padding: 12px; max-height: 180px; overflow: auto; }
+  .steps { margin: 0; padding-left: 18px; font-size: 12.5px; color: var(--body); display: grid; gap: 4px; }
+  a.link { color: var(--terracotta); font-weight: 700; font-size: 12px; text-decoration: none; }
+  kbd { font: 11px var(--ui); background: rgba(0,0,0,.06); border-radius: 5px; padding: 1px 6px; }
+</style>
+</head>
+<body>
+<aside>
+  <div class="brand"><h1>Photo Studio</h1><span id="mode" class="mode">…</span></div>
+  <div class="tabs"><button id="tabBuildings" aria-pressed="true">Buildings</button><button id="tabQueue" aria-pressed="false">Flow queue</button></div>
+  <div class="search" id="searchBox">
+    <input id="q" type="search" placeholder="Search buildings, streets…" autocomplete="off">
+    <label><input id="missing" type="checkbox"> Only buildings without a photo</label>
+  </div>
+  <div id="list" class="list"></div>
+  <div class="folder" id="folder"></div>
+</aside>
+
+<main id="main">
+  <div class="empty"><div><h2 style="font-size:26px">Choose a building</h2><p>Its current photo loads from the Atlas photos folder.</p></div></div>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <img id="lbImg" alt="">
+  <div class="bar"><span id="lbLabel"></span><button id="lbHold" type="button">Hold to see original</button><span class="muted" style="color:#ccc">or hold <kbd style="background:rgba(255,255,255,.15)">space</kbd> · <kbd style="background:rgba(255,255,255,.15)">esc</kbd> to close</span></div>
+</div>
+
+<input id="file" type="file" accept="image/jpeg,image/png,image/webp,image/heic" hidden>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const dataUri = (b64, mime) => `data:${mime};base64,${b64}`;
+
+const state = {
+  config: null, buildings: [], building: null,
+  original: null,          // { image, mimeType, atlasFile|null, label }
+  presets: new Set(), model: 'pro', variants: 2, preserve: true,
+  result: null, chosen: null, busy: null, error: '', done: '', commit: true,
+  prompt: '', source: '',
+  tab: 'buildings', jobs: [], inbox: null, jobId: null, jobChosen: null, jobBusy: false, jobMsg: '', jobErr: '',
+};
+
+async function api(path, body) {
+  const res = await fetch(path, body === undefined ? {} : { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(json.error || `Server error ${res.status}`);
+  return json;
+}
+
+/* ---------- Sidebar ---------- */
+function renderList() {
+  const q = $('#q').value.trim().toLowerCase();
+  const onlyMissing = $('#missing').checked;
+  const rows = state.buildings.filter((b) =>
+    (!q || `${b.name} ${b.address} ${b.id}`.toLowerCase().includes(q)) && (!onlyMissing || !b.file));
+  $('#list').innerHTML = rows.map((b) => `
+    <button class="row ${state.building?.id === b.id ? 'active' : ''}" data-id="${b.id}">
+      ${b.file ? `<img loading="lazy" src="/photos/${encodeURIComponent(b.file)}?v=${encodeURIComponent(b.file)}" alt="">` : '<span class="ph">no photo</span>'}
+      <span><div class="name">${esc(b.name)}</div><div class="addr">#${b.id} · ${esc(b.address)}</div></span>
+    </button>`).join('') || '<p class="muted" style="padding:10px">No matches.</p>';
+}
+
+$('#list').addEventListener('click', (e) => {
+  const row = e.target.closest('.row[data-id]');
+  if (row) selectBuilding(Number(row.dataset.id));
+});
+$('#q').addEventListener('input', renderList);
+$('#missing').addEventListener('change', renderList);
+
+async function selectBuilding(id) {
+  state.jobId = null;
+  state.building = state.buildings.find((b) => b.id === id);
+  Object.assign(state, { original: null, result: null, chosen: null, error: '', done: '' });
+  renderList(); renderMain();
+  if (state.building?.file) {
+    try {
+      const p = await api(`/api/photo?id=${id}`);
+      if (state.building?.id !== id) return;
+      state.original = { image: p.image, mimeType: p.mimeType, atlasFile: p.file, label: `Current Atlas photo · ${p.file}` };
+    } catch (err) { state.error = err.message; }
+    renderMain();
+  }
+}
+
+/* ---------- Main panel ---------- */
+function renderMain() {
+  const b = state.building;
+  if (!b) return;
+  const c = state.config;
+  const o = state.original;
+  const canGenerate = o && (state.prompt.trim() || state.presets.size) && !state.busy;
+  $('#main').innerHTML = `
+    <div class="head">
+      <div><div class="label">Building #${b.id}</div><h2>${esc(b.name)}</h2><div class="muted">${esc(b.address)}</div></div>
+    </div>
+    <section class="cols">
+      <div class="card">
+        <div class="label">Starting image</div>
+        ${o ? `<img class="source-img" src="${dataUri(o.image, o.mimeType)}" alt="">` : `<div class="source-img muted" style="display:grid;place-items:center">${b.file ? '<div class="spinner"></div>' : 'No photo in the Atlas yet'}</div>`}
+        <div class="muted">${o ? esc(o.label) : ''}</div>
+        <div class="drop" id="drop">Drop a different image here (e.g. a Flow export) or <u>browse</u></div>
+        ${o && !o.atlasFile && b.file ? `<button class="btn ghost" id="useCurrent" type="button">Back to current Atlas photo</button>` : ''}
+        <input class="text" id="source" placeholder="Source / credit — e.g. Own photo, Nov 2026" value="${esc(state.source)}">
+      </div>
+      <div class="card">
+        <div class="label">What to clean up</div>
+        <div class="chips">${c.presets.map((p) => `<button class="chip" data-preset="${p.id}" aria-pressed="${state.presets.has(p.id)}">${esc(p.label)}</button>`).join('')}</div>
+        <textarea class="text" id="prompt" placeholder="Anything specific — e.g. remove the white van and the shutter graffiti on the ground floor">${esc(state.prompt)}</textarea>
+        <label class="check"><input type="checkbox" id="preserve" ${state.preserve ? 'checked' : ''}>
+          <span><span style="color:var(--ink)">Preserve architecture</span><br><span class="muted">Forbids the model from changing the building itself.</span></span></label>
+        <div class="opts">
+          <div class="opt"><span class="label">Model</span><span class="seg" data-seg="model">${Object.entries({ pro: 'Best quality', fast: 'Fast draft' }).map(([k, v]) => `<button data-v="${k}" aria-pressed="${state.model === k}">${v}</button>`).join('')}</span></div>
+          <div class="opt"><span class="label">Versions</span><span class="seg" data-seg="variants">${[1, 2, 3].map((n) => `<button data-v="${n}" aria-pressed="${state.variants === n}">${n}</button>`).join('')}</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="sendFlow" ${o && (state.prompt.trim() || state.presets.size) && !state.busy ? '' : 'disabled'}>Send to Flow</button>
+          <button class="btn ghost" id="generate" ${canGenerate ? '' : 'disabled'}>${state.busy === 'edit' ? 'Cleaning up…' : 'Generate with Gemini API'}</button>
+          ${state.busy === 'edit' ? '<div class="spinner"></div>' : '<span class="muted"><kbd>⌘</kbd> + <kbd>Enter</kbd></span>'}
+        </div>
+        ${state.error ? `<div class="error">${esc(state.error)}</div>` : ''}
+      </div>
+    </section>
+    ${state.result ? renderResults() : ''}
+  `;
+  bindMain();
+}
+
+function renderResults() {
+  const r = state.result;
+  const o = state.original;
+  return `
+    <section>
+      <div class="label" style="margin-bottom:12px">Compare and choose ${r.mock ? '· <span style="color:var(--tint-text)">mock mode</span>' : ''}</div>
+      <div class="grid">
+        <div class="tile" style="cursor:default"><img src="${dataUri(o.image, o.mimeType)}" alt=""><div class="cap"><span>Original</span></div></div>
+        ${r.variants.map((v, i) => `
+          <button class="tile ${state.chosen === i ? 'chosen' : ''}" data-variant="${i}">
+            <img src="${dataUri(v.image, v.mimeType)}" alt="">
+            <span class="zoom" data-zoom="${i}">⤢ Inspect</span>
+            <div class="cap"><span>Version ${i + 1}</span><span>${state.chosen === i ? 'chosen' : ''}</span></div>
+          </button>`).join('')}
+      </div>
+    </section>
+    ${state.chosen !== null ? `
+    <section class="card">
+      <label class="check"><input type="checkbox" id="commit" ${state.commit ? 'checked' : ''}>
+        <span><span style="color:var(--ink)">Commit to git</span><br><span class="muted">${c_autoPush() ? 'Commits and pushes the photo.' : 'Commits locally; push when ready.'}</span></span></label>
+      <div class="actions">
+        <button class="btn" id="approve" ${state.busy ? 'disabled' : ''}>${state.busy === 'approve' ? 'Saving…' : `Approve version ${state.chosen + 1} for ${esc(state.building.name)}`}</button>
+        <span class="muted">Writes to the Atlas photos folder and updates data/photos.ts</span>
+      </div>
+      ${state.done ? `<div class="ok">${state.done}</div>` : ''}
+    </section>` : ''}
+  `;
+}
+const c_autoPush = () => state.config?.autoPush;
+
+function bindMain() {
+  const drop = $('#drop');
+  drop.onclick = () => { fileTarget = 'source'; $('#file').click(); };
+  drop.ondragover = (e) => { e.preventDefault(); drop.classList.add('over'); };
+  drop.ondragleave = () => drop.classList.remove('over');
+  drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove('over'); const f = e.dataTransfer.files[0]; if (f) loadFile(f); };
+  $('#useCurrent')?.addEventListener('click', () => selectBuilding(state.building.id));
+  $('#source').oninput = (e) => (state.source = e.target.value);
+  $('#prompt').oninput = (e) => {
+    state.prompt = e.target.value;
+    const ready = !!(state.original && (state.prompt.trim() || state.presets.size) && !state.busy);
+    $('#generate').disabled = !ready;
+    $('#sendFlow').disabled = !ready;
+  };
+  $('#preserve').onchange = (e) => (state.preserve = e.target.checked);
+  document.querySelectorAll('[data-preset]').forEach((el) => (el.onclick = () => {
+    const id = el.dataset.preset;
+    state.presets.has(id) ? state.presets.delete(id) : state.presets.add(id);
+    renderMain();
+  }));
+  document.querySelectorAll('[data-seg]').forEach((seg) => seg.querySelectorAll('button').forEach((btn) => (btn.onclick = () => {
+    const key = seg.dataset.seg;
+    state[key] = key === 'variants' ? Number(btn.dataset.v) : btn.dataset.v;
+    renderMain();
+  })));
+  $('#generate').onclick = generate;
+  $('#sendFlow').onclick = sendToFlow;
+  document.querySelectorAll('[data-variant]').forEach((el) => (el.onclick = (e) => {
+    const i = Number(el.dataset.variant);
+    if (e.target.closest('[data-zoom]')) return openLightbox(i);
+    state.chosen = i; state.done = ''; renderMain();
+  }));
+  $('#commit')?.addEventListener('change', (e) => (state.commit = e.target.checked));
+  $('#approve')?.addEventListener('click', approve);
+}
+
+let fileTarget = 'source';
+$('#file').onchange = (e) => {
+  const f = e.target.files[0];
+  if (f) {
+    const job = state.jobs.find((x) => x.id === state.jobId);
+    fileTarget === 'job' && job ? importResult(job, f) : loadFile(f);
+  }
+  fileTarget = 'source';
+  e.target.value = '';
+};
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const [head, b64] = String(reader.result).split(',');
+    const mime = (head.match(/data:([^;]+)/) || [])[1] || file.type || 'image/jpeg';
+    state.original = { image: b64, mimeType: mime, atlasFile: null, label: `Dropped file · ${file.name}` };
+    Object.assign(state, { result: null, chosen: null, done: '', error: '' });
+    renderMain();
+  };
+  reader.readAsDataURL(file);
+}
+
+async function generate() {
+  if (!state.original || state.busy) return;
+  Object.assign(state, { busy: 'edit', error: '', done: '', result: null, chosen: null });
+  renderMain();
+  try {
+    const r = await api('/api/edit', {
+      image: state.original.image, mimeType: state.original.mimeType, prompt: state.prompt,
+      presets: [...state.presets], preserve: state.preserve, model: state.model, variants: state.variants,
+    });
+    state.result = r; state.chosen = 0;
+    if (r.errors.length) state.error = `${r.errors.length} version(s) failed: ${r.errors[0]}`;
+  } catch (err) { state.error = err.message; }
+  state.busy = null;
+  renderMain();
+}
+
+async function approve() {
+  const v = state.result?.variants[state.chosen];
+  if (!v || state.busy) return;
+  state.busy = 'approve'; state.error = ''; renderMain();
+  try {
+    const r = await api('/api/approve', {
+      buildingId: state.building.id, edited: v.image, editedMime: v.mimeType,
+      original: state.original.atlasFile ? null : state.original.image, originalMime: state.original.mimeType,
+      originalAtlasFile: state.original.atlasFile, instruction: state.result.instruction, prompt: state.prompt,
+      presets: [...state.presets], model: state.result.model, source: state.source, commit: state.commit,
+    });
+    const git = r.git?.committed ? ` Committed <b>${esc(r.git.committed)}</b>${r.git.pushed ? ' and pushed' : ''}.` : r.git?.error ? ` Git: ${esc(r.git.error)}` : '';
+    state.done = `Saved <b>${esc(r.record.file)}</b> and pointed the Atlas at it.${git}`;
+    const { buildings } = await api('/api/buildings');
+    state.buildings = buildings;
+    state.building = buildings.find((b) => b.id === state.building.id);
+    renderList();
+  } catch (err) { state.error = err.message; }
+  state.busy = null;
+  renderMain();
+}
+
+/* ---------- Flow queue ---------- */
+const STATUS_LABEL = { queued: 'Queued', in_flow: 'In Flow', returned: 'Ready to review', approved: 'Approved', discarded: 'Discarded' };
+
+function setTab(tab) {
+  state.tab = tab;
+  $('#tabBuildings').setAttribute('aria-pressed', tab === 'buildings');
+  $('#tabQueue').setAttribute('aria-pressed', tab === 'queue');
+  $('#searchBox').style.display = tab === 'buildings' ? '' : 'none';
+  tab === 'buildings' ? renderList() : renderQueue();
+}
+$('#tabBuildings').onclick = () => setTab('buildings');
+$('#tabQueue').onclick = () => setTab('queue');
+
+function updateQueueTab() {
+  const open = state.jobs.filter((j) => ['queued', 'in_flow', 'returned'].includes(j.status)).length;
+  $('#tabQueue').textContent = open ? `Flow queue (${open})` : 'Flow queue';
+}
+
+function renderQueue() {
+  const inbox = state.inbox;
+  $('#list').innerHTML = (inbox && !inbox.ok ? `<p class="error" style="padding:10px">${esc(inbox.error || 'Downloads folder not readable.')}</p>` : '') +
+    (state.jobs.map((j) => `
+      <button class="row ${state.jobId === j.id ? 'active' : ''}" data-job="${esc(j.id)}">
+        <img loading="lazy" src="/flow/sources/${encodeURIComponent(j.sourceFile)}" alt="">
+        <span><div class="name">${esc(j.buildingName)}</div>
+          <div class="addr"><span class="pill ${j.status}">${STATUS_LABEL[j.status]}${j.results.length ? ` · ${j.results.length}` : ''}</span> ${new Date(j.createdAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</div></span>
+      </button>`).join('') || '<p class="muted" style="padding:10px">No Flow jobs yet. Pick a building, write a prompt and click <b>Send to Flow</b>.</p>');
+}
+
+$('#list').addEventListener('click', (e) => {
+  const row = e.target.closest('[data-job]');
+  if (row) selectJob(row.dataset.job);
+});
+
+async function refreshJobs() {
+  try {
+    const { jobs, inbox } = await api('/api/flow/jobs');
+    const before = JSON.stringify(state.jobs.map((j) => [j.id, j.status, j.results.length]));
+    state.jobs = jobs; state.inbox = inbox;
+    updateQueueTab();
+    if (before !== JSON.stringify(jobs.map((j) => [j.id, j.status, j.results.length]))) {
+      if (state.tab === 'queue') renderQueue();
+      if (state.jobId) renderJob();
+    }
+  } catch { /* server restarting */ }
+}
+setInterval(refreshJobs, 3000);
+
+async function sendToFlow() {
+  if (!state.original || state.busy) return;
+  state.busy = 'flow'; state.error = ''; renderMain();
+  try {
+    const job = await api('/api/flow/jobs', {
+      buildingId: state.building.id,
+      image: state.original.atlasFile ? null : state.original.image,
+      mimeType: state.original.mimeType,
+      prompt: state.prompt, presets: [...state.presets], preserve: state.preserve, source: state.source,
+    });
+    state.busy = null;
+    await refreshJobs();
+    setTab('queue');
+    selectJob(job.id);
+  } catch (err) { state.busy = null; state.error = err.message; renderMain(); }
+}
+
+function selectJob(id) {
+  state.jobId = id; state.jobChosen = null; state.jobMsg = ''; state.jobErr = '';
+  state.building = null;
+  renderQueue(); renderJob();
+}
+
+function renderJob() {
+  const j = state.jobs.find((x) => x.id === state.jobId);
+  if (!j) return;
+  const c = state.config;
+  if (state.jobChosen === null && j.results.length) state.jobChosen = 0;
+  const flowLink = c.flowProjectUrl ? `<a class="link" href="${esc(c.flowProjectUrl)}" target="_blank" rel="noopener">Open Flow project ↗</a>` : '';
+  $('#main').innerHTML = `
+    <div class="head">
+      <div><div class="label">Flow job · ${esc(j.id)}</div><h2>${esc(j.buildingName)}</h2>
+        <div class="muted"><span class="pill ${j.status}">${STATUS_LABEL[j.status]}</span> · building #${j.buildingId}${j.source ? ` · ${esc(j.source)}` : ''}</div></div>
+      <div class="actions">${flowLink}</div>
+    </div>
+    <section class="cols">
+      <div class="card">
+        <div class="label">Source sent to Flow</div>
+        <img class="source-img" src="/flow/sources/${encodeURIComponent(j.sourceFile)}" alt="">
+        <div class="muted">${esc(j.sourceFile)} · <a class="link" href="/flow/sources/${encodeURIComponent(j.sourceFile)}" download>download</a></div>
+      </div>
+      <div class="card">
+        <div class="label">Prompt for Flow</div>
+        <div class="promptbox" id="jobPrompt">${esc(j.instruction)}</div>
+        <div class="actions"><button class="btn ghost" id="copyPrompt" type="button">Copy prompt</button></div>
+        ${j.status === 'queued' || j.status === 'in_flow' ? `
+        <div class="label">Run it</div>
+        <ol class="steps">
+          <li>Ask Claude to <b>run the Flow queue</b>, or do it yourself:</li>
+          <li>Click <b>Collect downloads</b> below, upload the source to Flow, edit it with the prompt.</li>
+          <li>Download the results (2K). They appear here automatically from your Downloads folder.</li>
+        </ol>
+        <div class="actions">
+          ${j.status === 'queued'
+            ? '<button class="btn" id="startJob" type="button">Collect downloads</button>'
+            : '<span class="muted"><span class="spinner" style="display:inline-block;vertical-align:middle"></span> Watching Downloads for this job…</span> <button class="btn ghost" id="pauseJob" type="button">Stop collecting</button>'}
+        </div>` : ''}
+        <div class="drop" id="jobDrop">Or drop a Flow download here</div>
+        ${state.jobErr ? `<div class="error">${esc(state.jobErr)}</div>` : ''}
+      </div>
+    </section>
+    ${j.results.length ? `
+    <section>
+      <div class="label" style="margin-bottom:12px">Compare and choose</div>
+      <div class="grid">
+        <div class="tile" style="cursor:default"><img src="/flow/sources/${encodeURIComponent(j.sourceFile)}" alt=""><div class="cap"><span>Original</span></div></div>
+        ${j.results.map((r, i) => `
+          <button class="tile ${state.jobChosen === i ? 'chosen' : ''}" data-result="${i}">
+            <img src="/flow/results/${encodeURIComponent(r.file)}" alt="">
+            <span class="zoom" data-rzoom="${i}">⤢ Inspect</span>
+            <div class="cap"><span>Flow ${i + 1}</span><span>${state.jobChosen === i ? 'chosen' : ''}</span></div>
+          </button>`).join('')}
+      </div>
+    </section>
+    ${j.status !== 'approved' ? `
+    <section class="card">
+      <label class="check"><input type="checkbox" id="jobCommit" ${state.commit ? 'checked' : ''}>
+        <span><span style="color:var(--ink)">Commit to git</span><br><span class="muted">${c.autoPush ? 'Commits and pushes the photo.' : 'Commits locally; push when ready.'}</span></span></label>
+      <div class="actions">
+        <button class="btn" id="approveJob" ${state.jobBusy || state.jobChosen === null ? 'disabled' : ''}>${state.jobBusy ? 'Saving…' : `Approve Flow ${state.jobChosen + 1} for ${esc(j.buildingName)}`}</button>
+        <button class="btn ghost" id="discardJob" type="button">Discard job</button>
+      </div>
+    </section>` : ''}` : ''}
+    ${state.jobMsg ? `<div class="ok" style="margin-top:16px">${state.jobMsg}</div>` : ''}
+    ${j.status === 'approved' && !state.jobMsg ? `<div class="ok" style="margin-top:16px">Approved — now in the Atlas as <b>${esc(j.approvedFile)}</b>.</div>` : ''}
+  `;
+  bindJob(j);
+}
+
+function bindJob(j) {
+  $('#copyPrompt').onclick = async () => { try { await navigator.clipboard.writeText(j.instruction); $('#copyPrompt').textContent = 'Copied'; } catch { /* clipboard blocked */ } };
+  $('#startJob')?.addEventListener('click', () => jobStatus(j.id, 'in_flow'));
+  $('#pauseJob')?.addEventListener('click', () => jobStatus(j.id, j.results.length ? 'returned' : 'queued'));
+  $('#discardJob')?.addEventListener('click', () => jobStatus(j.id, 'discarded'));
+  $('#jobCommit')?.addEventListener('change', (e) => (state.commit = e.target.checked));
+  $('#approveJob')?.addEventListener('click', () => approveJob(j));
+  document.querySelectorAll('[data-result]').forEach((el) => (el.onclick = (e) => {
+    const i = Number(el.dataset.result);
+    if (e.target.closest('[data-rzoom]')) return openImageLightbox(`/flow/results/${encodeURIComponent(j.results[i].file)}`, `/flow/sources/${encodeURIComponent(j.sourceFile)}`, `Flow ${i + 1}`);
+    state.jobChosen = i; renderJob();
+  }));
+  const drop = $('#jobDrop');
+  drop.onclick = () => { fileTarget = 'job'; $('#file').click(); };
+  drop.ondragover = (e) => { e.preventDefault(); drop.classList.add('over'); };
+  drop.ondragleave = () => drop.classList.remove('over');
+  drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove('over'); const f = e.dataTransfer.files[0]; if (f) importResult(j, f); };
+}
+
+async function jobStatus(id, status) {
+  state.jobErr = '';
+  try { await api(`/api/flow/jobs/${id}/status`, { status }); } catch (err) { state.jobErr = err.message; }
+  await refreshJobs(); renderQueue(); renderJob();
+}
+
+function importResult(j, file) {
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const [head, b64] = String(reader.result).split(',');
+    const mime = (head.match(/data:([^;]+)/) || [])[1] || 'image/png';
+    try { await api(`/api/flow/jobs/${j.id}/result`, { image: b64, mimeType: mime, name: file.name }); }
+    catch (err) { state.jobErr = err.message; }
+    await refreshJobs(); renderJob();
+  };
+  reader.readAsDataURL(file);
+}
+
+async function approveJob(j) {
+  state.jobBusy = true; state.jobErr = ''; renderJob();
+  try {
+    const r = await api(`/api/flow/jobs/${j.id}/approve`, { result: state.jobChosen, commit: state.commit });
+    const git = r.git?.committed ? ` Committed <b>${esc(r.git.committed)}</b>${r.git.pushed ? ' and pushed' : ''}.` : r.git?.error ? ` Git: ${esc(r.git.error)}` : '';
+    state.jobMsg = `Saved <b>${esc(r.record.file)}</b> and pointed the Atlas at it.${git}`;
+    const { buildings } = await api('/api/buildings');
+    state.buildings = buildings;
+  } catch (err) { state.jobErr = err.message; }
+  state.jobBusy = false;
+  await refreshJobs(); renderJob();
+}
+
+/* ---------- Lightbox ---------- */
+let lbIndex = null;
+let lb = null; // { edited, original, label }
+function openImageLightbox(edited, original, label) {
+  lb = { edited, original, label };
+  lbIndex = 0;
+  showLb(false);
+  $('#lightbox').classList.add('open');
+}
+function openLightbox(i) {
+  const v = state.result.variants[i];
+  openImageLightbox(dataUri(v.image, v.mimeType), dataUri(state.original.image, state.original.mimeType), `Version ${i + 1}`);
+}
+function showLb(original) {
+  if (!lb) return;
+  $('#lbImg').src = original ? lb.original : lb.edited;
+  $('#lbLabel').textContent = original ? 'Original' : lb.label;
+}
+const closeLb = () => { $('#lightbox').classList.remove('open'); lbIndex = null; };
+$('#lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') closeLb(); });
+const hold = $('#lbHold');
+hold.onpointerdown = () => showLb(true);
+hold.onpointerup = hold.onpointerleave = () => lbIndex !== null && showLb(false);
+
+document.addEventListener('keydown', (e) => {
+  if (lbIndex !== null) {
+    if (e.key === 'Escape') closeLb();
+    if (e.code === 'Space') { e.preventDefault(); if (!e.repeat) showLb(true); }
+    return;
+  }
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') generate();
+});
+document.addEventListener('keyup', (e) => { if (lbIndex !== null && e.code === 'Space') showLb(false); });
+
+/* ---------- Boot ---------- */
+(async () => {
+  try {
+    const [config, { buildings }] = await Promise.all([api('/api/config'), api('/api/buildings')]);
+    state.config = config; state.buildings = buildings;
+    const mode = $('#mode');
+    mode.textContent = config.mock ? 'Mock mode' : 'Live';
+    mode.className = `mode ${config.mock ? 'mock' : 'live'}`;
+    mode.title = config.mock ? 'No GEMINI_API_KEY in .env — versions are stamped placeholders.' : 'Nano Banana via the Gemini API';
+    $('#folder').textContent = `Photos folder: ${config.photosFolder}`;
+    renderList();
+    await refreshJobs();
+  } catch (err) {
+    $('#main').innerHTML = `<div class="empty"><div><h2>Can't load the Studio</h2><p class="error">${esc(err.message)}</p></div></div>`;
+  }
+})();
+</script>
+</body>
+</html>

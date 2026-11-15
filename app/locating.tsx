@@ -56,7 +56,7 @@ export default function Locating() {
         <LocatingPin />
       </View>
       <LinearGradient
-        colors={['transparent', 'rgba(255,255,255,0.94)']}
+        colors={['transparent', colors.chrome]}
         locations={[0, 0.42]}
         style={styles.scrim}
       >

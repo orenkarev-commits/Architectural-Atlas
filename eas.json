@@ -18,12 +18,19 @@
       "distribution": "internal",
       "channel": "preview"
     },
+    "testflight": {
+      "extends": "preview",
+      "distribution": "store",
+      "autoIncrement": true,
+      "channel": "preview"
+    },
     "production": {
       "autoIncrement": true,
       "channel": "production"
     }
   },
   "submit": {
-    "production": {}
+    "production": {},
+    "testflight": {}
   }
 }

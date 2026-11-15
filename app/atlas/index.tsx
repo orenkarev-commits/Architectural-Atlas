@@ -1,174 +1,189 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { FlatList, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Text, UIManager, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { BackButton } from '../../components/BackButton';
 import { CircularOverviewMap } from '../../components/CircularOverviewMap';
 import { BuildingRow } from '../../components/BuildingRow';
-import { useAtlas } from '../../context/AtlasContext';
+import { BuildingWaves, WhoBuiltWhatStyle } from '../../components/AtlasCharts';
 import { buildings } from '../../data/buildings';
-import type { Building, BuildingStyle } from '../../data/types';
-import { timelineStyles, periodForStyle, styleByName } from '../../data/styles';
+import type { Building } from '../../data/types';
+import { timelineStyles } from '../../data/styles';
 import { parseYear } from '../../lib/year';
 import { colors, radii, spacing } from '../../theme/tokens';
 import { editorial, ui } from '../../theme/typography';
+
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const sortYear = (b: Building) => {
   const y = parseYear(b.year);
   return y === 0 ? Infinity : y;
 };
 
+// The three knowledge pages, lined up under "All Buildings".
+const KNOWLEDGE: { label: string; path: string }[] = [
+  { label: 'Innovations', path: '/innovations' },
+  { label: 'Materials', path: '/materials' },
+  { label: 'Dictionary', path: '/dictionary' },
+];
+
+// A style → its Architecture tour on the main map (walks every building of that style).
+const STYLE_TOUR: Record<string, string> = {
+  'Ottoman Era': 'arch-ottoman',
+  Eclectic: 'arch-eclectic',
+  'Art Deco': 'arch-art-deco',
+  'Early Modernism': 'arch-early-modernism',
+  'International Style': 'arch-international',
+};
+
 export default function Atlas() {
   const { style: styleParam } = useLocalSearchParams<{ style?: string }>();
-  const { setFilterStyle, nearOrder, geoOffline } = useAtlas();
-  const [periodName, setPeriodName] = useState<string | null>(null);
+  const [showBuildings, setShowBuildings] = useState<boolean>(!!styleParam);
 
-  // A style badge tapped elsewhere deep-links here → select that category.
-  useEffect(() => {
-    if (!styleParam) return;
-    setFilterStyle(styleParam);
-    const p = periodForStyle(styleParam as BuildingStyle);
-    setPeriodName(p?.name ?? styleParam);
-  }, [styleParam, setFilterStyle]);
-
-  const activePeriod = periodName ? styleByName(periodName) : undefined;
-
-  const visible = useMemo(() => {
-    if (!activePeriod) return buildings;
-    const match = activePeriod.matchStyles ?? [];
-    return buildings.filter((b) => match.includes(b.style));
-  }, [activePeriod]);
-
-  const sorted = useMemo(() => {
-    if (nearOrder) {
-      return [...visible].sort((a, b) => (nearOrder[a.id] ?? Infinity) - (nearOrder[b.id] ?? Infinity));
-    }
-    return [...visible].sort((a, b) => sortYear(a) - sortYear(b));
-  }, [visible, nearOrder]);
-
-  const headerRight = nearOrder
-    ? geoOffline
-      ? 'Nearest · stored coordinates'
-      : 'Nearest to you'
-    : `${sorted.length} of ${buildings.length}`;
+  const sorted = useMemo(() => [...buildings].sort((a, b) => sortYear(a) - sortYear(b)), []);
 
   const goToBuilding = (building: Building) => {
     router.push({ pathname: '/locating', params: { buildingId: String(building.id) } });
   };
 
+  // Styles link to the main map — "see more buildings like this" as a guided walk.
+  const styleToMap = (styleName?: string) => {
+    const tour = styleName ? STYLE_TOUR[styleName] : undefined;
+    router.push({ pathname: '/map', params: tour ? { tour } : {} });
+  };
+
+  const toggleBuildings = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setShowBuildings((o) => !o);
+  };
+
   return (
     <View style={styles.container}>
       <BackButton />
-      <FlatList
-        data={sorted}
-        keyExtractor={(item) => String(item.id)}
-        contentContainerStyle={styles.listContent}
-        ListHeaderComponent={
-          <>
-            <View style={styles.header}>
-              <Text style={styles.title}>Atlas</Text>
-              <Text style={styles.headerRight}>{headerRight}</Text>
-            </View>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <Text style={styles.title}>Atlas</Text>
 
-            {/* Knowledge area — the Atlas as a cumulative source */}
-            <View style={styles.knowledgeRow}>
-              <Pressable onPress={() => router.push('/dictionary')} hitSlop={6}>
-                <Text style={styles.knowledgeLink}>Dictionary</Text>
-              </Pressable>
-              <Text style={styles.knowledgeDot}>·</Text>
-              <Pressable onPress={() => router.push('/innovations')} hitSlop={6}>
-                <Text style={styles.knowledgeLink}>Innovations</Text>
-              </Pressable>
-              <Text style={styles.knowledgeDot}>·</Text>
-              <Pressable onPress={() => router.push('/materials')} hitSlop={6}>
-                <Text style={styles.knowledgeLink}>Materials</Text>
-              </Pressable>
-            </View>
+        <CircularOverviewMap buildings={buildings} frameBuildings={buildings} onSelect={goToBuilding} />
 
-            <CircularOverviewMap
-              buildings={Platform.OS === 'web' || activePeriod ? visible : buildings}
-              frameBuildings={buildings}
-              onSelect={goToBuilding}
-            />
+        {/* A clean column of title buttons: All Buildings leads, the knowledge pages follow. */}
+        <View style={styles.stack}>
+          <Pressable style={[styles.bubble, styles.bubbleLead]} onPress={toggleBuildings}>
+            <Text style={[styles.bubbleText, styles.bubbleTextLead]}>All Buildings</Text>
+            <Text style={[styles.chevron, showBuildings && styles.chevronOpen]}>⌄</Text>
+          </Pressable>
 
-            {/* By style — the categories are the building classifications */}
-            <View style={styles.chips}>
-              <Pressable
-                onPress={() => setPeriodName(null)}
-                style={[styles.chip, !activePeriod && styles.chipOn]}
-              >
-                <Text style={[styles.chipText, !activePeriod && styles.chipTextOn]}>All</Text>
-              </Pressable>
-              {timelineStyles.map((s) => {
-                const on = activePeriod?.name === s.name;
-                return (
-                  <Pressable
-                    key={s.name}
-                    onPress={() => setPeriodName(s.name)}
-                    onLongPress={() => router.push({ pathname: '/style/[name]', params: { name: s.name } })}
-                    style={[styles.chip, on && styles.chipOn]}
-                  >
-                    <Text style={[styles.chipText, on && styles.chipTextOn]}>{s.name}</Text>
-                    {s.transitional ? <Text style={styles.chipTag}>transitional</Text> : null}
-                  </Pressable>
-                );
-              })}
+          {showBuildings ? (
+            <View style={styles.expanded}>
+              <Text style={styles.byStyle}>By style — tap to see them on the map</Text>
+              <View style={styles.chips}>
+                <Pressable onPress={() => styleToMap()} style={styles.chip}>
+                  <Text style={styles.chipText}>All</Text>
+                </Pressable>
+                {timelineStyles
+                  .filter((s) => s.kind === 'style')
+                  .map((s) => (
+                    <Pressable key={s.name} onPress={() => styleToMap(s.name)} style={styles.chip}>
+                      <Text style={styles.chipText}>{s.name}</Text>
+                    </Pressable>
+                  ))}
+              </View>
+              <View style={styles.rows}>
+                {sorted.map((b) => (
+                  <BuildingRow key={b.id} building={b} onPress={() => goToBuilding(b)} />
+                ))}
+              </View>
             </View>
-          </>
-        }
-        renderItem={({ item }) => (
-          <BuildingRow
-            building={item}
-            distanceKm={nearOrder ? nearOrder[item.id] : undefined}
-            onPress={() => goToBuilding(item)}
-          />
-        )}
-        ItemSeparatorComponent={() => <View style={{ height: spacing.base }} />}
-      />
+          ) : null}
+
+          {KNOWLEDGE.map((k) => (
+            <Pressable key={k.label} style={styles.bubble} onPress={() => router.push(k.path as never)}>
+              <Text style={styles.bubbleText}>{k.label}</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        <View style={styles.chartCard}>
+          <Text style={styles.chartTitle}>Building waves</Text>
+          <BuildingWaves />
+        </View>
+        <View style={styles.chartCard}>
+          <Text style={styles.chartTitle}>Who built what style</Text>
+          <WhoBuiltWhatStyle />
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.white },
-  listContent: { paddingHorizontal: spacing.xxl, paddingBottom: spacing.huge },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 52,
-    marginLeft: 46,
-    marginBottom: spacing.sm,
+  chartCard: {
+    marginTop: spacing.xxl,
+    backgroundColor: colors.surface,
+    borderRadius: radii.lg,
+    borderWidth: 1,
+    borderColor: colors.hairline,
+    padding: spacing.lg,
   },
-  title: { ...editorial.screenHeader, color: colors.ink },
-  headerRight: { ...ui.metadataSmall, color: colors.muted },
-  knowledgeRow: {
+  chartTitle: { ...editorial.cardTitleLg, color: colors.ink, marginBottom: spacing.sm },
+  container: { flex: 1, backgroundColor: colors.surface },
+  content: { paddingHorizontal: spacing.xxl, paddingBottom: spacing.huge },
+  title: {
+    ...editorial.screenHeader,
+    fontSize: 40,
+    lineHeight: 46,
+    color: colors.ink,
+    textAlign: 'center',
+    paddingTop: 56,
+    marginBottom: spacing.lg,
+  },
+  stack: {
+    marginTop: spacing.xl,
+    gap: spacing.md,
+  },
+  bubble: {
+    alignSelf: 'center',
+    minWidth: 240,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: spacing.sm,
-    marginBottom: spacing.md,
+    backgroundColor: colors.surfaceTint,
+    borderWidth: 1,
+    borderColor: colors.terracotta,
+    borderRadius: radii.circle,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: spacing.md,
   },
-  knowledgeLink: { ...editorial.cardTitle, fontSize: 15, color: colors.terracotta },
-  knowledgeDot: { ...ui.body, color: colors.muted },
+  bubbleLead: {
+    minWidth: 260,
+    paddingVertical: spacing.lg,
+  },
+  bubbleText: { ...editorial.cardTitle, fontSize: 15, color: colors.terracotta },
+  bubbleTextLead: { fontSize: 20, fontWeight: '700' },
+  chevron: { ...ui.body, fontSize: 20, lineHeight: 20, color: colors.terracotta },
+  chevronOpen: { transform: [{ rotate: '180deg' }] },
+  expanded: {
+    gap: spacing.base,
+    marginTop: spacing.xs,
+    marginBottom: spacing.sm,
+  },
+  byStyle: { ...ui.metadataSmall, color: colors.muted, textAlign: 'center' },
   chips: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'center',
     gap: spacing.sm,
-    marginTop: spacing.md,
-    marginBottom: spacing.xl,
+    marginBottom: spacing.sm,
   },
   chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
     paddingHorizontal: spacing.base,
     paddingVertical: spacing.sm,
     borderRadius: radii.md,
     borderWidth: 1,
     borderColor: colors.hairline,
+    backgroundColor: colors.surfaceTint,
   },
-  chipOn: { backgroundColor: colors.surfaceTint, borderColor: colors.terracotta },
-  chipText: { ...editorial.cardTitle, fontSize: 14, color: colors.muted },
-  chipTextOn: { color: colors.ink },
-  chipTag: { ...ui.metadataSmall, fontSize: 9, color: colors.terracotta },
+  chipText: { ...editorial.cardTitle, fontSize: 14, color: colors.ink },
+  rows: { gap: spacing.base },
 });

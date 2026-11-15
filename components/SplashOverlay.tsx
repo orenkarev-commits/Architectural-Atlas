@@ -15,10 +15,10 @@ import {
   NOLLI_EPI,
   NOLLI_TRAVEL,
 } from '../data/nolli';
-import { colors } from '../theme/tokens';
+import { colors, gradient } from '../theme/tokens';
 import { editorial, ui } from '../theme/typography';
 
-const WARM = '#FBF4EA';
+const WARM = gradient.colors[0];
 const TWO_PI = Math.PI * 2;
 const PLAN_RATIO = NOLLI_PLAN_WIDTH / NOLLI_PLAN_HEIGHT; // 1.79, matches the source
 const DRIFT_SECONDS = 44; // slow, continuous drift while the splash is up
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   wrap: { backgroundColor: WARM, zIndex: 100, elevation: 100 },
   clip: { ...StyleSheet.absoluteFillObject, overflow: 'hidden' },
   planWrap: { position: 'absolute' },
-  scrim: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(251,244,234,0.62)' },
+  scrim: { ...StyleSheet.absoluteFillObject, backgroundColor: colors.warmScrim },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 32 },
   title: { ...editorial.welcomeTitle, color: colors.ink, textAlign: 'center' },
   subtitle: { ...ui.label, color: colors.terracotta, marginTop: 14, letterSpacing: 1.6 },
