@@ -459,7 +459,7 @@ export const architects: Architect[] = [
     school: 'International Style',
     quote: '',
     innovation:
-      "A builder-architect of the German Templer colony of Sarona who brought the International Style home to it. Steller trained in the early 1930s at the Bauhochschule in Lemgo, near Detmold in northern Germany — the same school as his Sarona contemporary Hugo Wennagel — and returned to design some of the colony's most modern houses, among them the Albrecht Aberle and Eugene & Elly Steller houses, standout examples of the style. His own family held a large orange grove and dairy farm in the colony. Little more of his biography is documented beyond Sarona.",
+      "A builder-architect of the German Templer colony of Sarona who brought the International Style home to it. Steller trained in the early 1930s at the Bauhochschule in Lemgo, near Detmold in northern Germany — the same school as his Sarona contemporary Hugo Wennagel — and returned to design some of the colony's most modern houses, among them the Haering, Albrecht Aberle and Eugene & Elly Steller houses — standout examples of the style and among the colony's last German houses before the 1941 deportation, when Sarona's Templers were interned and shipped to Australia. His own family held a large orange grove and dairy farm in the colony. Little more of his biography is documented beyond Sarona; no portrait is known — the 'Fritz Steller' found online is an unrelated present-day ceramicist.",
   },
   {
     name: 'Hugo Wennagel',

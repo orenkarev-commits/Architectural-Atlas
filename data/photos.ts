@@ -61,6 +61,7 @@ const photos: Partial<Record<number, ImageSourcePropType>> = {
   44: require('../assets/images/buildings/44-templer-reservoir.jpeg'),
   45: require('../assets/images/buildings/45-hemphel-house.jpg'),
   46: require('../assets/images/buildings/46-fruma-gourevitz-house.jpeg'),
+  // 47: AI restoration (Google Flow, Nano Banana 2.1, 2026-11-16) of Oren's own photo, an illustration rather than a record. Original kept as 47-nastissin-house-original.jpeg.
   47: require('../assets/images/buildings/47-nastissin-house.jpeg'),
   48: require('../assets/images/buildings/48-turret-building.jpeg'),
   50: require('../assets/images/buildings/50-beit-klein.jpeg'),
