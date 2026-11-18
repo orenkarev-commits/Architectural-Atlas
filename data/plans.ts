@@ -299,6 +299,15 @@ export const plansFor: Partial<Record<number, Plan[]>> = {
   ],
   50: [
     {
+      src: require('../assets/images/plans/Karl-Netter-9-02-elevation.jpg'),
+      kind: 'elevation',
+      year: 0,
+      date: 'undated (1937 or later)',
+      caption:
+        "Undated sheet (archive placeholder 1/1/1900; its committee stamp cites the 1937 by-law, so it is 1937 or later) for a flat on the roof, with the street elevation of the building's long front. Its title block names the architect of this addition as \u2018Eng. Y. A[?]gstein\u2019 (reading unclear: Arnstein / Ornstein / Argstein), of 42 Ahad Ha\u2019am. That is a later hand, not the unknown designer of the 1926 house.",
+      source: HANDASA,
+    },
+    {
       src: require('../assets/images/plans/Karl-Netter-9-01-plan-1927.jpg'),
       kind: 'plan',
       year: 1927,

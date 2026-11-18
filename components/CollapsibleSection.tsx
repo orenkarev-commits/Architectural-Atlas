@@ -14,10 +14,12 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
  */
 export function CollapsibleSection({
   title,
+  icon,
   defaultOpen = false,
   children,
 }: {
   title: string;
+  icon?: React.ReactNode;
   defaultOpen?: boolean;
   children: React.ReactNode;
 }) {
@@ -29,7 +31,10 @@ export function CollapsibleSection({
   return (
     <View style={styles.bubble}>
       <Pressable onPress={toggle} style={styles.header} hitSlop={4}>
-        <Text style={styles.title}>{title}</Text>
+        <View style={styles.titleWrap}>
+          {icon ? <View style={styles.iconWrap}>{icon}</View> : null}
+          <Text style={styles.title}>{title}</Text>
+        </View>
         <Text style={[styles.chevron, open && styles.chevronOpen]}>⌄</Text>
       </Pressable>
       {open ? <View style={styles.body}>{children}</View> : null}
@@ -51,6 +56,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing.xl,
+  },
+  titleWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    flex: 1,
+  },
+  iconWrap: {
+    width: 20,
+    alignItems: 'center',
   },
   title: {
     ...editorial.cardTitle,

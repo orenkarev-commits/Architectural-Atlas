@@ -7,6 +7,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { MapStyled } from '../../components/MapStyled';
 import { BackButton } from '../../components/BackButton';
 import { CollapsibleSection } from '../../components/CollapsibleSection';
+import { SectionIcon } from '../../components/SectionIcon';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { buildings } from '../../data/buildings';
 import { architects } from '../../data/architects';
@@ -198,45 +199,14 @@ export default function BuildingDetail() {
           {/* Each section is a collapsible terracotta-strip bubble.
               Order: the Story leads, then Why it Matters, Life, Materials, Archive. */}
           {story ? (
-            <CollapsibleSection title="The Story" defaultOpen>
+            <CollapsibleSection title="The Story" icon={<SectionIcon name="story" />} defaultOpen>
               <Text style={styles.storyTitle}>{story.title}</Text>
               <Text style={styles.storyText}>{story.reveal}</Text>
             </CollapsibleSection>
           ) : null}
 
-          <CollapsibleSection title="Why it Matters" defaultOpen={!story}>
-            <Bullets text={building.whyItMatters} />
-          </CollapsibleSection>
-
-          {building.timeline && building.timeline.length > 0 ? (
-            <CollapsibleSection title="Life of the Building">
-              <View style={styles.timeline}>
-                {building.timeline.map((t, i) => (
-                  <View key={i} style={styles.timelineRow}>
-                    <Text style={styles.timelineYear}>{t.year}</Text>
-                    <Text style={styles.timelineNote}>{t.note}</Text>
-                  </View>
-                ))}
-              </View>
-            </CollapsibleSection>
-          ) : null}
-
-          {building.materials ? (
-            <CollapsibleSection title="Materials & Construction">
-              <Bullets text={building.materials} />
-            </CollapsibleSection>
-          ) : null}
-
-          <CollapsibleSection title="Building Waves">
-            <BuildingWaves highlightId={building.id} />
-          </CollapsibleSection>
-
-          <CollapsibleSection title="Who Built What Style">
-            <WhoBuiltWhatStyle highlightId={building.id} />
-          </CollapsibleSection>
-
           {plans.length > 0 ? (
-            <CollapsibleSection title="From the Archive">
+            <CollapsibleSection title="From the Archive" icon={<SectionIcon name="archive" />} defaultOpen>
               {plans.map((plan, i) => (
                 <View key={i} style={styles.planBlock}>
                   <Pressable onPress={() => setActivePlan(plan)}>
@@ -254,6 +224,37 @@ export default function BuildingDetail() {
               ))}
             </CollapsibleSection>
           ) : null}
+
+          <CollapsibleSection title="Why it Matters" icon={<SectionIcon name="matters" />} defaultOpen={!story}>
+            <Bullets text={building.whyItMatters} />
+          </CollapsibleSection>
+
+          {building.timeline && building.timeline.length > 0 ? (
+            <CollapsibleSection title="Life of the Building" icon={<SectionIcon name="life" />}>
+              <View style={styles.timeline}>
+                {building.timeline.map((t, i) => (
+                  <View key={i} style={styles.timelineRow}>
+                    <Text style={styles.timelineYear}>{t.year}</Text>
+                    <Text style={styles.timelineNote}>{t.note}</Text>
+                  </View>
+                ))}
+              </View>
+            </CollapsibleSection>
+          ) : null}
+
+          {building.materials ? (
+            <CollapsibleSection title="Materials & Construction" icon={<SectionIcon name="materials" />}>
+              <Bullets text={building.materials} />
+            </CollapsibleSection>
+          ) : null}
+
+          <CollapsibleSection title="Building Waves">
+            <BuildingWaves highlightId={building.id} />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Who Built What Style">
+            <WhoBuiltWhatStyle highlightId={building.id} />
+          </CollapsibleSection>
 
           <PrimaryButton label="Open in Field research" onPress={() => router.push('/field')} />
         </Animated.View>
