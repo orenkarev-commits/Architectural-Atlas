@@ -51,7 +51,7 @@ function Bullets({ text }: { text: string }) {
 export default function BuildingDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const building = buildings.find((b) => String(b.id) === id);
-  const architect = building ? architects.find((a) => a.name === building.architect) : undefined;
+  const architect = building ? architects.find((a) => a.name === building.architect.replace(/ \(attributed\)$/, '')) : undefined;
   const plans = building ? plansForBuilding(building.id) : [];
   const story = building ? stories.find((s) => s.buildingId === building.id) : undefined;
   const [activePlan, setActivePlan] = useState<Plan | null>(null);

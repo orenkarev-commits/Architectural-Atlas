@@ -1364,7 +1364,7 @@ const entries: Building[] = [
   {
     id: 62,
     name: 'Beit Oplatka',
-    architect: 'Unattributed',
+    architect: 'A. Tiner (attributed)',
     year: 1925,
     style: 'Eclectic',
     styleNote: "Later Hashomer Hatzair's headquarters",
@@ -1375,7 +1375,7 @@ const entries: Building[] = [
     whyItMatters:
       "It matters as domestic architecture turned into political infrastructure — a private family house that became, for decades, the working headquarters of a national movement. A home converted, room by room, into the face of a politics.",
     materials:
-      "A rounded corner block in plastered masonry, its junction made inhabitable by a covered balcony carried on columns, with a precast-concrete balustrade of repeated openings — the corner given a public face while the rooms stayed domestic. Handasa file 00110660 (Gush 7455/8); architect unresolved (reported A. Tiner/Tainer or A. Sieber/Siber).",
+      "A rounded corner block in plastered masonry, its junction made inhabitable by a covered balcony carried on columns, with a precast-concrete balustrade of repeated openings — the corner given a public face while the rooms stayed domestic. Handasa file 00110660 (Gush 7455/8); architect attributed to A. Tiner (א. טינר) by the municipal conservation catalogue of typical details, Eclectic volume 1920–1930 (Conservation Dept, pp. 68, 96, 115, 118); permit not yet seen. Project TLV and golden-lotus also give Tiner; a Hebrew Wikipedia monuments list names Yosef Minor, which is unsourced and outweighed by the municipal catalogue but recorded until the permit settles it.",
     timeline: [
       { year: '1925', note: 'Built for Dr Raphael Oplatka — Jerusalem-born, trained in medicine in Paris and a former Ottoman military medical officer, by then chief physician of the government health office in Mandate Tel Aviv — and his wife Yocheved, who ran the building; the childless couple take one large flat and let the rest.' },
       { year: '1930s', note: 'Tenants include a Sorbonne-trained teacher giving French, English and German lessons.' },

@@ -8,6 +8,21 @@ import type { Architect } from './types';
 
 export const architects: Architect[] = [
   {
+    name: 'A. Tiner',
+    years: 'Not yet documented',
+    active: 'Tel Aviv, by 1921 (Beit Karaso); also attributed Beit Oplatka (1925)',
+    education: 'Not yet documented',
+    styleArc: 'Eclectic',
+    school: 'Eclectic',
+    quote: '',
+    innovation:
+      "Known so far only by an initial and a surname. The municipality's conservation catalogue of Eclectic details credits \"א. טינר\" with two corner buildings: Beit Karaso on Nahalat Binyamin (1921) and Beit Oplatka on Ahad Ha'am (1925). Both are corner buildings, and the catalogue records precast-concrete work on each: the arched frame over Beit Karaso's double entrance door, and Beit Oplatka's bottle balustrade. His full name, life dates, training and other works are still to be found, in the building permits, the Hebrew press and the architects' registers.",
+    signature: { work: 'Beit Oplatka', note: "A rounded corner made into a covered balcony on columns, the junction given a public face (attributed: municipal conservation catalogue)." },
+    works: [
+      { name: 'Beit Karaso, 12 Nahalat Binyamin (municipal conservation catalogue, Eclectic 1920–1930, pp. 31, 70)', year: '1921' },
+    ],
+  },
+  {
     name: 'David Tobia',
     active: 'From the 1920s; first chief engineer of Solel Boneh',
     education: 'Not yet documented',

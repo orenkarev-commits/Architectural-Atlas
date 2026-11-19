@@ -223,7 +223,7 @@ export function WhoBuiltWhatStyle({ highlightId, maxRows = 10 }: { highlightId?:
         ))}
       </View>
       {rows.map((a) => {
-        const bio = architects.find((x) => x.name === a);
+        const bio = architects.find((x) => x.name === a.replace(/ \(attributed\)$/, ''));
         const isTargetRow = target?.architect === a;
         return (
           <View key={a} style={s.gridRow}>
