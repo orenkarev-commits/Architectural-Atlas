@@ -1170,7 +1170,7 @@ const entries: Building[] = [
     timeline: [
       { year: '1919', note: 'The Balder family arrives from Vienna; Shmuel Balder, an engineer, is a friend of the poet Bialik.' },
       { year: '1925–26', note: 'Balder builds the corner villa for his family — one storey (Emil Tyner assisting the plan). Handasa file 00230230.' },
-      { year: 'c. 1930', note: 'Raised vertically — a second floor, then a partial third — within about five years.' },
+      { year: '1930', note: "The second-floor addition is approved — permit #145, stamped 18 March 1930; the signed sheet titles it the second floor of Mr. Shmuel Balder's house. A partial third follows — the villa grew upward within about five years." },
       { year: '1937', note: 'Balder dies; Regina Balder turns much of the house over to rented rooms and offices.' },
       { year: '1970s–80s', note: 'A haunt of artists.' },
       { year: 'Later', note: 'Home to the Camera Obscura photography school.' },

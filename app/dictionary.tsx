@@ -18,10 +18,11 @@ export default function Dictionary() {
     <View style={styles.container}>
       <BackButton />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Text style={styles.kicker}>Atlas</Text>
+        <Text style={styles.kicker}>Architectural Intelligence</Text>
         <Text style={styles.name}>Dictionary</Text>
         <Text style={styles.tagline}>
-          The working vocabulary of the collection — every term drawn from a building we hold.
+          The working vocabulary the Atlas reads buildings with — every term drawn from a building we hold,
+          and sourced, never inferred from style.
         </Text>
 
         {termCategoryOrder.map((cat) => {

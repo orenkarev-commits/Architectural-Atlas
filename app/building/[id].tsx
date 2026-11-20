@@ -7,14 +7,13 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { MapStyled } from '../../components/MapStyled';
 import { BackButton } from '../../components/BackButton';
 import { CollapsibleSection } from '../../components/CollapsibleSection';
-import { SectionIcon } from '../../components/SectionIcon';
+import { SectionIcon, type SectionIconName } from '../../components/SectionIcon';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { buildings } from '../../data/buildings';
 import { architects } from '../../data/architects';
 import { stories } from '../../data/stories';
 import { plansForBuilding, type Plan } from '../../data/plans';
 import { PlanViewer } from '../../components/PlanViewer';
-import { BuildingWaves, WhoBuiltWhatStyle } from '../../components/AtlasCharts';
 import { toBullets } from '../../lib/bullets';
 import { parseYear } from '../../lib/year';
 import { portraitFor } from '../../data/portraits';
@@ -57,6 +56,7 @@ export default function BuildingDetail() {
   const [activePlan, setActivePlan] = useState<Plan | null>(null);
   const [photoBig, setPhotoBig] = useState(false);
   const [slide, setSlide] = useState(0);
+  const [activeKey, setActiveKey] = useState<string>('');
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
@@ -97,6 +97,49 @@ export default function BuildingDetail() {
     ...plans.map((plan, i) => ({ key: `plan-${i}`, src: plan.src, onPress: () => setActivePlan(plan) })),
   ];
   const pressed = ({ pressed: p }: { pressed: boolean }) => (p ? styles.pressed : null);
+
+  // The four content topics, shown as a 2×2 grid of glass cards; the selected one opens below.
+  type SectionDef = { key: string; icon: SectionIconName; title: string; render: () => React.ReactNode };
+  const sectionDefs: SectionDef[] = [
+    ...(story
+      ? [{
+          key: 'story', icon: 'story' as const, title: 'The Story',
+          render: () => (
+            <>
+              <Text style={styles.storyTitle}>{story.title}</Text>
+              <Text style={styles.storyText}>{story.reveal}</Text>
+            </>
+          ),
+        }]
+      : []),
+    {
+      key: 'matters', icon: 'matters' as const, title: 'Why it Matters',
+      render: () => <Bullets text={building.whyItMatters} />,
+    },
+    ...(building.timeline && building.timeline.length > 0
+      ? [{
+          key: 'life', icon: 'life' as const, title: 'Life of the Building',
+          render: () => (
+            <View style={styles.timeline}>
+              {building.timeline!.map((t, i) => (
+                <View key={i} style={styles.timelineRow}>
+                  <Text style={styles.timelineYear}>{t.year}</Text>
+                  <Text style={styles.timelineNote}>{t.note}</Text>
+                </View>
+              ))}
+            </View>
+          ),
+        }]
+      : []),
+    ...(building.materials
+      ? [{
+          key: 'materials', icon: 'materials' as const, title: 'Materials & Construction',
+          render: () => <Bullets text={building.materials!} />,
+        }]
+      : []),
+  ];
+  const currentKey = activeKey && sectionDefs.some((s) => s.key === activeKey) ? activeKey : sectionDefs[0]?.key ?? '';
+  const current = sectionDefs.find((s) => s.key === currentKey);
 
   return (
     <View style={styles.container}>
@@ -162,7 +205,9 @@ export default function BuildingDetail() {
               style={(st) => [styles.fact, styles.factDivider, pressed(st)]}
               onPress={() => openAtlas(building.style)}
             >
-              <Text style={styles.factValue}>{building.style}</Text>
+              <Text style={styles.factValue} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.6}>
+                {building.style.replace(/\s*style$/i, '')}
+              </Text>
               <Text style={styles.factLabel}>style</Text>
             </Pressable>
             {age ? (
@@ -173,38 +218,32 @@ export default function BuildingDetail() {
             ) : null}
           </View>
 
-          <View>
-            <Text style={styles.sectionHeading}>Architect</Text>
-            <Pressable
-              style={(st) => [styles.architectRow, pressed(st)]}
-              disabled={!architect}
-              onPress={() => {
-                if (architect) {
-                  router.push({ pathname: '/architects/[name]', params: { name: architect.name } });
-                }
-              }}
-            >
-              {portrait ? (
-                <Image source={portrait} style={styles.avatar} />
-              ) : (
-                <View style={[styles.avatar, styles.avatarEmpty]}>
-                  <Text style={styles.avatarText}>{avatarLabel}</Text>
-                </View>
-              )}
-              <Text style={styles.architectName}>{building.architect}</Text>
-              {architect ? <Text style={styles.chevron}>›</Text> : null}
-            </Pressable>
-          </View>
+          {/* Architect — a terracotta strip that opens the architect's page. */}
+          <Pressable
+            style={(st) => [styles.architectStrip, pressed(st)]}
+            disabled={!architect}
+            onPress={() => {
+              if (architect) {
+                router.push({ pathname: '/architects/[name]', params: { name: architect.name } });
+              }
+            }}
+          >
+            {portrait ? (
+              <Image source={portrait} style={styles.avatar} />
+            ) : (
+              <View style={[styles.avatar, styles.avatarStripEmpty]}>
+                <Text style={styles.avatarStripText}>{avatarLabel}</Text>
+              </View>
+            )}
+            <View style={styles.architectStripText}>
+              <Text style={styles.architectStripLabel}>Architect</Text>
+              <Text style={styles.architectStripName} numberOfLines={2}>{building.architect}</Text>
+            </View>
+            {architect ? <Text style={styles.architectStripChevron}>›</Text> : null}
+          </Pressable>
 
-          {/* Each section is a collapsible terracotta-strip bubble.
-              Order: the Story leads, then Why it Matters, Life, Materials, Archive. */}
-          {story ? (
-            <CollapsibleSection title="The Story" icon={<SectionIcon name="story" />} defaultOpen>
-              <Text style={styles.storyTitle}>{story.title}</Text>
-              <Text style={styles.storyText}>{story.reveal}</Text>
-            </CollapsibleSection>
-          ) : null}
-
+          {/* The Archive opens first, directly under the architect; then the Story, then
+              Why it Matters, Life, Materials. */}
           {plans.length > 0 ? (
             <CollapsibleSection title="From the Archive" icon={<SectionIcon name="archive" />} defaultOpen>
               {plans.map((plan, i) => (
@@ -225,36 +264,31 @@ export default function BuildingDetail() {
             </CollapsibleSection>
           ) : null}
 
-          <CollapsibleSection title="Why it Matters" icon={<SectionIcon name="matters" />} defaultOpen={!story}>
-            <Bullets text={building.whyItMatters} />
-          </CollapsibleSection>
+          {/* The four topics as a 2×2 grid of glass cards; the chosen one opens below. */}
+          <View style={styles.sectionGrid}>
+            {sectionDefs.map((s) => {
+              const on = s.key === currentKey;
+              return (
+                <Pressable
+                  key={s.key}
+                  onPress={() => setActiveKey(s.key)}
+                  style={({ pressed: p }) => [styles.sectionCard, on && styles.sectionCardOn, p && styles.pressed]}
+                >
+                  <SectionIcon name={s.icon} size={30} color={on ? colors.white : colors.terracotta} />
+                  <Text style={[styles.sectionCardTitle, on && styles.sectionCardTitleOn]} numberOfLines={2}>
+                    {s.title}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
 
-          {building.timeline && building.timeline.length > 0 ? (
-            <CollapsibleSection title="Life of the Building" icon={<SectionIcon name="life" />}>
-              <View style={styles.timeline}>
-                {building.timeline.map((t, i) => (
-                  <View key={i} style={styles.timelineRow}>
-                    <Text style={styles.timelineYear}>{t.year}</Text>
-                    <Text style={styles.timelineNote}>{t.note}</Text>
-                  </View>
-                ))}
-              </View>
-            </CollapsibleSection>
+          {current ? (
+            <View style={styles.sectionPanel}>
+              <Text style={styles.sectionPanelTitle}>{current.title}</Text>
+              {current.render()}
+            </View>
           ) : null}
-
-          {building.materials ? (
-            <CollapsibleSection title="Materials & Construction" icon={<SectionIcon name="materials" />}>
-              <Bullets text={building.materials} />
-            </CollapsibleSection>
-          ) : null}
-
-          <CollapsibleSection title="Building Waves">
-            <BuildingWaves highlightId={building.id} />
-          </CollapsibleSection>
-
-          <CollapsibleSection title="Who Built What Style">
-            <WhoBuiltWhatStyle highlightId={building.id} />
-          </CollapsibleSection>
 
           <PrimaryButton label="Open in Field research" onPress={() => router.push('/field')} />
         </Animated.View>
@@ -344,6 +378,62 @@ const styles = StyleSheet.create({
   factValue: { ...editorial.cardTitle, color: colors.ink, textAlign: 'center' },
   factLabel: { ...ui.metadata, color: colors.muted, marginTop: 2 },
   sectionHeading: { ...editorial.cardTitleLg, color: colors.ink, marginBottom: spacing.base },
+  architectStrip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.lg,
+    backgroundColor: colors.terracotta,
+    borderRadius: radii.lg,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.base,
+    shadowColor: '#3A0A00',
+    shadowOpacity: 0.22,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 5,
+  },
+  architectStripText: { flex: 1, minWidth: 0 },
+  architectStripLabel: {
+    ...ui.metadataSmall,
+    color: 'rgba(255,255,255,0.78)',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  architectStripName: { ...editorial.cardTitle, color: colors.white, marginTop: 1 },
+  architectStripChevron: { ...ui.body, fontSize: 24, color: 'rgba(255,255,255,0.85)' },
+  avatarStripEmpty: { backgroundColor: 'rgba(255,255,255,0.22)', alignItems: 'center', justifyContent: 'center' },
+  avatarStripText: { ...editorial.cardTitle, color: colors.white },
+
+  // 2×2 glass section grid
+  sectionGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+  },
+  sectionCard: {
+    width: '48%',
+    aspectRatio: 1.25,
+    borderRadius: radii.lg,
+    backgroundColor: colors.glassFill,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.base,
+    shadowColor: '#2A1008',
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 4,
+  },
+  sectionCardOn: { backgroundColor: colors.terracotta, borderColor: colors.terracotta },
+  sectionCardTitle: { ...ui.buttonLabel, fontSize: 12, color: colors.ink, textAlign: 'center' },
+  sectionCardTitleOn: { color: colors.white },
+  sectionPanel: { marginTop: spacing.xs },
+  sectionPanelTitle: { ...editorial.cardTitleLg, color: colors.ink, marginBottom: spacing.base },
+
   architectRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
   avatar: { width: 44, height: 44, borderRadius: 22, flexShrink: 0 },
   avatarEmpty: { backgroundColor: colors.terracottaTint, alignItems: 'center', justifyContent: 'center' },

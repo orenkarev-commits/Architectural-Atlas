@@ -87,6 +87,17 @@ export const gradient = {
   angleDeg: 160,
 };
 
+/**
+ * Living red-orange "sunset" gradient for the welcome screen — three states the
+ * background drifts slowly between (matches the splash + the London Atlas landing).
+ * Cream/white content reads on all three.
+ */
+export const gradientDrift: ReadonlyArray<readonly [string, string]> = [
+  ['#F0893B', '#B4241A'],
+  ['#EF6B3C', '#9E1C12'],
+  ['#F6A24A', '#C23A1A'],
+];
+
 export const spacing = {
   xs: 4,
   sm: 6,

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -7,50 +7,63 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path } from 'react-native-svg';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useFocusEffect } from '@react-navigation/native';
-import { GradientBackground } from '../components/GradientBackground';
 import { ExpandingSearchInput } from '../components/ExpandingSearchInput';
-import { StoryCard } from '../components/StoryCard';
-import { useAtlas } from '../context/AtlasContext';
 import { buildings } from '../data/buildings';
 import { architects } from '../data/architects';
-import { feed, type FeedStory } from '../lib/feed';
-import { rotatedSlice } from '../lib/rotate';
 import { suggest, type Suggestion } from '../lib/search';
-import { colors, radii, spacing } from '../theme/tokens';
+import { useAtlas } from '../context/AtlasContext';
+import { colors, gradientDrift, radii, spacing } from '../theme/tokens';
 import { editorial, ui } from '../theme/typography';
 
-// Terracotta-recoloured contour texture (from the old Field-research tile).
-const fieldTexture = require('../assets/images/field-texture-terracotta.jpeg');
+const CREAM = '#FBF3EA';
 
-const STORY_CARD_W = 220;
-const STORY_GAP = 14;
-
-/** A rotating slice of the story feed, streaming slowly along the bottom (seamless marquee). */
-function StoriesMarquee({ items, onOpen }: { items: FeedStory[]; onOpen: (s: FeedStory) => void }) {
-  const setWidth = items.length * (STORY_CARD_W + STORY_GAP);
-  const x = useSharedValue(0);
-  useEffect(() => {
-    x.value = 0;
-    x.value = withRepeat(withTiming(-setWidth, { duration: setWidth * 45, easing: Easing.linear }), -1, false);
-  }, [x, setWidth]);
-  const rowStyle = useAnimatedStyle(() => ({ transform: [{ translateX: x.value }] }));
+/** The Atlas line-mark (pointed-arch façade), drawn in cream with no icon surround — fine lineweight. */
+function LogoMark({ size = 60 }: { size?: number }) {
+  const p = {
+    stroke: CREAM,
+    fill: 'none' as const,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  };
   return (
-    <View style={styles.marqueeClip} pointerEvents="box-none">
-      <Animated.View style={[styles.marqueeRow, rowStyle]}>
-        {[...items, ...items].map((s, i) => (
-          <View key={`${s.key}-${i}`} style={styles.storyCardWrap}>
-            <StoryCard tag={s.category} title={s.title} onPress={() => onOpen(s)} />
-          </View>
-        ))}
+    <Svg width={size} height={size} viewBox="0 0 120 120">
+      <Path d="M30 96 V46 H90 V96" strokeWidth={3.1} {...p} />
+      <Path d="M30 46 V40 H38 V46 M46 46 V40 H54 V46 M62 46 V40 H70 V46 M78 46 V40 H86 V46" strokeWidth={2.2} {...p} />
+      <Path d="M52 96 V70 Q52 54 60 50 Q68 54 68 70 V96" strokeWidth={3.1} {...p} />
+      <Path d="M38 96 V76 Q38 66 43 63 Q48 66 48 76 V96" strokeWidth={2.2} {...p} />
+      <Path d="M72 96 V76 Q72 66 77 63 Q82 66 82 76 V96" strokeWidth={2.2} {...p} />
+    </Svg>
+  );
+}
+
+/** Full-screen living red-orange gradient that drifts slowly between three states. */
+function DriftingGradient() {
+  const a = useSharedValue(0);
+  const b = useSharedValue(0);
+  useEffect(() => {
+    a.value = withRepeat(withTiming(1, { duration: 7000, easing: Easing.inOut(Easing.ease) }), -1, true);
+    b.value = withRepeat(withTiming(1, { duration: 11000, easing: Easing.inOut(Easing.ease) }), -1, true);
+  }, [a, b]);
+  const sA = useAnimatedStyle(() => ({ opacity: a.value }));
+  const sB = useAnimatedStyle(() => ({ opacity: b.value }));
+  return (
+    <View style={StyleSheet.absoluteFill} pointerEvents="none">
+      <LinearGradient colors={gradientDrift[0] as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
+      <Animated.View style={[StyleSheet.absoluteFill, sA]}>
+        <LinearGradient colors={gradientDrift[1] as any} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={StyleSheet.absoluteFill} />
+      </Animated.View>
+      <Animated.View style={[StyleSheet.absoluteFill, sB]}>
+        <LinearGradient colors={gradientDrift[2] as any} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} style={StyleSheet.absoluteFill} />
       </Animated.View>
     </View>
   );
 }
 
-/** A pulsing ring behind a circle button. */
+/** A pulsing ring behind the map button. */
 function PulseRing() {
   const scale = useSharedValue(1);
   const opacity = useSharedValue(0.5);
@@ -62,30 +75,20 @@ function PulseRing() {
   return <Animated.View style={[styles.mapPulseRing, ring]} pointerEvents="none" />;
 }
 
-const CIRCLE = 72; // 25% smaller than the previous 96
-
 export default function Welcome() {
   const [query, setQuery] = useState('');
-  const { pickStart, advanceStories, findNearMe, nearError } = useAtlas();
+  const { findNearMe, nearError } = useAtlas();
   const insets = useSafeAreaInsets();
 
-  const feedSlice = rotatedSlice(feed, pickStart, 16);
-  const openFeed = (s: FeedStory) => {
-    if (s.storyId) router.push({ pathname: '/story/[id]', params: { id: s.storyId } });
-    else if (s.buildingId != null)
-      router.push({ pathname: '/locating', params: { buildingId: String(s.buildingId) } });
-    else if (s.architectName)
-      router.push({ pathname: '/architects/[name]', params: { name: s.architectName } });
-  };
-  const hasFocusedOnce = useRef(false);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (hasFocusedOnce.current) advanceStories();
-      hasFocusedOnce.current = true;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-  );
+  const fade = useSharedValue(0);
+  const hasFadedOnce = useRef(false);
+  useEffect(() => {
+    if (!hasFadedOnce.current) {
+      fade.value = withTiming(1, { duration: 800, easing: Easing.out(Easing.ease) });
+      hasFadedOnce.current = true;
+    }
+  }, [fade]);
+  const fadeStyle = useAnimatedStyle(() => ({ opacity: fade.value }));
 
   const suggestions = query.trim() ? suggest(query, buildings, architects) : [];
 
@@ -98,9 +101,6 @@ export default function Welcome() {
     }
   };
 
-  // On submit (return key or the send arrow) just dismiss the keyboard and leave the
-  // suggestion list up, so the user can pick a result themselves rather than being
-  // jumped straight to the first match.
   const submitSearch = () => {
     Keyboard.dismiss();
   };
@@ -111,10 +111,18 @@ export default function Welcome() {
   };
 
   return (
-    <GradientBackground>
-      <View style={[styles.screen, { paddingTop: insets.top + 16, paddingBottom: insets.bottom + 6 }]}>
+    <View style={{ flex: 1 }}>
+      <DriftingGradient />
+      <Animated.View
+        style={[
+          styles.screen,
+          fadeStyle,
+          { paddingTop: insets.top + 16, paddingBottom: insets.bottom + 20 },
+        ]}
+      >
         {/* Top: identity + search */}
         <View style={styles.top}>
+          <LogoMark size={58} />
           <View style={styles.rule} />
           <Text style={styles.title}>
             <Text style={styles.titleThe}>The </Text>Architectural Atlas
@@ -147,7 +155,7 @@ export default function Welcome() {
           </View>
         </View>
 
-        {/* Middle: the map button, then the three destination circles */}
+        {/* Middle: the pulsing map button, then the Atlas button */}
         <View style={styles.middle}>
           <Pressable onPress={onOpenMap} style={({ pressed }) => [styles.mapBtnWrap, pressed && styles.pressedScale]}>
             <PulseRing />
@@ -161,45 +169,15 @@ export default function Welcome() {
           <Text style={styles.mapHint}>Open the map</Text>
           {nearError ? <Text style={styles.nearError}>{nearError}</Text> : null}
 
-          <View style={styles.circleRow}>
-            <Pressable
-              onPress={() => router.push('/field')}
-              style={({ pressed }) => [styles.circleItem, pressed && styles.lift]}
-            >
-              <View style={[styles.circle, styles.storiesCircle]}>
-                <Text style={styles.storiesLabel} numberOfLines={1} adjustsFontSizeToFit>Stories</Text>
-              </View>
-            </Pressable>
-
-            <Pressable
-              onPress={() => router.push('/atlas')}
-              style={({ pressed }) => [styles.circleItem, pressed && styles.lift]}
-            >
-              <View style={styles.atlasClip}>
-                <Image source={fieldTexture} style={styles.atlasTexture} />
-                <View style={styles.atlasTextureWrap}>
-                  <Text style={styles.atlasLabel} numberOfLines={1} adjustsFontSizeToFit>Atlas</Text>
-                </View>
-              </View>
-            </Pressable>
-
-            <Pressable
-              onPress={() => router.push('/architects')}
-              style={({ pressed }) => [styles.circleItem, pressed && styles.lift]}
-            >
-              <View style={[styles.circle, styles.glassCircle]}>
-                <Text style={styles.inkLabel} numberOfLines={1} adjustsFontSizeToFit>Architects</Text>
-              </View>
-            </Pressable>
-          </View>
+          <Pressable
+            onPress={() => router.push('/atlas')}
+            style={({ pressed }) => [styles.atlasBtn, pressed && styles.pressedScale]}
+          >
+            <Text style={styles.atlasBtnLabel}>Open the Atlas</Text>
+          </Pressable>
         </View>
-
-        {/* Bottom: the always-visible scrolling stories */}
-        <View style={styles.bottom}>
-          <StoriesMarquee items={feedSlice} onOpen={openFeed} />
-        </View>
-      </View>
-    </GradientBackground>
+      </Animated.View>
+    </View>
   );
 }
 
@@ -214,29 +192,31 @@ const styles = StyleSheet.create({
   rule: {
     width: 32,
     height: 2,
-    backgroundColor: colors.terracotta,
+    backgroundColor: CREAM,
+    opacity: 0.9,
+    marginTop: 12,
     marginBottom: 14,
   },
   title: {
     ...editorial.welcomeTitle,
-    color: colors.ink,
+    color: CREAM,
     textAlign: 'center',
   },
   titleThe: {
     fontSize: 20,
-    color: colors.muted,
+    color: 'rgba(251,243,234,0.78)',
   },
   standfirst: {
     ...ui.bodyLarge,
-    fontSize: 9,
-    lineHeight: 13,
-    color: colors.muted,
-    maxWidth: 230,
-    marginTop: spacing.xs,
+    fontSize: 12,
+    lineHeight: 17,
+    color: 'rgba(251,243,234,0.88)',
+    maxWidth: 260,
+    marginTop: spacing.sm,
     textAlign: 'center',
   },
   searchWrap: {
-    marginTop: spacing.lg,
+    marginTop: spacing.xl,
     width: '100%',
     alignItems: 'center',
   },
@@ -263,7 +243,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: spacing.md,
+    gap: spacing.lg,
   },
   mapBtnWrap: {
     width: 104,
@@ -276,22 +256,23 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: colors.terracotta,
+    backgroundColor: CREAM,
   },
+  // Glass map button with a soft drop shadow (Apple-like) over the gradient.
   mapBtnCircle: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    borderWidth: 2,
-    borderColor: colors.surface,
-    backgroundColor: colors.terracotta,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.75)',
+    backgroundColor: 'rgba(255,255,255,0.22)',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 6,
+    shadowColor: '#5A0E00',
+    shadowOpacity: 0.3,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 8,
   },
   plusIcon: { width: 40, height: 40 },
   plusBarH: {
@@ -301,7 +282,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: colors.surface,
+    backgroundColor: CREAM,
   },
   plusBarV: {
     position: 'absolute',
@@ -310,85 +291,35 @@ const styles = StyleSheet.create({
     width: 4,
     height: 40,
     borderRadius: 2,
-    backgroundColor: colors.surface,
+    backgroundColor: CREAM,
   },
   pressedScale: { transform: [{ scale: 1.05 }] },
-  mapHint: { ...ui.buttonLabel, color: colors.white },
-  nearError: { ...ui.metadata, color: colors.body, textAlign: 'center', maxWidth: 260 },
+  mapHint: { ...ui.buttonLabel, color: CREAM },
+  nearError: { ...ui.metadata, color: CREAM, textAlign: 'center', maxWidth: 260 },
 
-  circleRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: spacing.lg,
-    marginTop: spacing.lg,
-  },
-  circleItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  lift: { transform: [{ translateY: -3 }] },
-  circle: {
-    width: CIRCLE,
-    height: CIRCLE,
-    borderRadius: CIRCLE / 2,
+  // The primary Atlas button — solid sunset-orange, centred, with a drop shadow.
+  atlasBtn: {
+    marginTop: spacing.sm,
+    minWidth: 220,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: 15,
+    borderRadius: radii.circle,
+    backgroundColor: '#C2531F',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.35)',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#3A0A00',
+    shadowOpacity: 0.35,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 8,
   },
-  atlasClip: {
-    width: CIRCLE,
-    height: CIRCLE,
-    borderRadius: CIRCLE / 2,
-    overflow: 'hidden',
-    backgroundColor: colors.terracottaDark,
-  },
-  atlasTexture: {
-    ...StyleSheet.absoluteFillObject,
-    width: CIRCLE,
-    height: CIRCLE,
-    transform: [{ scale: 3 }],
-  },
-  atlasTextureWrap: {
-    ...StyleSheet.absoluteFillObject,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  atlasLabel: {
+  atlasBtnLabel: {
     ...ui.buttonLabel,
-    fontSize: 10,
-    paddingHorizontal: 5,
-    textAlign: 'center',
+    fontSize: 16,
+    letterSpacing: 0.3,
     color: colors.white,
     fontWeight: '700',
-    textShadowColor: 'rgba(70,26,10,0.55)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 8,
-  },
-  glassCircle: { backgroundColor: colors.glassFill, borderWidth: 1, borderColor: colors.glassBorder },
-  inkLabel: { ...ui.buttonLabel, fontSize: 10, paddingHorizontal: 5, color: colors.ink, textAlign: 'center' },
-  storiesCircle: { backgroundColor: colors.terracotta },
-  storiesLabel: {
-    ...ui.buttonLabel,
-    fontSize: 10,
-    paddingHorizontal: 5,
-    color: colors.white,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-
-  bottom: {
-    width: '100%',
-  },
-  marqueeClip: {
-    width: '100%',
-    overflow: 'hidden',
-  },
-  marqueeRow: {
-    flexDirection: 'row',
-  },
-  storyCardWrap: {
-    width: STORY_CARD_W,
-    marginRight: STORY_GAP,
   },
 });

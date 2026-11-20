@@ -57,7 +57,7 @@ export default function FieldResearch() {
     <GradientBackground>
       <BackButton />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Text style={styles.header}>Field research</Text>
+        <Text style={styles.header}>Stories</Text>
 
         {/* The Nolli band opens the main map. */}
         <Pressable onPress={() => router.push('/map')}>
@@ -111,6 +111,22 @@ export default function FieldResearch() {
               {shown.length === 0 ? <Text style={styles.explainer}>No stories match yet.</Text> : null}
             </View>
           ) : null}
+        </View>
+
+        {/* Innovations — the true firsts, surfaced inside Stories. */}
+        <View style={styles.section}>
+          <Text style={styles.toursTitle}>Innovations</Text>
+          <Text style={styles.explainer}>
+            The genuine firsts in the collection — a building that did something before anyone else here.
+          </Text>
+          <GlassCard style={styles.storyCard} onPress={() => router.push('/innovations')}>
+            <View style={styles.storyTagRow}>
+              <Text style={styles.storyTag}>Firsts</Text>
+              <Text style={styles.chevron}>›</Text>
+            </View>
+            <Text style={styles.storyTitle}>See every innovation</Text>
+            <Text style={styles.storyPlace}>Each one tied to the building that made it.</Text>
+          </GlassCard>
         </View>
 
         {/* Tours below. */}
