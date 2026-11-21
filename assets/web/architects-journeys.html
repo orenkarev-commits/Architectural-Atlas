@@ -149,6 +149,9 @@ const A = [
   {id:"X10",n:"Yehoshua Tabachnik",c:"#7A5F6B",d:""},
   {id:"X11",n:"Yehuda Zuckerman",c:"#5A8070",d:""},
 ];
+// Which of these we actually hold as an Atlas architect page (the rest are the wider Circle).
+const ATLAS = new Set(["A04","A10","A11","A16","A17","A18","X1","X2","X3","X4","X5","X6","X7","X8","X9","X10","X11"]);
+A.forEach(a => { a.atlas = ATLAS.has(a.id); });
 
 const C = {
   "Frankfurt":[8.68,50.11],"Munich":[11.58,48.14],"Gleiwitz":[18.67,50.29],
@@ -246,8 +249,9 @@ J.forEach(([id, stops]) => {
     rG.append("path")
       .attr("d", `M${p1[0]},${p1[1]} Q${mx},${my} ${p2[0]},${p2[1]}`)
       .attr("fill","none").attr("stroke", arch.c)
-      .attr("stroke-width", 1.1).attr("stroke-dasharray","3.5 2.5")
-      .attr("stroke-opacity", 0.55)
+      .attr("stroke-width", arch.atlas ? 1.5 : 1.0)
+      .attr("stroke-dasharray", arch.atlas ? "none" : "3.5 2.5")
+      .attr("stroke-opacity", arch.atlas ? 0.72 : 0.38)
       .attr("data-arch", id).attr("class","route");
   }
 });
@@ -371,22 +375,22 @@ function highlight(id) {
 }
 
 const le = document.getElementById("legend");
-// Split: exhibition cohort, then atlas architects
-const exhib = A.filter(a => !a.id.startsWith("X"));
-const atlas = A.filter(a => a.id.startsWith("X"));
+// Split by whether we hold the architect as an Atlas page (filled dot + solid route)
+// versus the wider Architects' Circle with no page yet (hollow dot + dashed route).
+const inAtlas = A.filter(a => a.atlas);
+const notIn = A.filter(a => !a.atlas);
 
-let h = `<h3>The Architects</h3><div class="lg">`;
-exhib.forEach(a => {
+let h = `<h3>The Architects</h3>`;
+h += `<div style="font-size:8px;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-muted);margin:2px 0 3px">In the Atlas — ${inAtlas.length}</div><div class="lg">`;
+inAtlas.forEach(a => {
   h += `<div class="lr" data-id="${a.id}"><span class="ld" style="background:${a.c}"></span>${a.n.split(" ").pop()}</div>`;
 });
 h += `</div>`;
-if (atlas.length) {
-  h += `<div style="font-size:8px;color:var(--fg-muted);margin-top:6px;padding-top:4px;border-top:1px solid var(--hairline)">Atlas architects</div><div class="lg" style="margin-top:3px">`;
-  atlas.forEach(a => {
-    h += `<div class="lr" data-id="${a.id}"><span class="ld" style="background:${a.c}"></span>${a.n.split(" ").pop()}</div>`;
-  });
-  h += `</div>`;
-}
+h += `<div style="font-size:8px;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-muted);margin:8px 0 3px;padding-top:5px;border-top:1px solid var(--hairline)">Architects' Circle — no page yet</div><div class="lg">`;
+notIn.forEach(a => {
+  h += `<div class="lr" data-id="${a.id}"><span class="ld" style="background:transparent;border:1.3px solid ${a.c}"></span>${a.n.split(" ").pop()}</div>`;
+});
+h += `</div>`;
 h += `<div class="lk">`;
 h += `<div class="lki"><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="none" stroke="var(--grey-birth-ring)" stroke-width="1.2"/><circle cx="5" cy="5" r="2" fill="var(--grey-birth)"/></svg>Birth</div>`;
 h += `<div class="lki"><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="#D58A42" stroke="#fff" stroke-width="0.6"/></svg>Study</div>`;
