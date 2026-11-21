@@ -1,111 +1,50 @@
-import React, { useRef } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import { WebView } from 'react-native-webview';
+import React from 'react';
+import { Image, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BackButton } from '../../components/BackButton';
 import { colors, spacing } from '../../theme/tokens';
-import { editorial, ui } from '../../theme/typography';
+import { ui } from '../../theme/typography';
+
+const MAP = require('../../assets/images/journeys-map.jpg');
+const AR = 2133 / 3200; // width / height
 
 /**
- * The WebView is a native module added after the current TestFlight build, so on older
- * installs it isn't in the binary and would crash the route. This boundary catches that
- * and shows a friendly notice until the next build ships.
+ * The Architects' Circle — where each architect was born, studied in Europe, and
+ * settled in Palestine. Shown as a high-resolution, pinch-zoomable image for now;
+ * the live interactive map returns with the next native build.
  */
-class WebViewBoundary extends React.Component<
-  { children: React.ReactNode },
-  { failed: boolean }
-> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  render() {
-    if (this.state.failed) {
-      return (
-        <View style={styles.fallback}>
-          <Text style={styles.fallbackTitle}>Architects’ Journeys</Text>
-          <Text style={styles.fallbackBody}>
-            This map arrives with the next app update. Install the newest build from TestFlight to explore where
-            the Architects’ Circle was born, studied and settled.
-          </Text>
-        </View>
-      );
-    }
-    return this.props.children;
-  }
-}
-
-// On iOS the WebView loads the HTML from the app bundle via require().
-// On Android, assets must be loaded from the file:///android_asset/ path.
-const mapHtml =
-  Platform.OS === 'ios'
-    ? require('../../assets/web/architects-journeys.html')
-    : { uri: 'file:///android_asset/web/architects-journeys.html' };
-
 export default function JourneysMap() {
-  const webRef = useRef<WebView>(null);
+  const { width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const imgW = width;
+  const imgH = width / AR;
 
   return (
     <View style={styles.container}>
       <BackButton />
-      <WebViewBoundary>
-      <WebView
-        ref={webRef}
-        source={mapHtml}
-        style={styles.webview}
-        originWhitelist={['*']}
-        javaScriptEnabled
-        domStorageEnabled
-        allowFileAccess
-        allowFileAccessFromFileURLs
-        allowUniversalAccessFromFileURLs
-        scrollEnabled={false}
-        bounces={false}
-        overScrollMode="never"
+      <ScrollView
+        style={styles.flex}
+        contentContainerStyle={{ paddingTop: insets.top + 44, paddingBottom: insets.bottom + 40 }}
+        maximumZoomScale={4}
+        minimumZoomScale={1}
+        bouncesZoom
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        // Let D3 handle all gestures
-        scalesPageToFit={false}
-        // Dark mode: inject the phone's color scheme
-        injectedJavaScriptBeforeContentLoaded={`
-          (function() {
-            var meta = document.createElement('meta');
-            meta.name = 'color-scheme';
-            meta.content = '${colors.surface === '#FFFFFF' ? 'light' : 'dark'}';
-            document.head.appendChild(meta);
-          })();
-          true;
-        `}
-        onMessage={(event) => {
-          // Handle messages from the map (e.g. architect tapped)
-          try {
-            const data = JSON.parse(event.nativeEvent.data);
-            if (data.type === 'ready') {
-              // Map loaded successfully
-            }
-          } catch {}
-        }}
-      />
-      </WebViewBoundary>
+      >
+        <Text style={styles.hint}>Pinch to zoom · drag to pan</Text>
+        <Image source={MAP} style={{ width: imgW, height: imgH }} resizeMode="contain" />
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.surface,
+  container: { flex: 1, backgroundColor: '#0c1020' },
+  flex: { flex: 1 },
+  hint: {
+    ...ui.metadataSmall,
+    color: 'rgba(243,239,230,0.6)',
+    textAlign: 'center',
+    paddingBottom: spacing.sm,
   },
-  webview: {
-    flex: 1,
-    backgroundColor: 'transparent',
-  },
-  fallback: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: spacing.xxl,
-    gap: spacing.md,
-  },
-  fallbackTitle: { ...editorial.cardTitleLg, color: colors.ink, textAlign: 'center' },
-  fallbackBody: { ...ui.body, color: colors.muted, textAlign: 'center', maxWidth: 300, lineHeight: 22 },
 });

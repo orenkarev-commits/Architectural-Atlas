@@ -56,8 +56,16 @@ export function MotionGradient({
 
   return (
     <View style={[{ flex: 1 }, style]}>
+      {/* Base gradient — always painted, never transformed, so it can't disappear. */}
+      <LinearGradient
+        colors={states[0] as any}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={StyleSheet.absoluteFill}
+        pointerEvents="none"
+      />
+      {/* Drifting + panning layers on top. */}
       <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, sPan]}>
-        <LinearGradient colors={states[0] as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
         <Animated.View style={[StyleSheet.absoluteFill, sA]}>
           <LinearGradient colors={states[1] as any} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={StyleSheet.absoluteFill} />
         </Animated.View>

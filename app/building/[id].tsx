@@ -298,7 +298,9 @@ export default function BuildingDetail() {
                   onPress={() => setActiveKey(s.key)}
                   style={({ pressed: p }) => [styles.sectionCard, on && styles.sectionCardOn, p && styles.pressed]}
                 >
-                  <SectionIcon name={s.icon} size={30} color={on ? colors.white : colors.terracotta} />
+                  <View style={styles.sectionIconWrap}>
+                    <SectionIcon name={s.icon} size={46} color={on ? colors.white : colors.terracotta} />
+                  </View>
                   <Text style={[styles.sectionCardTitle, on && styles.sectionCardTitleOn]} numberOfLines={2}>
                     {s.title}
                   </Text>
@@ -437,14 +439,14 @@ const styles = StyleSheet.create({
   },
   sectionCard: {
     width: '48%',
-    aspectRatio: 1.25,
+    aspectRatio: 1.12,
     borderRadius: radii.lg,
     backgroundColor: colors.glassFill,
     borderWidth: 1,
     borderColor: colors.glassBorder,
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
+    justifyContent: 'space-between',
+    paddingVertical: spacing.lg,
     paddingHorizontal: spacing.base,
     shadowColor: '#2A1008',
     shadowOpacity: 0.12,
@@ -452,8 +454,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 6 },
     elevation: 4,
   },
+  sectionIconWrap: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   sectionCardOn: { backgroundColor: colors.terracotta, borderColor: colors.terracotta },
-  sectionCardTitle: { ...ui.buttonLabel, fontSize: 12, color: colors.ink, textAlign: 'center' },
+  sectionCardTitle: { ...ui.buttonLabel, fontSize: 11.5, color: colors.ink, textAlign: 'center' },
   sectionCardTitleOn: { color: colors.white },
   sectionPanel: { marginTop: spacing.xs },
   sectionPanelTitle: { ...editorial.cardTitleLg, color: colors.ink, marginBottom: spacing.base },
