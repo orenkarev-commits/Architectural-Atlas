@@ -11,59 +11,67 @@ export type SectionIconName =
   | 'architect';
 
 /**
- * Line icons for the building-page section topics, drawn to match the
- * conservation-dossier voice. Monochrome and tinted terracotta by default.
+ * Bauhaus section icons — primary shapes in two tones (a nod to the White City's
+ * roots), matching the Atlas tiles. `color` is the solid fill; `tint` is the
+ * lighter second tone and defaults to white on dark/active surfaces.
  */
 export function SectionIcon({
   name,
   size = 18,
   color = colors.terracotta,
+  tint,
 }: {
   name: SectionIconName;
   size?: number;
   color?: string;
+  tint?: string;
 }) {
-  const p = {
-    stroke: color,
-    strokeWidth: 1.7,
-    fill: 'none',
-    strokeLinecap: 'round' as const,
-    strokeLinejoin: 'round' as const,
-  };
+  const isWhite = color.toUpperCase() === colors.white.toUpperCase() || color.toLowerCase() === 'white';
+  const t = tint ?? (isWhite ? 'rgba(255,255,255,0.42)' : 'rgba(194,83,31,0.22)');
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
       {name === 'story' && (
         <>
-          <Path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v13c-3-1-6-1-8 1-2-2-5-2-8-1V5z" {...p} />
-          <Path d="M12 7v12" {...p} />
+          <Circle cx={8} cy={8} r={5} fill={t} />
+          <Path
+            d="M7 6.6c-1 .2-1.7 1-1.7 2 0 .9.7 1.6 1.6 1.6.2 0 .3 0 .5-.1-.2 1-.9 1.7-1.8 2 .1.5.2.7.2.7 1.8-.4 3-1.9 3-3.9 0-1.3-.9-2.3-2.1-2.3Z"
+            fill={color}
+          />
+          <Rect x={10.5} y={14} width={10} height={2.1} rx={1} fill={color} />
+          <Rect x={10.5} y={17.6} width={7} height={2.1} rx={1} fill={t} />
         </>
       )}
       {name === 'matters' && (
-        <Path d="M12 3l1.7 6 6 1.7-6 1.7L12 18l-1.7-5.6-6-1.7 6-1.7z" {...p} />
+        <>
+          <Path d="M12 3 L19.5 12 L12 21 L4.5 12 Z" fill={t} />
+          <Circle cx={12} cy={12} r={3.1} fill={color} />
+        </>
       )}
       {name === 'life' && (
         <>
-          <Circle cx={12} cy={12} r={8} {...p} />
-          <Path d="M12 8v4l3 2" {...p} />
+          <Circle cx={12} cy={12} r={8} fill={t} />
+          <Path d="M12 12 V4 A8 8 0 0 1 20 12 Z" fill={color} />
+          <Circle cx={12} cy={12} r={1.9} fill={color} />
         </>
       )}
       {name === 'materials' && (
         <>
-          <Rect x={3.5} y={7} width={17} height={10} rx={1} {...p} />
-          <Path d="M3.5 12h17M10 7v5M15 12v5" {...p} />
+          <Rect x={3} y={6} width={7.5} height={4.4} rx={0.6} fill={color} />
+          <Rect x={11.5} y={6} width={9.5} height={4.4} rx={0.6} fill={t} />
+          <Rect x={5.5} y={11.4} width={9.5} height={4.4} rx={0.6} fill={t} />
+          <Rect x={16} y={11.4} width={5} height={4.4} rx={0.6} fill={color} />
         </>
       )}
       {name === 'archive' && (
         <>
-          <Path d="M5.5 4h8l5 5v11h-13z" {...p} />
-          <Path d="M13.5 4v5h5" {...p} />
-          <Path d="M8.5 13h7M8.5 16h5" {...p} />
+          <Rect x={4} y={6.5} width={12} height={13.5} rx={1.4} fill={t} />
+          <Rect x={8} y={3} width={12} height={13.5} rx={1.4} fill={color} />
         </>
       )}
       {name === 'architect' && (
         <>
-          <Circle cx={12} cy={6} r={2} {...p} />
-          <Path d="M11 8l-4 12M13 8l4 12M8.5 17h7" {...p} />
+          <Path d="M12 4 L18.5 19 L5.5 19 Z" fill={t} />
+          <Circle cx={12} cy={7.2} r={2.4} fill={color} />
         </>
       )}
     </Svg>

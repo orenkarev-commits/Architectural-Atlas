@@ -67,10 +67,6 @@ export default function StoryScreen() {
         <Text style={styles.title}>{v.title}</Text>
         <Text style={styles.place}>{v.place}</Text>
 
-        <View style={styles.illustrationPanel}>
-          <Text style={styles.illustrationPlaceholder}>{v.slotHint} — illustration pending</Text>
-        </View>
-
         <Text style={styles.reveal}>{v.reveal}</Text>
 
         <GlassCard

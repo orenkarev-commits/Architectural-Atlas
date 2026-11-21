@@ -33,37 +33,39 @@ const STYLE_TOUR: Record<string, string> = {
   'International Style': 'arch-international',
 };
 
-/** Three line glyphs for the Atlas tiles. */
-function TileGlyph({ kind, color }: { kind: 'buildings' | 'atlas' | 'stories'; color: string }) {
-  const p = { stroke: color, strokeWidth: 1.7, fill: 'none' as const, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
+type TileKind = 'buildings' | 'dictionary' | 'stories';
+
+/** Bauhaus glyphs (primary shapes) for the Atlas tiles — a nod to the White City's roots. */
+function TileGlyph({ kind, color, tint }: { kind: TileKind; color: string; tint: string }) {
   if (kind === 'buildings') {
     return (
-      <Svg width={30} height={30} viewBox="0 0 24 24">
-        <Rect x={3} y={8} width={8} height={13} {...p} />
-        <Rect x={13} y={4} width={8} height={17} {...p} />
-        <Line x1={6} y1={11} x2={8} y2={11} {...p} />
-        <Line x1={6} y1={15} x2={8} y2={15} {...p} />
-        <Line x1={16} y1={8} x2={18} y2={8} {...p} />
-        <Line x1={16} y1={12} x2={18} y2={12} {...p} />
-        <Line x1={16} y1={16} x2={18} y2={16} {...p} />
+      <Svg width={34} height={34} viewBox="0 0 24 24">
+        <Circle cx={18} cy={6.5} r={3} fill={tint} />
+        <Rect x={3.5} y={9.5} width={7} height={11.5} fill={color} />
+        <Rect x={12} y={5.5} width={8.5} height={15.5} fill={tint} />
+        <Rect x={14.3} y={8} width={1.6} height={1.6} fill={color} />
+        <Rect x={17.4} y={8} width={1.6} height={1.6} fill={color} />
+        <Rect x={14.3} y={11.3} width={1.6} height={1.6} fill={color} />
+        <Rect x={17.4} y={11.3} width={1.6} height={1.6} fill={color} />
       </Svg>
     );
   }
-  if (kind === 'atlas') {
-    // An open book / compass — the Atlas's Architectural Intelligence.
+  if (kind === 'dictionary') {
+    // Circle + triangle — the Atlas's Architectural Intelligence.
     return (
-      <Svg width={30} height={30} viewBox="0 0 24 24">
-        <Path d="M12 5 C9 3 5 3 3 4 V19 C5 18 9 18 12 20 C15 18 19 18 21 19 V4 C19 3 15 3 12 5 Z" {...p} />
-        <Line x1={12} y1={5} x2={12} y2={20} {...p} />
-        <Circle cx={12} cy={12} r={2.2} {...p} />
+      <Svg width={34} height={34} viewBox="0 0 24 24">
+        <Circle cx={10.5} cy={12.5} r={7.2} fill={tint} />
+        <Path d="M13 3.5 21 18.5 5 18.5Z" fill={color} />
+        <Circle cx={10.5} cy={12.5} r={2.1} fill={color} />
       </Svg>
     );
   }
   return (
-    <Svg width={30} height={30} viewBox="0 0 24 24">
-      <Path d="M4 4 H20 V17 H13 L10 20 L10 17 H4 Z" {...p} />
-      <Line x1={7} y1={9} x2={17} y2={9} {...p} />
-      <Line x1={7} y1={13} x2={14} y2={13} {...p} />
+    <Svg width={34} height={34} viewBox="0 0 24 24">
+      <Circle cx={8} cy={9} r={5} fill={tint} />
+      <Path d="M7 7.6c-1 .2-1.7 1-1.7 2 0 .9.7 1.6 1.6 1.6.2 0 .3 0 .5-.1-.2 1-.9 1.7-1.8 2 .1.5.2.7.2.7 1.8-.4 3-1.9 3-3.9 0-1.3-.9-2.3-2.1-2.3Z" fill={color} />
+      <Rect x={11.5} y={14.5} width={9} height={2} rx={1} fill={color} />
+      <Rect x={11.5} y={18} width={6.5} height={2} rx={1} fill={tint} />
     </Svg>
   );
 }
@@ -96,9 +98,9 @@ export default function Atlas() {
     setShowBuildings((o) => !o);
   };
 
-  const tiles: { kind: 'buildings' | 'atlas' | 'stories'; label: string; onPress: () => void; active?: boolean }[] = [
+  const tiles: { kind: TileKind; label: string; onPress: () => void; active?: boolean }[] = [
     { kind: 'buildings', label: 'Buildings', onPress: toggleBuildings, active: showBuildings },
-    { kind: 'atlas', label: 'Atlas', onPress: () => router.push('/dictionary' as never) },
+    { kind: 'dictionary', label: 'Dictionary', onPress: () => router.push('/dictionary' as never) },
     { kind: 'stories', label: 'Stories', onPress: () => router.push('/field' as never) },
   ];
 
@@ -118,7 +120,11 @@ export default function Atlas() {
               onPress={t.onPress}
               style={({ pressed }) => [styles.tile, t.active && styles.tileOn, pressed && styles.tilePressed]}
             >
-              <TileGlyph kind={t.kind} color={t.active ? colors.white : colors.terracotta} />
+              <TileGlyph
+                kind={t.kind}
+                color={t.active ? colors.white : colors.terracotta}
+                tint={t.active ? 'rgba(255,255,255,0.42)' : 'rgba(194,83,31,0.22)'}
+              />
               <Text style={[styles.tileLabel, t.active && styles.tileLabelOn]}>{t.label}</Text>
             </Pressable>
           ))}

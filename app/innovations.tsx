@@ -23,7 +23,7 @@ const FIRSTS: { id: number; claim: string }[] = [
   { id: 32, claim: "Tel Aviv's first City Hall" },
 ];
 
-const firsts = FIRSTS.map((f) => ({ ...f, building: buildings.find((b) => b.id === f.id)! }))
+export const innovationFirsts = FIRSTS.map((f) => ({ ...f, building: buildings.find((b) => b.id === f.id)! }))
   .filter((f) => f.building)
   .sort((a, b) => (parseYear(a.building.year) || Infinity) - (parseYear(b.building.year) || Infinity));
 
@@ -39,7 +39,7 @@ export default function Innovations() {
           city, the country, or the world.
         </Text>
 
-        {firsts.map(({ building: b, claim }) => (
+        {innovationFirsts.map(({ building: b, claim }) => (
           <Pressable
             key={b.id}
             style={({ pressed }) => [styles.item, pressed && styles.pressed]}

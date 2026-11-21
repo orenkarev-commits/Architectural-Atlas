@@ -5,7 +5,8 @@ import { router } from 'expo-router';
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
-import { GradientBackground } from '../../components/GradientBackground';
+import { innovationFirsts } from '../innovations';
+import { MotionGradient } from '../../components/MotionGradient';
 import { BackButton } from '../../components/BackButton';
 import { GlassCard } from '../../components/GlassCard';
 import { NolliBand } from '../../components/NolliBand';
@@ -54,7 +55,7 @@ export default function FieldResearch() {
   }, [cat, query, addrById]);
 
   return (
-    <GradientBackground>
+    <MotionGradient variant="warm">
       <BackButton />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Text style={styles.header}>Stories</Text>
@@ -113,20 +114,26 @@ export default function FieldResearch() {
           ) : null}
         </View>
 
-        {/* Innovations — the true firsts, surfaced inside Stories. */}
+        {/* Innovations — the true firsts, every one shown as a single line. */}
         <View style={styles.section}>
           <Text style={styles.toursTitle}>Innovations</Text>
           <Text style={styles.explainer}>
             The genuine firsts in the collection — a building that did something before anyone else here.
           </Text>
-          <GlassCard style={styles.storyCard} onPress={() => router.push('/innovations')}>
-            <View style={styles.storyTagRow}>
-              <Text style={styles.storyTag}>Firsts</Text>
-              <Text style={styles.chevron}>›</Text>
-            </View>
-            <Text style={styles.storyTitle}>See every innovation</Text>
-            <Text style={styles.storyPlace}>Each one tied to the building that made it.</Text>
-          </GlassCard>
+          <View style={styles.innoList}>
+            {innovationFirsts.map(({ building: b, claim }) => (
+              <Pressable
+                key={b.id}
+                style={({ pressed }) => [styles.innoRow, pressed && styles.innoRowPressed]}
+                onPress={() => router.push({ pathname: '/locating', params: { buildingId: String(b.id) } })}
+              >
+                <View style={styles.innoBullet} />
+                <Text style={styles.innoText} numberOfLines={1}>
+                  <Text style={styles.innoName}>{b.name}</Text> — {claim}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         </View>
 
         {/* Tours below. */}
@@ -174,7 +181,7 @@ export default function FieldResearch() {
         </View>
 
       </ScrollView>
-    </GradientBackground>
+    </MotionGradient>
   );
 }
 
@@ -219,6 +226,19 @@ const styles = StyleSheet.create({
   filterText: { ...ui.metadataSmall, color: colors.inkSoft },
   filterTextOn: { color: colors.white },
   list: { gap: spacing.base },
+  innoList: { marginTop: spacing.xs },
+  innoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingVertical: spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.hairline,
+  },
+  innoRowPressed: { opacity: 0.6 },
+  innoBullet: { width: 5, height: 5, borderRadius: 2.5, backgroundColor: colors.terracotta, flexShrink: 0 },
+  innoText: { ...ui.bodySmall, color: colors.body, flex: 1 },
+  innoName: { color: colors.inkSoft, fontWeight: '700' },
   storyCard: { padding: 15 },
   storyTagRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   storyTag: { ...ui.label, color: colors.terracottaTextOnTint },

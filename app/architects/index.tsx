@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { FlatList, LayoutAnimation, Platform, Pressable, StyleSheet, Text, UIManager, View } from 'react-native';
 import { router } from 'expo-router';
 import { BackButton } from '../../components/BackButton';
+import { MotionGradient } from '../../components/MotionGradient';
 import { ArchitectRow } from '../../components/ArchitectRow';
 import { CompassDial } from '../../components/CompassDial';
 import { architects } from '../../data/architects';
@@ -58,7 +59,7 @@ export default function ArchitectsIndex() {
   }, [hovered]);
 
   return (
-    <View style={styles.container}>
+    <MotionGradient variant="warm">
       <BackButton />
       <FlatList
         data={architects}
@@ -90,7 +91,7 @@ export default function ArchitectsIndex() {
         }}
         ItemSeparatorComponent={() => <View style={{ height: spacing.base }} />}
       />
-    </View>
+    </MotionGradient>
   );
 }
 

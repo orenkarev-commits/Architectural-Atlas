@@ -47,6 +47,30 @@ function Bullets({ text }: { text: string }) {
   );
 }
 
+/** Split long prose into readable paragraphs (on blank lines, else ~2 sentences each). */
+function toParagraphs(text: string): string[] {
+  if (!text) return [];
+  const byBlank = text.split(/\n\s*\n/).map((s) => s.trim()).filter(Boolean);
+  if (byBlank.length > 1) return byBlank;
+  const sentences = text.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [text];
+  const out: string[] = [];
+  for (let i = 0; i < sentences.length; i += 2) out.push(sentences.slice(i, i + 2).join(' ').trim());
+  return out.filter(Boolean);
+}
+
+function Paragraphs({ text }: { text: string }) {
+  const paras = toParagraphs(text);
+  return (
+    <View style={styles.paraWrap}>
+      {paras.map((p, i) => (
+        <Text key={i} style={[styles.storyText, i === 0 && styles.storyLead]}>
+          {p}
+        </Text>
+      ))}
+    </View>
+  );
+}
+
 export default function BuildingDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const building = buildings.find((b) => String(b.id) === id);
@@ -107,7 +131,7 @@ export default function BuildingDetail() {
           render: () => (
             <>
               <Text style={styles.storyTitle}>{story.title}</Text>
-              <Text style={styles.storyText}>{story.reveal}</Text>
+              <Paragraphs text={story.reveal} />
             </>
           ),
         }]
@@ -511,13 +535,23 @@ const styles = StyleSheet.create({
     color: colors.body,
   },
   storyTitle: {
-    ...editorial.cardTitle,
-    fontSize: 15,
+    ...editorial.cardTitleLg,
+    fontSize: 18,
     color: colors.ink,
+    marginBottom: spacing.xs,
   },
+  paraWrap: { gap: spacing.base },
   storyText: {
     ...ui.body,
+    fontSize: 15.5,
+    lineHeight: 24,
     color: colors.body,
+  },
+  // The opening paragraph, a touch larger and darker to pull the eye in.
+  storyLead: {
+    fontSize: 16.5,
+    lineHeight: 26,
+    color: colors.inkSoft,
   },
   planBlock: {
     gap: spacing.xs,

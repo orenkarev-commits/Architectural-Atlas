@@ -7,16 +7,16 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ExpandingSearchInput } from '../components/ExpandingSearchInput';
+import { MotionGradient } from '../components/MotionGradient';
 import { buildings } from '../data/buildings';
 import { architects } from '../data/architects';
 import { suggest, type Suggestion } from '../lib/search';
 import { useAtlas } from '../context/AtlasContext';
-import { colors, gradientDrift, radii, spacing } from '../theme/tokens';
+import { colors, radii, spacing } from '../theme/tokens';
 import { editorial, ui } from '../theme/typography';
 
 const CREAM = '#FBF3EA';
@@ -37,29 +37,6 @@ function LogoMark({ size = 60 }: { size?: number }) {
       <Path d="M38 96 V76 Q38 66 43 63 Q48 66 48 76 V96" strokeWidth={2.2} {...p} />
       <Path d="M72 96 V76 Q72 66 77 63 Q82 66 82 76 V96" strokeWidth={2.2} {...p} />
     </Svg>
-  );
-}
-
-/** Full-screen living red-orange gradient that drifts slowly between three states. */
-function DriftingGradient() {
-  const a = useSharedValue(0);
-  const b = useSharedValue(0);
-  useEffect(() => {
-    a.value = withRepeat(withTiming(1, { duration: 7000, easing: Easing.inOut(Easing.ease) }), -1, true);
-    b.value = withRepeat(withTiming(1, { duration: 11000, easing: Easing.inOut(Easing.ease) }), -1, true);
-  }, [a, b]);
-  const sA = useAnimatedStyle(() => ({ opacity: a.value }));
-  const sB = useAnimatedStyle(() => ({ opacity: b.value }));
-  return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none">
-      <LinearGradient colors={gradientDrift[0] as any} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
-      <Animated.View style={[StyleSheet.absoluteFill, sA]}>
-        <LinearGradient colors={gradientDrift[1] as any} start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} style={StyleSheet.absoluteFill} />
-      </Animated.View>
-      <Animated.View style={[StyleSheet.absoluteFill, sB]}>
-        <LinearGradient colors={gradientDrift[2] as any} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} style={StyleSheet.absoluteFill} />
-      </Animated.View>
-    </View>
   );
 }
 
@@ -111,8 +88,7 @@ export default function Welcome() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <DriftingGradient />
+    <MotionGradient variant="sunset">
       <Animated.View
         style={[
           styles.screen,
@@ -177,7 +153,7 @@ export default function Welcome() {
           </Pressable>
         </View>
       </Animated.View>
-    </View>
+    </MotionGradient>
   );
 }
 

@@ -86,7 +86,7 @@ const entries: Building[] = [
     address: '22 Bialik Street',
     geo: 'Beit Bialik, 22 Bialik Street, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.072858, lng: 34.771146 },
-    image: IMG,
+    image: require('../assets/images/buildings/bialik-house-first-built-1920s.jpg'),
     whyItMatters:
       "It matters as an experiment in inventing a national architecture: the commission itself is the idea — a house asked to give a new Hebrew city an identity, 'a new architecture for an old people.' Minor, a student of Alexander Baerwald, carries his teacher's comprehensive 'modern-oriental' approach into a private home.",
     materials:
