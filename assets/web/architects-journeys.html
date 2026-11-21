@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=yes">
+<title>Architects' Journeys</title>
+<style>
+  :root {
+    --bg: #F7F3EE;
+    --fg: #2E2620;
+    --fg-muted: #6B5E55;
+    --land: #e8e3da;
+    --land-stroke: #ccc5b8;
+    --water: #d4dfe8;
+    --border: #d5cec4;
+    --card-bg: rgba(247,243,238,0.95);
+    --tooltip-bg: #2E2620;
+    --tooltip-fg: #F7F3EE;
+    --grey-birth: #8a8580;
+    --grey-birth-ring: #b0aaa3;
+    --circle-gold: #c9a84c;
+    --hairline: #E8E2DA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #211B18;
+      --fg: #F4ECE4;
+      --fg-muted: #B0A196;
+      --land: #22201c;
+      --land-stroke: #3a3630;
+      --water: #0e1418;
+      --border: #3a3630;
+      --card-bg: rgba(33,27,24,0.95);
+      --tooltip-bg: #F4ECE4;
+      --tooltip-fg: #211B18;
+      --grey-birth: #7a756e;
+      --grey-birth-ring: #5a554e;
+      --circle-gold: #c9a84c;
+      --hairline: #3E3530;
+      color-scheme: dark;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; touch-action: none; }
+  body { background: var(--water); color: var(--fg); font-family: -apple-system, system-ui, sans-serif; }
+  svg { display: block; width: 100%; height: 100%; }
+  .land { fill: var(--land); stroke: var(--land-stroke); stroke-width: 0.5; }
+  .country-border { fill: none; stroke: var(--border); stroke-width: 0.3; stroke-dasharray: 2 1; }
+
+  /* Floating legend */
+  #legend {
+    position: fixed;
+    bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    left: 8px; right: 8px;
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 14px;
+    padding: 10px 12px;
+    max-height: 45vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 10;
+  }
+  #legend h3 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .lg { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; }
+  .lr {
+    display: flex; align-items: center; gap: 5px;
+    padding: 2px 0; cursor: pointer;
+    font-size: 10px; transition: opacity 0.2s;
+  }
+  .lr:active { opacity: 0.5; }
+  .lr.dim { opacity: 0.15; }
+  .ld { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .lk {
+    display: flex; gap: 10px; margin-top: 6px; padding-top: 6px;
+    border-top: 1px solid var(--hairline);
+  }
+  .lki {
+    display: flex; align-items: center; gap: 3px;
+    font-size: 8.5px; color: var(--fg-muted);
+  }
+  .lki svg { flex-shrink: 0; }
+
+  /* Tooltip */
+  #tt {
+    position: fixed; pointer-events: none;
+    background: var(--tooltip-bg); color: var(--tooltip-fg);
+    padding: 7px 10px; border-radius: 6px;
+    font-size: 11px; line-height: 1.4;
+    max-width: 220px; opacity: 0; transition: opacity 0.15s;
+    z-index: 20; box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+  #tt.show { opacity: 1; }
+  .ttc { font-weight: 700; font-size: 12px; }
+  .ttt { font-size: 9px; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.6; }
+  .ttr { display: flex; align-items: center; gap: 4px; padding: 1px 0; }
+  .tts { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  .chug-label {
+    font-size: 8px; font-weight: 700;
+    fill: var(--circle-gold); text-anchor: middle;
+  }
+</style>
+</head>
+<body>
+<div id="tt"></div>
+<div id="legend"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+(async function() {
+
+// ── ARCHITECT DATA ──────────────────────────────────────────
+const A = [
+  {id:"A01",n:"Richard Kauffmann",c:"#8FAE9F",d:"1887–1920"},
+  {id:"A02",n:"Ze'ev Haller",c:"#0876B8",d:"1884–1933"},
+  {id:"A03",n:"Erich Mendelsohn",c:"#91B84C",d:"1887–1941"},
+  {id:"A04",n:"Lotte Cohn",c:"#99506E",d:"1893–1983"},
+  {id:"A05",n:"Itzchak Rapoport",c:"#303A68",d:"1901–?"},
+  {id:"A06",n:"Leo Adler",c:"#9BA9B0",d:"1891–?"},
+  {id:"A08",n:"Arieh Sharon",c:"#C77B70",d:"1900–1984"},
+  {id:"A10",n:"Genia Averbuch",c:"#4A3034",d:"1909–1977"},
+  {id:"A11",n:"Dov Karmi",c:"#D58A42",d:"1905–1962"},
+  {id:"A12",n:"Ze'ev Rechter",c:"#D8A9AD",d:"1899–1960"},
+  {id:"A13",n:"Joseph Neufeld",c:"#77704D",d:"1899–?"},
+  {id:"A14",n:"Sam Barkai",c:"#BD554A",d:"1898–?"},
+  {id:"A15",n:"Yaakov Ben Sira",c:"#C7B82E",d:"1899–?"},
+  {id:"A16",n:"Joseph Berlin",c:"#B52F2F",d:"1877–1952"},
+  {id:"A17",n:"Yehuda Magidovitch",c:"#672D2B",d:"1886–1961"},
+  {id:"A18",n:"Zaki Chelouche",c:"#C77B30",d:"1893–1973"},
+  {id:"A19",n:"Robert Chelouche",c:"#8B6914",d:"1904–?"},
+  // Atlas architects
+  {id:"X1",n:"Alexander Levy",c:"#E06030",d:"1883–1942"},
+  {id:"X2",n:"Joseph Minor",c:"#7B9E5A",d:"1885–1966"},
+  {id:"X3",n:"Moshe Cherner",c:"#8E6B50",d:"1879–1962"},
+  {id:"X4",n:"Carl Rubin",c:"#5C7A99",d:"1899–1955"},
+  {id:"X5",n:"Benjamin Chaikin",c:"#4D7A6B",d:"1883–1950"},
+  {id:"X6",n:"Ben-Ami Shulman",c:"#8A6190",d:"1907–1986"},
+  {id:"X7",n:"Dov Hershkovitz",c:"#6A6A4A",d:"1878–1935"},
+  {id:"X8",n:"Arpad Gut",c:"#A0784C",d:"1877–1948"},
+  {id:"X9",n:"Pinhas Hütt",c:"#A87050",d:"1888–1949"},
+  {id:"X10",n:"Yehoshua Tabachnik",c:"#7A5F6B",d:""},
+  {id:"X11",n:"Yehuda Zuckerman",c:"#5A8070",d:""},
+];
+
+const C = {
+  "Frankfurt":[8.68,50.11],"Munich":[11.58,48.14],"Gleiwitz":[18.67,50.29],
+  "Dresden":[13.74,51.05],"Zittau":[14.81,50.9],"Darmstadt":[8.65,49.87],
+  "Leipzig":[12.37,51.34],"Allenstein":[20.49,53.78],"Berlin":[13.41,52.52],
+  "London":[-0.13,51.51],"Jerusalem":[35.21,31.77],"Tel Aviv":[34.78,32.09],
+  "Berdichev":[28.58,49.88],"Alexandria":[29.92,31.2],"Paris":[2.35,48.86],
+  "Kerch":[36.47,45.36],"Jarosław":[22.68,49.97],"Dessau":[12.24,51.84],
+  "Smila":[31.87,49.22],"Rome":[12.5,41.9],"Ghent":[3.72,51.05],
+  "Brussels":[4.35,50.85],"Zhvanets":[26.43,48.6],"Kovalivka":[30.87,48.58],
+  "Venice":[12.32,45.44],"Monastyryska":[25.16,49.09],"Vienna":[16.37,48.21],
+  "Moscow":[37.62,55.76],"Novorossiysk":[37.77,44.72],"Kyiv":[30.52,50.45],
+  "Mogilev":[30.34,53.9],"St. Petersburg":[30.34,59.93],"Uman":[30.22,48.75],
+  "Odessa":[30.72,46.48],"Jaffa":[34.75,32.05],"Lausanne":[6.63,46.52],
+  "Chernivtsi":[25.94,48.29],"Lwów":[24.03,49.84],"Dubova":[30.1,48.75],
+  "Kakhovka":[33.48,46.82],"Kéthely":[17.3,46.65],"Gedera":[34.78,31.81],
+  "Mykolaiv":[31.99,46.98],
+};
+
+// Journey stops: [archId, [[city, type], ...]]
+const J = [
+  ["A01",[["Frankfurt","birth"],["Munich","study"],["Tel Aviv","immigration"]]],
+  ["A02",[["Gleiwitz","birth"],["Dresden","study"],["Zittau","study"],["Darmstadt","study"],["Leipzig","practice"],["Tel Aviv","immigration"]]],
+  ["A03",[["Allenstein","birth"],["Munich","study"],["Berlin","study"],["Berlin","practice"],["London","emigration"],["Jerusalem","practice"],["Tel Aviv","immigration"]]],
+  ["A04",[["Berlin","birth"],["Berlin","study"],["Jerusalem","immigration"],["Berlin","return"],["Tel Aviv","return"]]],
+  ["A05",[["Berdichev","birth"],["Tel Aviv","immigration"],["Alexandria","study"],["Tel Aviv","return"],["Berlin","study"],["Paris","study"],["Tel Aviv","return"]]],
+  ["A06",[["Kerch","birth"],["Berlin","study"],["Munich","study"],["Dresden","study"],["Tel Aviv","immigration"]]],
+  ["A08",[["Jarosław","birth"],["Tel Aviv","immigration"],["Dessau","study"],["Berlin","practice"],["Tel Aviv","return"]]],
+  ["A10",[["Smila","birth"],["Tel Aviv","immigration"],["Rome","study"],["Ghent","study"],["Brussels","study"],["Tel Aviv","return"]]],
+  ["A11",[["Zhvanets","birth"],["Jerusalem","immigration"],["Ghent","study"],["Tel Aviv","return"]]],
+  ["A12",[["Kovalivka","birth"],["Tel Aviv","immigration"],["Rome","study"],["Paris","study"],["Tel Aviv","return"]]],
+  ["A13",[["Monastyryska","birth"],["Tel Aviv","immigration"],["Rome","study"],["Vienna","study"],["Berlin","practice"],["Moscow","practice"],["Tel Aviv","return"]]],
+  ["A14",[["Novorossiysk","birth"],["Tel Aviv","immigration"],["Venice","study"],["Paris","study"],["Tel Aviv","return"]]],
+  ["A15",[["Kyiv","birth"],["Tel Aviv","immigration"],["London","study"],["Tel Aviv","return"]]],
+  ["A16",[["Mogilev","birth"],["St. Petersburg","study"],["Tel Aviv","immigration"]]],
+  ["A17",[["Uman","birth"],["Odessa","study"],["Tel Aviv","immigration"]]],
+  ["A18",[["Jaffa","birth"],["Lausanne","study"],["Paris","study"],["Paris","practice"],["Tel Aviv","return"]]],
+  ["A19",[["Jaffa","birth"],["Paris","study"],["Tel Aviv","return"]]],
+  // Atlas architects
+  ["X1",[["Berlin","birth"],["Berlin","study"],["Tel Aviv","immigration"],["Berlin","return"],["Paris","emigration"]]],
+  ["X2",[["Moscow","study"],["Berlin","practice"],["Tel Aviv","immigration"]]],
+  ["X3",[["Chernivtsi","study"],["Tel Aviv","immigration"]]],
+  ["X4",[["Vienna","study"],["Tel Aviv","immigration"],["Berlin","practice"],["Tel Aviv","return"]]],
+  ["X5",[["St. Petersburg","birth"],["London","study"],["Tel Aviv","immigration"]]],
+  ["X6",[["Jaffa","birth"],["Brussels","study"],["Tel Aviv","return"]]],
+  ["X7",[["Kakhovka","birth"],["St. Petersburg","study"],["Tel Aviv","immigration"]]],
+  ["X8",[["Kéthely","birth"],["Tel Aviv","immigration"]]],
+  ["X9",[["Lwów","birth"],["Chernivtsi","study"],["Tel Aviv","immigration"]]],
+  ["X10",[["Dubova","birth"],["Odessa","study"],["Jerusalem","study"],["Tel Aviv","immigration"]]],
+  ["X11",[["Gedera","birth"],["Tel Aviv","immigration"]]],
+];
+
+// ── MAP ─────────────────────────────────────────────────────
+const world = await d3.json("countries-50m.json").catch(() => null);
+if (!world) { document.body.innerHTML = '<p style="padding:40px;color:red">Map data not found</p>'; return; }
+
+const land = topojson.feature(world, world.objects.land);
+const borders = topojson.mesh(world, world.objects.countries, (a,b) => a !== b);
+
+const W = window.innerWidth, H = window.innerHeight;
+const projection = d3.geoMercator()
+  .center([20, 44])
+  .scale(Math.min(W, H) * 2.2)
+  .translate([W/2, H/2]);
+const pathGen = d3.geoPath().projection(projection);
+
+const svg = d3.select("body").insert("svg", "#tt")
+  .attr("width", W).attr("height", H);
+const g = svg.append("g");
+
+// Touch zoom
+svg.call(d3.zoom().scaleExtent([0.4, 14])
+  .on("zoom", e => g.attr("transform", e.transform)));
+
+g.append("path").datum(land).attr("class","land").attr("d", pathGen);
+g.append("path").datum(borders).attr("class","country-border").attr("d", pathGen);
+
+function p(name) { const co = C[name]; return co ? projection(co) : null; }
+
+// ── ROUTES ──────────────────────────────────────────────────
+const rG = g.append("g");
+const aMap = Object.fromEntries(A.map(a => [a.id, a]));
+
+J.forEach(([id, stops]) => {
+  const arch = aMap[id]; if (!arch) return;
+  for (let i = 0; i < stops.length - 1; i++) {
+    const p1 = p(stops[i][0]), p2 = p(stops[i+1][0]);
+    if (!p1 || !p2) continue;
+    if (Math.abs(p1[0]-p2[0]) < 2 && Math.abs(p1[1]-p2[1]) < 2) continue;
+    const dx = p2[0]-p1[0], dy = p2[1]-p1[1];
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const off = Math.max(dist * 0.25, 12);
+    const mx = (p1[0]+p2[0])/2 - dy/dist * off;
+    const my = (p1[1]+p2[1])/2 + dx/dist * off;
+    rG.append("path")
+      .attr("d", `M${p1[0]},${p1[1]} Q${mx},${my} ${p2[0]},${p2[1]}`)
+      .attr("fill","none").attr("stroke", arch.c)
+      .attr("stroke-width", 1.1).attr("stroke-dasharray","3.5 2.5")
+      .attr("stroke-opacity", 0.55)
+      .attr("data-arch", id).attr("class","route");
+  }
+});
+
+// ── NODES ───────────────────────────────────────────────────
+const nG = g.append("g");
+const cityData = {};
+const birthCities = new Set();
+
+J.forEach(([id, stops]) => {
+  const arch = aMap[id]; if (!arch) return;
+  if (stops.length && stops[0][1] === "birth") birthCities.add(stops[0][0]);
+  stops.forEach(([city, type]) => {
+    const pos = p(city); if (!pos) return;
+    if (!cityData[city]) cityData[city] = { pos, archs: [], types: new Set() };
+    if (!cityData[city].archs.find(a => a.id === id))
+      cityData[city].archs.push({ id, c: arch.c, n: arch.n });
+    cityData[city].types.add(type);
+  });
+});
+
+const tt = document.getElementById("tt");
+
+Object.entries(cityData).forEach(([name, data]) => {
+  const [cx, cy] = data.pos;
+  const ng = nG.append("g").attr("transform", `translate(${cx},${cy})`)
+    .attr("class","node").attr("data-archs", data.archs.map(a=>a.id).join(","));
+
+  const isBirth = birthCities.has(name);
+  const studyArchs = data.archs.filter((a, i, arr) =>
+    data.types.has("study") && arr.findIndex(x=>x.id===a.id) === i);
+
+  if (isBirth) {
+    ng.append("circle").attr("r",5.5).attr("fill","none")
+      .attr("stroke","var(--grey-birth-ring)").attr("stroke-width",1.1).attr("opacity",0.7);
+    ng.append("circle").attr("r",2.8).attr("fill","var(--grey-birth)").attr("opacity",0.8);
+  }
+
+  if (studyArchs.length === 1) {
+    ng.append("circle").attr("r",5).attr("fill",studyArchs[0].c)
+      .attr("stroke","#fff").attr("stroke-width",0.7).attr("opacity",0.9);
+  } else if (studyArchs.length > 1) {
+    const pie = d3.pie().value(1).sort(null);
+    const arc = d3.arc().innerRadius(0).outerRadius(5.5);
+    pie(studyArchs).forEach(d => {
+      ng.append("path").attr("d", arc(d)).attr("fill", studyArchs[d.index].c)
+        .attr("stroke","#fff").attr("stroke-width",0.4).attr("opacity",0.9);
+    });
+  }
+
+  if (!isBirth && studyArchs.length === 0) {
+    const col = data.archs[0]?.c || "#888";
+    ng.append("circle").attr("r",3.5).attr("fill",col)
+      .attr("stroke","#fff").attr("stroke-width",0.5).attr("opacity",0.7);
+  }
+
+  ng.append("text").attr("x", 8).attr("y", 2.5)
+    .attr("font-size", 6.5).attr("fill","var(--fg)").attr("opacity",0.6)
+    .attr("font-weight",600).text(name);
+
+  // Touch/hover tooltip
+  const showTT = (evt) => {
+    let html = `<div class="ttc">${name}</div>`;
+    if (isBirth) html += `<div class="ttt">Birthplace</div>`;
+    if (data.types.has("study")) html += `<div class="ttt">Education</div>`;
+    data.archs.forEach(a => {
+      html += `<div class="ttr"><span class="tts" style="background:${a.c}"></span>${a.n}</div>`;
+    });
+    tt.innerHTML = html;
+    tt.classList.add("show");
+    const x = evt.touches ? evt.touches[0].clientX : evt.clientX;
+    const y = evt.touches ? evt.touches[0].clientY : evt.clientY;
+    tt.style.left = Math.min(x + 12, W - 230) + "px";
+    tt.style.top = (y - 10) + "px";
+  };
+  ng.on("mouseenter", showTT).on("touchstart", showTT)
+    .on("mouseleave", () => tt.classList.remove("show"))
+    .on("touchend", () => setTimeout(() => tt.classList.remove("show"), 1500));
+});
+
+// Chug marker at Tel Aviv
+const tlv = p("Tel Aviv");
+if (tlv) {
+  nG.append("circle").attr("cx",tlv[0]).attr("cy",tlv[1]).attr("r",11)
+    .attr("fill","none").attr("stroke","var(--circle-gold)")
+    .attr("stroke-width",1.3).attr("stroke-dasharray","2.5 1.5").attr("opacity",0.7);
+  nG.append("text").attr("x",tlv[0]).attr("y",tlv[1]-14)
+    .attr("class","chug-label").text("חוג 1932");
+}
+
+// ── ANIMATE ROUTES IN ───────────────────────────────────────
+rG.selectAll(".route").each(function() {
+  const len = this.getTotalLength();
+  d3.select(this)
+    .attr("stroke-dasharray", len+" "+len)
+    .attr("stroke-dashoffset", len)
+    .transition().duration(1600).delay(Math.random()*700)
+    .ease(d3.easeCubicOut).attr("stroke-dashoffset", 0)
+    .on("end", function() { d3.select(this).attr("stroke-dasharray","3.5 2.5"); });
+});
+
+// ── LEGEND ──────────────────────────────────────────────────
+let activeId = null;
+function highlight(id) {
+  activeId = activeId === id ? null : id;
+  d3.selectAll(".route").transition().duration(200)
+    .attr("stroke-opacity", activeId ? 0.06 : 0.55)
+    .attr("stroke-width", 1.1);
+  if (activeId) {
+    d3.selectAll(`.route[data-arch="${activeId}"]`).transition().duration(200)
+      .attr("stroke-opacity", 0.9).attr("stroke-width", 2);
+  }
+  d3.selectAll(".node").transition().duration(200)
+    .attr("opacity", function() {
+      if (!activeId) return 1;
+      return this.getAttribute("data-archs").split(",").includes(activeId) ? 1 : 0.12;
+    });
+  document.querySelectorAll(".lr").forEach(r => {
+    r.classList.toggle("dim", activeId && r.dataset.id !== activeId);
+  });
+}
+
+const le = document.getElementById("legend");
+// Split: exhibition cohort, then atlas architects
+const exhib = A.filter(a => !a.id.startsWith("X"));
+const atlas = A.filter(a => a.id.startsWith("X"));
+
+let h = `<h3>The Architects</h3><div class="lg">`;
+exhib.forEach(a => {
+  h += `<div class="lr" data-id="${a.id}"><span class="ld" style="background:${a.c}"></span>${a.n.split(" ").pop()}</div>`;
+});
+h += `</div>`;
+if (atlas.length) {
+  h += `<div style="font-size:8px;color:var(--fg-muted);margin-top:6px;padding-top:4px;border-top:1px solid var(--hairline)">Atlas architects</div><div class="lg" style="margin-top:3px">`;
+  atlas.forEach(a => {
+    h += `<div class="lr" data-id="${a.id}"><span class="ld" style="background:${a.c}"></span>${a.n.split(" ").pop()}</div>`;
+  });
+  h += `</div>`;
+}
+h += `<div class="lk">`;
+h += `<div class="lki"><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="none" stroke="var(--grey-birth-ring)" stroke-width="1.2"/><circle cx="5" cy="5" r="2" fill="var(--grey-birth)"/></svg>Birth</div>`;
+h += `<div class="lki"><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="#D58A42" stroke="#fff" stroke-width="0.6"/></svg>Study</div>`;
+h += `<div class="lki"><svg width="16" height="6"><line x1="0" y1="3" x2="16" y2="3" stroke="var(--fg-muted)" stroke-width="1" stroke-dasharray="3 2"/></svg>Journey</div>`;
+h += `<div class="lki"><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="none" stroke="var(--circle-gold)" stroke-width="1" stroke-dasharray="2 1"/></svg>חוג</div>`;
+h += `</div>`;
+le.innerHTML = h;
+
+document.querySelectorAll(".lr").forEach(r => {
+  r.addEventListener("click", () => highlight(r.dataset.id));
+  r.addEventListener("touchend", (e) => { e.preventDefault(); highlight(r.dataset.id); });
+});
+
+// Message to React Native
+function postMsg(msg) {
+  if (window.ReactNativeWebView) window.ReactNativeWebView.postMessage(JSON.stringify(msg));
+}
+postMsg({ type: "ready" });
+
+})();
+</script>
+</body>
+</html>

@@ -184,6 +184,13 @@ export default function Atlas() {
 
         {/* City context — how the city grew, and who built in which style. */}
         <Text style={styles.contextHeading}>City context</Text>
+        <Pressable
+          style={({ pressed }) => [styles.chartCard, pressed && styles.tilePressed]}
+          onPress={() => router.push('/context/journeys' as never)}
+        >
+          <Text style={styles.chartTitle}>Architects' Journeys</Text>
+          <Text style={styles.chartSubtitle}>Birth, education &amp; migration to Palestine</Text>
+        </Pressable>
         <View style={styles.chartCard}>
           <Text style={styles.chartTitle}>Building waves</Text>
           <BuildingWaves />
@@ -281,4 +288,5 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   chartTitle: { ...editorial.cardTitleLg, color: colors.ink, marginBottom: spacing.sm },
+  chartSubtitle: { ...ui.bodySmall, color: colors.muted },
 });

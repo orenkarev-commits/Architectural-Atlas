@@ -33,8 +33,20 @@ export interface Plan {
 }
 
 const HANDASA = 'Tel Aviv Handasa engineering archive';
+const EXHIBITION = 'Tel Aviv "Modern Architecture" exhibition (photographed print)';
 
 export const plansFor: Partial<Record<number, Plan[]>> = {
+  18: [
+    {
+      src: require('../assets/images/plans/dizengoff-square-01-averbuch-sketch-1934.jpg'),
+      kind: 'plan',
+      year: 1934,
+      date: '1934',
+      caption:
+        "Genia Averbuch's winning entry in the 1934 competition for the square — the round plaza ringed by a continuous band of International-Style buildings that was actually built. The sketch she submitted.",
+      source: EXHIBITION,
+    },
+  ],
   56: [
     {
       src: require('../assets/images/plans/Idelson-30-02-plan.jpg'),
@@ -499,6 +511,15 @@ export const plansFor: Partial<Record<number, Plan[]>> = {
       caption:
         "The south elevation to Idelson Street (חזית דרומית — רחוב אידלסון), a measured conservation drawing of Dov Karmi's 1936 façade — the taut three-storey International-Style front with its banded windows and level datums (Handasa 01090290).",
       source: HANDASA,
+    },
+    {
+      src: require('../assets/images/plans/liebling-house-01-plan-1937.jpg'),
+      kind: 'plan',
+      year: 1937,
+      date: '1937',
+      caption:
+        "The Liebling House typical floor plan, 1937 — the apartment layout of Dov Karmi's building, titled on the sheet 'Apartment building of Mr. L., Tel-Aviv'.",
+      source: EXHIBITION,
     },
   ],
   38: [

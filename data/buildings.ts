@@ -387,7 +387,7 @@ const entries: Building[] = [
     address: 'Zina Dizengoff Square',
     geo: 'Dizengoff Square, Tel Aviv-Yafo, Israel',
     resolved: { lat: 32.077994, lng: 34.774349 },
-    image: IMG,
+    image: require('../assets/images/buildings/dizengoff-square-completed-1930s.jpg'),
     whyItMatters:
       "It matters at the scale of the city, not the building: Averbuch's 1934 plan gave a whole circular plaza a single shared face, so a ring of houses by different architects would read as one room — likely the only plaza in the world laid out on Bauhaus principles. Raised onto a deck in the 1970s, returned to her street level in 2016.",
     materials:

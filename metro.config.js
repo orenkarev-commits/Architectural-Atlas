@@ -26,4 +26,7 @@ config.resolver.blockList = [
   new RegExp(`^${studioDir}[\\\\/].*`),
 ];
 
+// Let Metro bundle .html files as assets (for the WebView journeys map).
+config.resolver.assetExts.push('html');
+
 module.exports = config;

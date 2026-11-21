@@ -14,6 +14,7 @@
   main { max-width:1120px; margin:0 auto; padding:40px 16px 80px; }
   h1 { font-family:Newsreader, Georgia, serif; font-style:italic; font-weight:400; font-size:44px; margin:0 0 6px; }
   .lede { color:var(--muted); font-size:14px; max-width:60ch; margin:0 0 8px; line-height:1.55; }
+  h2.era { margin-top:72px; padding-top:28px; border-top:1px solid var(--hair); }
   h2 { font-family:Newsreader, Georgia, serif; font-style:italic; font-weight:400; font-size:26px; margin:44px 0 4px; }
   .sub { color:var(--muted); font-size:13px; margin:0 0 16px; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(228px, 1fr)); gap:14px; }
@@ -30,7 +31,7 @@
 <body>
 <main>
   <h1>Icon options</h1>
-  <p class="lede">Forty-eight directions (25 to 48 are the second round) for the Tel Aviv Architectural Atlas home-screen icon, drawn in the app's own palette. Each is shown at home-screen size and at 40&nbsp;px, where an icon has to survive. All 48 now share one light source, layered paper shadows and a fine grain. Tell me the numbers you like and I'll refine those and cut the full icon set.</p>
+  <p class="lede">Sixty-four directions for the Tel Aviv Architectural Atlas home-screen icon. The newest round (49 to 64) is at the top. It takes its techniques from the 2026 award and trend work and applies each one to an Atlas idea. Every option is shown at home-screen size and at 40&nbsp;px, where an icon has to survive. Tell me the numbers you like and I'll refine those and cut the full icon set.</p>
   <div id="out"></div>
 </main>
 <script>
@@ -161,6 +162,54 @@ for (const g of groups) {
   html += `</div>`;
 }
 
+// ---- Round 3: after the 2026 award work (LogoLounge 2026 trend report, Red Dot, Apple Design Awards) ----
+const lime = '#B5E04C';
+const round3 = [
+ { title:'Round 3 · after the 2026 award work', sub:'Each one takes a technique from LogoLounge\'s 2026 trend report and applies it to a real Atlas idea: one shape, built on a grid, with nothing that disappears at 40 px. Kept flat, the way the winning marks are.', items:[
+  ['Echo corner', 'Echo Arcs. Nested rounded corners in plan, like stacked curved balconies seen from above.',
+    bg(terra) + [180,300,420,540,660].map(r => `<path d="M-100 ${792-r}H232A${r} ${r} 0 0 1 ${232+r} 792V1124" fill="none" stroke="${cream}" stroke-width="56"/>`).join('') + `<path d="M232 792V682A110 110 0 0 1 342 792Z" fill="${cream}"/>`],
+  ['Banded corner', 'Piano. A rounded-corner block cut by balcony lines that thicken toward the street.',
+    bg(cream) + `<path d="M172 852V432A260 260 0 0 1 432 172H852V852Z" fill="${terra}"/>` + [[300,10],[388,16],[482,22],[582,28],[688,34],[800,40]].map(([y,t]) => `<rect x="150" y="${y}" width="730" height="${t}" fill="${cream}"/>`).join('')],
+  ['A, two ways', 'Slant Break. An upright Poppins A beside an italic Newsreader A: the app\'s only two typefaces, side by side.',
+    bg(cream) + `<text x="300" y="730" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="600" font-size="540" fill="${ink}">A</text><text x="716" y="730" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-style="italic" font-size="640" fill="${terra}">A</text>`],
+  ['Three-part gable', 'Tri-Link. A gable (and an A) built from three linked pieces: two walls and a floor.',
+    bg(cream) + [['512,140 152,860 346,740 512,408',terra],['512,140 872,860 678,740 512,408',mint],['152,860 872,860 678,740 346,740',ink]].map(([p,f]) => `<polygon points="${p}" fill="${f}" stroke="${cream}" stroke-width="24" stroke-linejoin="round"/>`).join('')],
+  ['Open circus', 'Open Axis. Twelve streets meet a round plaza and stop just short of it.',
+    bg(terra) + rng(6, i => `<g transform="rotate(${i*30} 512 512)"><rect x="490" y="96" width="44" height="270" rx="22" fill="${cream}"/><rect x="490" y="658" width="44" height="270" rx="22" fill="${cream}"/></g>`) + `<circle cx="512" cy="512" r="72" fill="${cream}"/>`],
+  ['Four blocks, one plaza', 'Quad Quivers, turned into city blocks. Four blocks with their corners cut back to make a round plaza.',
+    bg(cream) + [[150,150],[552,150],[150,552],[552,552]].map(([x,y]) => `<rect x="${x}" y="${y}" width="322" height="322" fill="${terra}"/>`).join('') + `<circle cx="512" cy="512" r="200" fill="${cream}"/><circle cx="512" cy="512" r="78" fill="${mint}"/>`],
+  ['Turning louvres', 'Phasers. Brise-soleil fins frozen at seven stages of turning against the sun.',
+    bg(mint) + rng(7, i => { const t = i*Math.PI/12, fw = 84*Math.cos(t), sw = 46*Math.sin(t), cx = 170 + i*114; return `<rect x="${cx-fw/2}" y="170" width="${fw}" height="684" fill="${cream}"/><rect x="${cx+fw/2}" y="170" width="${sw}" height="684" fill="${peach}"/>`; })],
+  ['Four elements', 'Colorforms. Rounded corner, porthole, thermometer window, balconies: four flat pieces on a grid.',
+    bg(cream) + `<path d="M160 496V360A200 200 0 0 1 360 160H496V496Z" fill="${terra}"/><circle cx="696" cy="328" r="168" fill="${ink}"/><circle cx="696" cy="328" r="66" fill="${cream}"/><rect x="160" y="528" width="336" height="336" fill="${mint}"/><rect x="304" y="580" width="48" height="232" rx="24" fill="${cream}"/>` + rng(3, i => `<rect x="528" y="${536+i*116}" width="336" height="88" rx="44" fill="${terra}"/>`)],
+  ['Sun over sea', 'Colorforms. A half sun on the horizon, the sea in three strokes. The city faces west.',
+    bg(cream) + `<path d="M232 470A280 280 0 0 1 792 470Z" fill="${terra}"/>` + rng(3, i => `<rect x="${232+i*70}" y="${530+i*110}" width="${560-i*140}" height="70" rx="35" fill="${mint}"/>`)],
+  ['Echo vault', 'Echo Arcs. Three nested arches; reads as a doorway, an arcade, or a vault.',
+    bg(mint) + `<path d="M362 900V560A150 150 0 0 1 662 560V900Z" fill="${terra}"/>` + [330,240,150].map(r => `<path d="M${512-r} 900V560A${r} ${r} 0 0 1 ${512+r} 560V900" fill="none" stroke="${cream}" stroke-width="56"/>`).join('')],
+  ['Echo pin', 'Echo Arcs and a map pin. The place gives off a signal.',
+    bg(terra) + [1, .7, .4].map(s => `<path d="M512 912C400 730 252 610 252 430A260 260 0 1 1 772 430C772 610 624 730 512 912Z" fill="none" stroke="${cream}" stroke-width="${36/s}" stroke-linejoin="round" transform="translate(512 470) scale(${s}) translate(-512 -470)"/>`).join('') + `<circle cx="512" cy="430" r="40" fill="${cream}"/>`],
+  ['Shutters, slanted', 'Slash Bar. Angled slats in a window pair, the way Tel Aviv shutters cut the sun.',
+    bg(terra) + `<rect x="232" y="172" width="560" height="680" rx="36" fill="${cream}"/>` + rng(8, i => `<polygon points="272,${232+i*74} 752,${206+i*74} 752,${246+i*74} 272,${272+i*74}" fill="${ink}"/>`) + `<rect x="500" y="172" width="24" height="680" fill="${cream}"/>`],
+  ['Rolling balconies', 'Roll Over. Three balcony slabs with two-tone shading, coming out of the wall.',
+    bg(mint) + [250,448,646].map(y => `<rect x="150" y="${y}" width="600" height="128" rx="64" fill="${peach}"/><path d="M214 ${y}H750V${y+64}H150A64 64 0 0 1 214 ${y}Z" fill="${cream}"/>`).join('') + `<rect x="620" y="0" width="404" height="1024" fill="${terra}"/>`],
+  ['Walking route', 'Faders. One unbroken line through the blocks, getting stronger as it reaches the place.',
+    bg(cream) + `<defs><linearGradient id="fade12" gradientUnits="userSpaceOnUse" x1="200" y1="830" x2="620" y2="250"><stop offset="0" stop-color="${peach}"/><stop offset="1" stop-color="${terra}"/></linearGradient></defs><path d="M200 830H440V600H260V380H580V650H800V250H620" fill="none" stroke="url(#fade12)" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/><circle cx="620" cy="250" r="86" fill="${terra}"/><circle cx="620" cy="250" r="32" fill="${cream}"/>`],
+  ['Glass balconies', 'Layered glass, the way iOS 26 icons are built: frosted balconies over a solid stair tower.',
+    `<defs><linearGradient id="lg14" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D2622C"/><stop offset="1" stop-color="${terraD}"/></linearGradient></defs><rect width="1024" height="1024" fill="url(#lg14)"/><rect x="600" y="130" width="170" height="780" rx="20" fill="${cream}"/>` + [220,447,674].map(y => `<rect x="-60" y="${y}" width="780" height="130" rx="65" fill="#FFFFFF" fill-opacity=".4" stroke="#FFFFFF" stroke-opacity=".9" stroke-width="8"/><rect x="40" y="${y+18}" width="560" height="10" rx="5" fill="#FFFFFF" fill-opacity=".55"/>`).join('')],
+  ['Curved balconies, electric green', 'The 2026 colour. LogoLounge reports green leading this year, out to electric yellow-greens. Off the app\'s palette.',
+    bands(ink, lime, '#1E1815')],
+ ]},
+];
+const svgFlat = s => `<svg class="flat" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+let r3 = '';
+for (const g of round3) {
+  r3 += `<h2>${g.title}</h2><p class="sub">${g.sub}</p><div class="grid">`;
+  for (const [name, note, s] of g.items) { n++; r3 += card(String(n), name, note, svgFlat(s)); }
+  r3 += `</div>`;
+}
+const cut = html.indexOf('<h2>The building</h2>');
+html = html.slice(0, cut) + r3 + `<h2 class="era">Earlier rounds</h2><p class="sub">Rounds 1 and 2, numbered 01 to 48, with the lit paper finish.</p>` + html.slice(cut);
+
 // ---- material pass: one light source (top left), cut-paper layers, paper grain ----
 const pal = [cream, peach, terra, terraD, ink, mint, mintD, white, '#1E1815'];
 const mix = (a, b, t) => '#' + [1,3,5].map(i => Math.round(parseInt(a.slice(i,i+2),16)*(1-t) + parseInt(b.slice(i,i+2),16)*t).toString(16).padStart(2,'0')).join('');
@@ -173,7 +222,7 @@ const shared = `<svg width="0" height="0" style="position:absolute" aria-hidden=
   `</defs></svg>`;
 document.getElementById('out').innerHTML = shared + html;
 const overlay = `<rect width="1024" height="1024" fill="url(#sheen)"/><rect width="1024" height="1024" fill="url(#shade)"/><rect width="1024" height="1024" filter="url(#grain)" style="mix-blend-mode:multiply"/>`;
-document.querySelectorAll('.ico svg').forEach(s => {
+document.querySelectorAll('.ico svg:not(.flat)').forEach(s => {
   s.querySelectorAll('[fill]').forEach(e => { const i = pal.indexOf(e.getAttribute('fill')); if (i >= 0) e.setAttribute('fill', `url(#g${i})`); });
   [...s.children].forEach(e => { if (e.tagName !== 'defs' && !e.classList.contains('bg')) e.setAttribute('filter', 'url(#sh)'); });
   s.insertAdjacentHTML('beforeend', overlay);
