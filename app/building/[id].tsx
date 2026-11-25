@@ -80,7 +80,6 @@ export default function BuildingDetail() {
   const [activePlan, setActivePlan] = useState<Plan | null>(null);
   const [photoBig, setPhotoBig] = useState(false);
   const [slide, setSlide] = useState(0);
-  const [activeKey, setActiveKey] = useState<string>('');
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
@@ -162,9 +161,6 @@ export default function BuildingDetail() {
         }]
       : []),
   ];
-  const currentKey = activeKey && sectionDefs.some((s) => s.key === activeKey) ? activeKey : sectionDefs[0]?.key ?? '';
-  const current = sectionDefs.find((s) => s.key === currentKey);
-
   return (
     <View style={styles.container}>
       <MapStyled
@@ -288,33 +284,18 @@ export default function BuildingDetail() {
             </CollapsibleSection>
           ) : null}
 
-          {/* The four topics as a 2×2 grid of glass cards; the chosen one opens below. */}
-          <View style={styles.sectionGrid}>
-            {sectionDefs.map((s) => {
-              const on = s.key === currentKey;
-              return (
-                <Pressable
-                  key={s.key}
-                  onPress={() => setActiveKey(s.key)}
-                  style={({ pressed: p }) => [styles.sectionCard, on && styles.sectionCardOn, p && styles.pressed]}
-                >
-                  <View style={styles.sectionIconWrap}>
-                    <SectionIcon name={s.icon} size={46} color={on ? colors.white : colors.terracotta} />
-                  </View>
-                  <Text style={[styles.sectionCardTitle, on && styles.sectionCardTitleOn]} numberOfLines={2}>
-                    {s.title}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
-
-          {current ? (
-            <View style={styles.sectionPanel}>
-              <Text style={styles.sectionPanelTitle}>{current.title}</Text>
-              {current.render()}
+          {/* Every topic shown in full, each under its Bauhaus icon — rich and complete. */}
+          {sectionDefs.map((s) => (
+            <View key={s.key} style={styles.section}>
+              <View style={styles.sectionHead}>
+                <View style={styles.sectionHeadIcon}>
+                  <SectionIcon name={s.icon} size={22} />
+                </View>
+                <Text style={styles.sectionHeadTitle}>{s.title}</Text>
+              </View>
+              {s.render()}
             </View>
-          ) : null}
+          ))}
 
           <PrimaryButton label="Open in Field research" onPress={() => router.push('/field')} />
         </Animated.View>
@@ -460,6 +441,21 @@ const styles = StyleSheet.create({
   sectionCardTitleOn: { color: colors.white },
   sectionPanel: { marginTop: spacing.xs },
   sectionPanelTitle: { ...editorial.cardTitleLg, color: colors.ink, marginBottom: spacing.base },
+
+  // Full, always-visible section with a Bauhaus icon header
+  section: { gap: spacing.md },
+  sectionHead: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  sectionHeadIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: radii.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.glassFill,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+  },
+  sectionHeadTitle: { ...editorial.cardTitleLg, color: colors.ink },
 
   architectRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
   avatar: { width: 44, height: 44, borderRadius: 22, flexShrink: 0 },
