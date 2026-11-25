@@ -6,7 +6,7 @@ import { colors, spacing } from '../../theme/tokens';
 import { ui } from '../../theme/typography';
 
 const MAP = require('../../assets/images/journeys-map.jpg');
-const AR = 2133 / 3200; // width / height
+const AR = 2800 / 1985; // width / height (landscape poster)
 
 /**
  * The Architects' Circle — where each architect was born, studied in Europe, and

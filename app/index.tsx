@@ -147,9 +147,9 @@ export default function Welcome() {
 
           <Pressable
             onPress={() => router.push('/atlas')}
-            style={({ pressed }) => [styles.atlasBtn, pressed && styles.pressedScale]}
+            style={({ pressed }) => [styles.atlasCircle, pressed && styles.pressedScale]}
           >
-            <Text style={styles.atlasBtnLabel}>Open the Atlas</Text>
+            <Text style={styles.atlasCircleLabel}>Atlas</Text>
           </Pressable>
         </View>
       </Animated.View>
@@ -273,29 +273,28 @@ const styles = StyleSheet.create({
   mapHint: { ...ui.buttonLabel, color: CREAM },
   nearError: { ...ui.metadata, color: CREAM, textAlign: 'center', maxWidth: 260 },
 
-  // The primary Atlas button — solid sunset-orange, centred, with a drop shadow.
-  atlasBtn: {
-    marginTop: spacing.sm,
-    minWidth: 220,
-    paddingHorizontal: spacing.xxl,
-    paddingVertical: 15,
-    borderRadius: radii.circle,
-    backgroundColor: '#C2531F',
+  // The Atlas button — a glass circle, a touch smaller than the map button, centred.
+  atlasCircle: {
+    marginTop: spacing.md,
+    width: 82,
+    height: 82,
+    borderRadius: 41,
+    backgroundColor: 'rgba(255,255,255,0.20)',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.35)',
+    borderColor: 'rgba(255,255,255,0.7)',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#3A0A00',
-    shadowOpacity: 0.35,
-    shadowRadius: 16,
+    shadowOpacity: 0.3,
+    shadowRadius: 14,
     shadowOffset: { width: 0, height: 8 },
-    elevation: 8,
+    elevation: 7,
   },
-  atlasBtnLabel: {
+  atlasCircleLabel: {
     ...ui.buttonLabel,
-    fontSize: 16,
+    fontSize: 15,
     letterSpacing: 0.3,
-    color: colors.white,
+    color: CREAM,
     fontWeight: '700',
   },
 });

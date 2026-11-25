@@ -59,7 +59,7 @@ export default function ArchitectsIndex() {
   }, [hovered]);
 
   return (
-    <MotionGradient variant="warm">
+    <MotionGradient variant="warm" opacity={0.5}>
       <BackButton />
       <FlatList
         data={architects}

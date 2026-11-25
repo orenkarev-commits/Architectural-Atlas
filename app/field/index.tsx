@@ -55,7 +55,7 @@ export default function FieldResearch() {
   }, [cat, query, addrById]);
 
   return (
-    <MotionGradient variant="warm">
+    <MotionGradient variant="warm" opacity={0.5}>
       <BackButton />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Text style={styles.header}>Stories</Text>

@@ -3,6 +3,7 @@ import { Image, LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, Te
 import Svg, { Path, Rect, Line, Circle } from 'react-native-svg';
 import { router, useLocalSearchParams } from 'expo-router';
 import { BackButton } from '../../components/BackButton';
+import { MotionGradient } from '../../components/MotionGradient';
 import { CircularOverviewMap } from '../../components/CircularOverviewMap';
 import { BuildingRow } from '../../components/BuildingRow';
 import { BuildingWaves, WhoBuiltWhatStyle } from '../../components/AtlasCharts';
@@ -105,7 +106,7 @@ export default function Atlas() {
   ];
 
   return (
-    <View style={styles.container}>
+    <MotionGradient variant="warm" opacity={0.55}>
       <BackButton />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>Atlas</Text>
@@ -200,7 +201,7 @@ export default function Atlas() {
           <WhoBuiltWhatStyle />
         </View>
       </ScrollView>
-    </View>
+    </MotionGradient>
   );
 }
 

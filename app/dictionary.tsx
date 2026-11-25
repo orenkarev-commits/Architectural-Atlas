@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   kicker: { ...ui.label, color: colors.terracotta },
-  name: { ...editorial.architectName, color: colors.ink },
+  name: { ...editorial.architectName, color: colors.ink, lineHeight: 42, paddingTop: 2 },
   tagline: { ...editorial.cardTitle, color: colors.inkSoft, marginTop: spacing.xs },
   search: {
     ...ui.body,
