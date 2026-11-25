@@ -80,6 +80,8 @@ export default function Welcome() {
 
   const submitSearch = () => {
     Keyboard.dismiss();
+    const asked = query.trim();
+    if (asked) router.push({ pathname: '/ask', params: { q: asked } });
   };
 
   const onOpenMap = () => {

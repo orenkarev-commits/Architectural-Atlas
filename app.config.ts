@@ -20,6 +20,11 @@ const config: ExpoConfig = {
   orientation: 'portrait',
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
+  // Server output so the Atlas assistant API route (app/api/ask+api.ts) can run on EAS Hosting.
+  web: {
+    bundler: 'metro',
+    output: 'server',
+  },
   icon: './assets/images/icon.png',
   ios: {
     supportsTablet: false,
@@ -76,6 +81,9 @@ const config: ExpoConfig = {
     eas: {
       projectId: '2639e838-5a8d-469e-b637-cfadd17a8225',
     },
+    // The deployed EAS Hosting URL that serves /api/ask. Set EXPO_PUBLIC_ASSISTANT_URL
+    // (public, baked into the JS bundle) after `eas deploy`; empty = assistant disabled.
+    assistantUrl: process.env.EXPO_PUBLIC_ASSISTANT_URL ?? '',
   },
 };
 
