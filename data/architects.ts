@@ -51,7 +51,7 @@ export const architects: Architect[] = [
     school: 'Eclectic',
     quote: '',
     innovation:
-      "Trained at the Imperial Academy of Arts in St. Petersburg and in Palestine from 1921, he became chief architect of the Histadrut's Public Works Office, later Solel Boneh, and built some seventy documented works in Tel Aviv between 1922 and 1937. He practised with the engineer Richard Passovsky until 1929; his son Ze'ev Berlin later joined him. The father began in the Eclectic manner and moved toward the International Style — flat roofs, ribbon windows, ornament let go — arriving where the son's generation had started. Stairwell glazing and volumetric restraint became the shared signature.",
+      "Born in Mogilev in 1877, he trained at the Imperial Academy of Arts in St. Petersburg and reached Palestine in 1921, where he became chief architect of the Histadrut's Public Works Office, later Solel Boneh, and built some seventy to eighty documented works in Tel Aviv between 1922 and 1937. He practised with the engineer Richard Passovsky until 1929; his son Ze'ev Berlin later joined him. The father began in the Eclectic manner and moved toward the International Style — flat roofs, ribbon windows, ornament let go — arriving where the son's generation had started. Stairwell glazing and volumetric restraint became the shared signature.",
     works: [
       // Beit HaTe'omim (id 11), The First Power Station (id 12), Ohel Moed
       // Synagogue (id 13) and Beit Awad (id 14) are now Atlas buildings and
