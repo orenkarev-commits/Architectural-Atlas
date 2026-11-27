@@ -505,6 +505,8 @@ const entries: Building[] = [
     image: IMG,
     whyItMatters:
       "It matters as a cultural first — architecture built to give the young city's musical life a room of its own: the concert hall as civic institution, in a city that did not yet have a concert hall.",
+    materials:
+      'Built as an auditorium — a 1,000-seat hall beside Bialik Square. It is remembered for what happened inside it more than for its fabric; the construction is not documented in the Atlas.',
     timeline: [
       { year: '1928', note: "Cornerstone laid on a Balfour Street plot given by the philanthropist Shmuel Blum — a culture house honouring the poet Bialik and permanent home for his 'Oneg Shabbat' Saturday gatherings (begun 1926)." },
       { year: '1929', note: "The 1,000-seat hall opens on 9 May, beside Bialik's square." },
@@ -527,6 +529,8 @@ const entries: Building[] = [
     image: IMG,
     whyItMatters:
       "It matters as an early experiment by a hand still learning: one of Levy's first Tel Aviv buildings, the corner-turning idea in rehearsal two years before he would crown the Pagoda House.",
+    materials:
+      'An Eclectic, ornamental corner block turning the junction at the mouth of the Carmel Market — doubled for the family by Magidovitch in 1925. The structural system is not documented in the Atlas.',
     timeline: [
       { year: '1921', note: 'Peyga and Alter-Moshe Mangel arrive from Warsaw and buy the corner plot, pledging to build within two months.' },
       { year: '1922', note: "Alexander Levy builds a three-storey house — one of his first in the city, at the mouth of the future Carmel Market." },
