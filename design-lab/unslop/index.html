@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building page · unslop options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Comfortaa:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #0f0e0d; min-height: 100vh; display: flex; justify-content: center; padding: 24px 0 96px; }
+  #stage { width: 390px; }
+  img { display: block; max-width: 100%; }
+  .phone { width: 390px; border-radius: 28px; overflow: hidden; position: relative; }
+  .sticky { position: sticky; bottom: 0; }
+  @media (max-width: 420px) { body { padding: 0 0 96px; } .phone { border-radius: 0; width: 100vw; } #stage { width: 100vw; } }
+
+  /* 1 · Archive (polish: keep the brand, fix the signs) */
+  .a { background: #1c1917; color: #ece7e2; font-family: Comfortaa, sans-serif; }
+  .a h1, .a h2 { font-family: "Madimi One", sans-serif; font-weight: 400; }
+  .a .hero { position: relative; }
+  .a .hero img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .a .tag { position: absolute; left: 16px; bottom: 16px; font-size: 12px; padding: 4px 8px; border-radius: 8px; background: rgba(28,25,23,.78); color: #d6cfc8; }
+  .a .then { display: flex; gap: 8px; padding: 12px 20px 0; }
+  .a .then button { flex: 1; height: 32px; border-radius: 8px; border: 1px solid rgba(236,231,226,.1); background: transparent; color: #a8a29e; font: 500 13px Comfortaa; }
+  .a .then button[aria-pressed="true"] { background: #2a2623; color: #ece7e2; }
+  .a .body { padding: 20px; }
+  .a h1 { font-size: 30px; line-height: 1.15; }
+  .a .addr { color: #a8a29e; font-size: 15px; margin-top: 8px; }
+  .a .facts { display: grid; grid-template-columns: repeat(3, 1fr); margin: 20px 0; border-top: 1px solid rgba(236,231,226,.08); border-bottom: 1px solid rgba(236,231,226,.08); }
+  .a .facts div { padding: 12px 0; text-align: center; }
+  .a .facts b { display: block; font: 500 17px "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+  .a .facts span { font-size: 12px; color: #8a837d; }
+  .a .label { font-size: 13px; color: #8a837d; margin: 24px 0 8px; }
+  .a .arch { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: #24201d; }
+  .a .ini { width: 40px; height: 40px; border-radius: 20px; background: #34302c; display: grid; place-items: center; font-size: 14px; }
+  .a .status { font-size: 12px; color: #8a837d; }
+  .a h2 { font-size: 20px; margin: 32px 0 12px; }
+  .a p { font-size: 15px; line-height: 1.6; color: #d6cfc8; }
+  .a .sheet { border-radius: 12px; overflow: hidden; background: #24201d; margin-bottom: 12px; }
+  .a .sheet figcaption { padding: 12px; font-size: 13px; color: #a8a29e; line-height: 1.5; }
+  .a .tl { display: grid; grid-template-columns: 72px 1fr; gap: 8px 12px; font-size: 14px; line-height: 1.55; }
+  .a .tl dt { font: 500 13px "IBM Plex Mono", monospace; color: #8a837d; padding-top: 2px; }
+  .a .bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #1c1917; border-top: 1px solid rgba(236,231,226,.08); }
+  .a .bar span { color: #a8a29e; font-size: 14px; }
+  .a .go { height: 40px; padding: 0 16px; border-radius: 10px; border: 0; background: #c2683f; color: #fff; font: 500 14px Comfortaa; }
+
+  /* 2 · Drawing sheet (light paper, the archive sheet is the moment) */
+  .d { background: #f4f1ea; color: #1f1d1a; font-family: "IBM Plex Sans", sans-serif; }
+  .d .sheetwrap { padding: 16px; }
+  .d .elev { border: 1px solid #1f1d1a; background: #efe6cf; }
+  .d .elev img { width: 100%; mix-blend-mode: multiply; }
+  .d .tb { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #1f1d1a; border-top: 0; }
+  .d .tb div { padding: 8px 10px; border-top: 1px solid rgba(31,29,26,.25); }
+  .d .tb div:nth-child(odd) { border-right: 1px solid rgba(31,29,26,.25); }
+  .d .tb div:nth-child(-n+2) { border-top: 0; }
+  .d .tb small { display: block; font: 400 11px "IBM Plex Mono", monospace; color: #6b655d; }
+  .d .tb b { font-weight: 500; font-size: 14px; }
+  .d .tb .wide { grid-column: span 2; border-right: 0 !important; }
+  .d .body { padding: 8px 20px 24px; }
+  .d h1 { font-weight: 500; font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; }
+  .d .addr { color: #6b655d; margin-top: 4px; font-size: 15px; }
+  .d h2 { font-weight: 500; font-size: 17px; margin: 28px 0 8px; }
+  .d p { font-size: 15px; line-height: 1.65; color: #34312c; }
+  .d .photo { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .d .photo figure img { aspect-ratio: 1; object-fit: cover; border: 1px solid rgba(31,29,26,.2); }
+  .d .photo figcaption { font: 400 11px "IBM Plex Mono", monospace; color: #6b655d; margin-top: 4px; }
+  .d .tl { border-left: 1px solid #1f1d1a; padding-left: 16px; display: grid; gap: 12px; }
+  .d .tl div { font-size: 14px; line-height: 1.55; }
+  .d .tl b { font: 500 12px "IBM Plex Mono", monospace; display: block; color: #6b655d; }
+  .d .bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #f4f1ea; border-top: 1px solid #1f1d1a; }
+  .d .go { height: 40px; padding: 0 16px; border: 1px solid #1f1d1a; border-radius: 8px; background: #1f1d1a; color: #f4f1ea; font: 500 14px "IBM Plex Sans"; }
+
+  /* 3 · Field guide (photo-led, reading the front with numbered terms) */
+  .f { background: #faf8f5; color: #23201c; font-family: "Source Serif 4", serif; }
+  .f .hero { position: relative; }
+  .f .hero img { width: 100%; }
+  .f .pin { position: absolute; width: 24px; height: 24px; border-radius: 12px; background: #faf8f5; color: #23201c; font: 500 12px "IBM Plex Sans"; display: grid; place-items: center; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+  .f .cap { padding: 8px 20px; color: #7a7064; background: #faf8f5; font: 400 12px "IBM Plex Sans"; }
+  .f .body { padding: 20px; }
+  .f .kicker { font: 500 13px "IBM Plex Sans"; color: #7a7064; }
+  .f h1 { font-weight: 500; font-size: 32px; line-height: 1.15; margin-top: 4px; }
+  .f .meta { font: 400 14px "IBM Plex Sans"; color: #7a7064; margin-top: 8px; }
+  .f .terms { margin: 24px 0; display: grid; gap: 12px; }
+  .f .term { display: grid; grid-template-columns: 24px 1fr; gap: 12px; font-size: 15px; line-height: 1.5; }
+  .f .term i { font-style: normal; width: 24px; height: 24px; border-radius: 12px; background: #23201c; color: #faf8f5; font: 500 12px "IBM Plex Sans"; display: grid; place-items: center; }
+  .f .term b { font-weight: 600; }
+  .f h2 { font-weight: 500; font-size: 20px; margin: 28px 0 8px; }
+  .f p { font-size: 16px; line-height: 1.65; color: #3b362f; }
+  .f .bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #faf8f5; border-top: 1px solid rgba(35,32,28,.1); font: 400 14px "IBM Plex Sans"; color: #7a7064; }
+  .f .go { height: 40px; padding: 0 16px; border: 0; border-radius: 20px; background: #2f5d50; color: #fff; font: 500 14px "IBM Plex Sans"; }
+
+  .proto-picker { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2147483647; display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(10, 10, 10, 0.82); -webkit-backdrop-filter: blur(12px) saturate(1.4); backdrop-filter: blur(12px) saturate(1.4); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 8px 24px rgba(0, 0, 0, 0.24), 0 2px 6px rgba(0, 0, 0, 0.12); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; line-height: 1; -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none; }
+  .proto-picker-highlight { position: absolute; top: 4px; left: 0; height: 28px; border-radius: 999px; background: rgba(255, 255, 255, 0.12); will-change: transform; }
+  .proto-picker[data-ready] .proto-picker-highlight { transition: transform 250ms cubic-bezier(0.23, 1, 0.32, 1), width 250ms cubic-bezier(0.23, 1, 0.32, 1); }
+  @media (prefers-reduced-motion: reduce) { .proto-picker[data-ready] .proto-picker-highlight { transition: none; } }
+  .proto-picker-item { position: relative; display: flex; align-items: center; height: 28px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: rgba(255, 255, 255, 0.55); font: inherit; cursor: pointer; transition: color 150ms ease-out; }
+  .proto-picker-item:hover { color: rgba(255, 255, 255, 0.85); }
+  .proto-picker-item:active { transform: scale(0.97); }
+  .proto-picker-item:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.4); outline-offset: 2px; }
+  .proto-picker-item[data-active] { color: #fff; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<nav class="proto-picker" aria-label="Prototype variants">
+  <span class="proto-picker-highlight" aria-hidden="true"></span>
+  <button class="proto-picker-item" data-active aria-current="true">Archive</button>
+  <button class="proto-picker-item">Drawing sheet</button>
+  <button class="proto-picker-item">Field guide</button>
+</nav>
+<script>
+const IMG = '/assets/images/';
+const B = {
+  name: 'Nastissin House', alt: 'The Common House', address: 'Yehuda Halevi 131',
+  type: 'Apartment house', year: '1925–26', style: 'Art Deco', architect: 'Yehuda Zuckerman',
+  restored: IMG + 'buildings/47-nastissin-house.jpeg', today: IMG + 'buildings/47-nastissin-house-original.jpeg',
+  elev: IMG + 'plans/Yehuda-Halevi-131-01-elevation.jpg', plan: IMG + 'plans/Yehuda-Halevi-131-02-plan-1925.jpg',
+  why: 'Urbanity arriving ahead of the city: speculative apartment housing given a composed, symmetrical Art Deco face at the edge of the built city, a front drawn before the city reached it.',
+  story: "When the house went up in 1925–26, Sarona's fields still lay beyond it at the city's eastern edge. The Common House was a private company, not a cooperative, and the poet Uri Zvi Greenberg later lived here.",
+  tl: [['1913', 'Michael Nastissin buys some twelve dunam here through his company HaBayit HaMeshutaf, the Common House.'],
+       ['1925–26', 'Zuckerman gives the speculative apartment house a symmetrical Art Deco front.'],
+       ['1931', 'Nastissin dies; Dizengoff eulogises him.'],
+       ['Late 1940s', 'The poet Uri Zvi Greenberg lives here with Dr Yehoshua Yeivin.'],
+       ['1950s on', 'The ground floor runs an atelier, a grocery, a printing press, now a music company.']],
+};
+
+function archive() {
+  return `<div class="phone a">
+    <div class="hero"><img id="a-img" src="${B.restored}" alt="${B.name}, AI restoration of the front">
+      <span class="tag" id="a-tag">AI restoration · an illustration, not a record</span></div>
+    
+    <div class="body">
+      <h1>${B.name}</h1><div class="addr">${B.address} · ${B.type}</div>
+      <div class="facts"><div><b>${B.year}</b><span>Built</span></div><div><b style="font-family:Comfortaa">${B.style}</b><span>Style</span></div><div><b>1925</b><span>Plan approved</span></div></div>
+      <div class="label">Architect</div>
+      <div class="arch"><div class="ini">YZ</div><div>${B.architect}</div></div>
+      <h2>From the archive</h2>
+      <figure class="sheet"><img src="${B.elev}" alt="Original elevation"><figcaption>Elevation, ink and wash at 1:100, for Hevrat HaBinyan HaMeshutaf</figcaption></figure>
+      <figure class="sheet"><img src="${B.plan}" alt="Floor plan 1925"><figcaption>Floor plan approved 24 Nov 1925</figcaption></figure>
+      <h2>The story</h2><p>${B.story}</p>
+      <h2>Why it matters</h2><p>${B.why}</p>
+      <h2>Life of the building</h2>
+      <dl class="tl">${B.tl.map(([y,t]) => `<dt>${y}</dt><dd>${t}</dd>`).join('')}</dl>
+    </div>
+    <div class="bar sticky"><span>${B.address}</span><button class="go">Walk there</button></div>
+  </div>`;
+}
+window.aSwap = (btn, which) => {
+  document.querySelectorAll('.a .then button').forEach(b => b.setAttribute('aria-pressed', b === btn));
+  document.getElementById('a-img').src = B[which];
+  document.getElementById('a-tag').textContent = which === 'today' ? "Oren's photo, perspective corrected" : 'AI restoration · an illustration, not a record';
+};
+
+function drawing() {
+  return `<div class="phone d">
+    <div class="sheetwrap">
+      <div class="elev"><img src="${B.elev}" alt="Original elevation"></div>
+      <div class="tb">
+        <div class="wide"><small>Building</small><b>${B.name} · ${B.alt}</b></div>
+        <div><small>Architect</small><b>${B.architect}</b></div><div><small>Built</small><b>${B.year}</b></div>
+        <div><small>Style</small><b>${B.style}</b></div><div><small>Address</small><b>${B.address}</b></div>
+        <div class="wide"><small>Source</small><b>Handasa 00061310 · plan approved 24 Nov 1925</b></div>
+      </div>
+    </div>
+    <div class="body">
+      <h1>A front drawn before the city reached it</h1>
+      <div class="addr">${B.type}, ${B.address}</div>
+      <p style="margin-top:16px">${B.why}</p>
+      <div class="photo">
+        <figure style="grid-column:span 2"><img src="${B.restored}" alt="AI restoration" style="aspect-ratio:auto"><figcaption>AI restoration · an illustration, not a record</figcaption></figure>
+      </div>
+      <h2>The story</h2><p>${B.story}</p>
+      <h2>Life of the building</h2>
+      <div class="tl">${B.tl.map(([y,t]) => `<div><b>${y}</b>${t}</div>`).join('')}</div>
+    </div>
+    <div class="bar sticky"><span style="font-size:14px;color:#6b655d">${B.address}</span><button class="go">Walk there</button></div>
+  </div>`;
+}
+
+function field() {
+  const pins = [[49,28,1],[14,45,2],[49,84,3],[86,72,4]];
+  return `<div class="phone f">
+    <div class="hero" style="background:#efe6cf"><img src="${B.elev}" alt="Original elevation, 1925" style="aspect-ratio:auto;mix-blend-mode:multiply">
+      ${pins.map(([x,y,n]) => `<span class="pin" style="left:calc(${x}% - 12px);top:calc(${y}% - 12px)">${n}</span>`).join('')}
+      <div class="cap">Original elevation, 1925 · Handasa 00061310</div></div>
+    <div class="body">
+      <div class="kicker">${B.style} · ${B.year}</div>
+      <h1>${B.name}</h1>
+      <div class="meta">${B.architect} · ${B.address}</div>
+      <div class="terms">
+        <div class="term"><i>1</i><div><b>Stair column.</b> Glazed full height in the drawing, under a stepped cap. Today it has one small shuttered window per landing.</div></div>
+        <div class="term"><i>2</i><div><b>Projecting bays</b> with finned balcony fronts on every floor.</div></div>
+        <div class="term"><i>3</i><div><b>Entrance.</b> A double door between finials; today it sits a few steps up, behind a stone garden wall.</div></div>
+        <div class="term"><i>4</i><div><b>End bays.</b> Windows in the drawing; shopfronts there today.</div></div>
+      </div>
+      <h2>The story</h2><p>${B.story}</p>
+      <h2>Why it matters</h2><p>${B.why}</p>
+    </div>
+    <div class="bar sticky"><span>${B.address}</span><button class="go">Walk there</button></div>
+  </div>`;
+}
+
+const variants = [archive, drawing, field];
+const stage = document.getElementById('stage');
+const picker = document.querySelector('.proto-picker');
+const highlight = picker.querySelector('.proto-picker-highlight');
+const items = [...picker.querySelectorAll('.proto-picker-item:not(.proto-picker-replay)')];
+let current = 0;
+function moveHighlight() { const el = items[current]; highlight.style.width = el.offsetWidth + 'px'; highlight.style.transform = `translateX(${el.offsetLeft}px)`; }
+function mount(i) { stage.innerHTML = ''; requestAnimationFrame(() => { stage.innerHTML = variants[i](); }); }
+function setActive(i) {
+  if (i < 0 || i >= variants.length) return;
+  current = i;
+  items.forEach((el, j) => { el.toggleAttribute('data-active', j === i); if (j === i) el.setAttribute('aria-current', 'true'); else el.removeAttribute('aria-current'); });
+  moveHighlight();
+  const url = new URL(location); url.searchParams.set('v', i + 1); history.replaceState(null, '', url);
+  mount(i);
+}
+items.forEach((el, i) => el.addEventListener('click', () => setActive(i)));
+window.addEventListener('resize', moveHighlight);
+document.addEventListener('keydown', (e) => {
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const num = parseInt(e.key, 10);
+  if (num >= 1 && num <= variants.length) setActive(num - 1);
+  else if (e.key === 'ArrowRight') setActive((current + 1) % variants.length);
+  else if (e.key === 'ArrowLeft') setActive((current - 1 + variants.length) % variants.length);
+});
+setActive((parseInt(new URLSearchParams(location.search).get('v'), 10) || 1) - 1);
+requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute('data-ready', '')));
+</script>
+</body>
+</html>
