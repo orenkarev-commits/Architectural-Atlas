@@ -15,6 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BackButton } from '../components/BackButton';
 import { MotionGradient } from '../components/MotionGradient';
 import { askAtlas, assistantEnabled, type ChatMsg, type Citation } from '../lib/assistant';
+import { answerLocally } from '../lib/localAssistant';
 import { colors, radii, spacing } from '../theme/tokens';
 import { editorial, ui } from '../theme/typography';
 
@@ -47,10 +48,11 @@ export default function Ask() {
     setTurns((prev) => [...prev, { role: 'user', content: question }]);
     setLoading(true);
     try {
-      const res = await askAtlas(history);
+      // Free on-device engine by default; the LLM endpoint only if configured.
+      const res = assistantEnabled ? await askAtlas(history) : answerLocally(question);
       setTurns((prev) => [...prev, { role: 'assistant', content: res.answer, citations: res.citations }]);
     } catch {
-      setError('The assistant is unavailable right now. Try the search, or ask again later.');
+      setError('Something went wrong answering that — try rephrasing.');
     } finally {
       setLoading(false);
       requestAnimationFrame(() => scrollRef.current?.scrollToEnd({ animated: true }));
@@ -58,7 +60,7 @@ export default function Ask() {
   };
 
   useEffect(() => {
-    if (!started.current && q && assistantEnabled) {
+    if (!started.current && q) {
       started.current = true;
       void send(String(q));
     }
@@ -84,14 +86,6 @@ export default function Ask() {
             Questions answered only from the Atlas — who built it, why it matters, how it was made. Every claim is
             tied to a record.
           </Text>
-
-          {!assistantEnabled ? (
-            <View style={styles.noticeCard}>
-              <Text style={styles.noticeText}>
-                The research assistant isn’t switched on yet. Once its endpoint is deployed it answers here.
-              </Text>
-            </View>
-          ) : null}
 
           {turns.map((t, i) =>
             t.role === 'user' ? (
@@ -130,16 +124,16 @@ export default function Ask() {
             style={styles.input}
             value={input}
             onChangeText={setInput}
-            placeholder={assistantEnabled ? 'Ask about any building…' : 'Assistant not configured'}
+            placeholder="Ask about any building…"
             placeholderTextColor={colors.muted}
-            editable={assistantEnabled && !loading}
+            editable={!loading}
             onSubmitEditing={() => send(input)}
             returnKeyType="send"
             multiline
           />
           <Pressable
             onPress={() => send(input)}
-            disabled={!assistantEnabled || loading || !input.trim()}
+            disabled={loading || !input.trim()}
             style={({ pressed }) => [styles.sendBtn, (!input.trim() || loading) && styles.sendDisabled, pressed && styles.citePressed]}
           >
             <Text style={styles.sendArrow}>↑</Text>

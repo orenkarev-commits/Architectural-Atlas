@@ -16,7 +16,6 @@ import { buildings } from '../data/buildings';
 import { architects } from '../data/architects';
 import { suggest, type Suggestion } from '../lib/search';
 import { useAtlas } from '../context/AtlasContext';
-import { assistantEnabled } from '../lib/assistant';
 import { colors, radii, spacing } from '../theme/tokens';
 import { editorial, ui } from '../theme/typography';
 
@@ -82,9 +81,7 @@ export default function Welcome() {
   const submitSearch = () => {
     Keyboard.dismiss();
     const asked = query.trim();
-    // Only open the chat once the assistant endpoint is configured; otherwise leave the
-    // suggestion list up as before.
-    if (asked && assistantEnabled) router.push({ pathname: '/ask', params: { q: asked } });
+    if (asked) router.push({ pathname: '/ask', params: { q: asked } });
   };
 
   const onOpenMap = () => {
