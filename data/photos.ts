@@ -107,3 +107,11 @@ export function photoFor(
 export function isPlaceholder(id: number): boolean {
   return photos[id] === undefined;
 }
+
+/**
+ * A short caption shown over a building's main picture when it is not a plain photograph,
+ * e.g. an AI restoration (facade-elevation skill). The note says what the picture is, never a fact.
+ */
+export const photoNotes: Partial<Record<number, string>> = {
+  47: 'AI restoration · an illustration, not a record',
+};
